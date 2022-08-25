@@ -1,7 +1,11 @@
 package com.main;
 
 public class App {
+
 	public static void main(String[] args) {
-		System.out.println("wbs 프로젝트");
+		// TODO Auto-generated method stub
+		System.out.println("WBS 일정 관리 프로그램");
+
 	}
+
 }
