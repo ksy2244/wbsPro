@@ -1,4 +1,4 @@
-package com.main;
+package com.emp;
 
 public class EmployeeDTO{
 	private String user_code; //사원번호

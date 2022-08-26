@@ -1,9 +1,9 @@
-package com.main;
+package com.plan;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CatDate_DAO {
+public interface CatDateDAO {
 
 	
 	// ① 작업 등록 메뉴
@@ -23,26 +23,25 @@ public interface CatDate_DAO {
 	// ④ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public CatDateDTO searchCatDate_Code(CatDateDTO dto) throws SQLException;
-
+	public CatDateDTO searchCatDateCode(CatDateDTO dto) ;
 	
 	
 	// 작업명 검색
-	public List<CatDateDTO> searchCatDate_Name(String CatDate_name) throws SQLException;
+	public List<CatDateDTO> searchCatDateName(String CatDate_name) ;
 
 	
 	
 	// 담당자명 검색
-	public List<CatDateDTO> searchCatDate_Manager(String CatDate_manager) throws SQLException;
+	public List<CatDateDTO> searchCatDateManager(String CatDate_manager);
 	
 	
 	// 날짜 검색
-	public List<CatDateDTO> searchCatDate_Date(String CatDate_date) throws SQLException;
+	public List<CatDateDTO> searchCatDateDate(String CatDate_date);
 
 	
 	
 	// 전체 작업 목록
-	public List<CatDateDTO> searchCatDate_All(String CatDate_date) throws SQLException;
+	public List<CatDateDTO> searchCatDateAll(String CatDate_date);
 
 	
 	
@@ -51,11 +50,11 @@ public interface CatDate_DAO {
 	// ⑤ 업무 구성비 관리
 	
 	  // 업무 구성비 등록
-	public int workCompInsert_CatDate(int input) throws SQLException;
+	public int workCompInsertCatDate(int input) throws SQLException;
 	
 	
 	  // 업무 구성비 수정
-	public int workCompUpdate_CatDate(int input) throws SQLException; 
+	public int workCompUpdateCatDate(int input) throws SQLException; 
 	
 	
 	

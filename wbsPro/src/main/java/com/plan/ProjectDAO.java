@@ -1,9 +1,9 @@
-package com.main;
+package com.plan;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Project_DAO {
+public interface ProjectDAO {
 
 	
 	// ① 작업 등록 메뉴
@@ -25,27 +25,27 @@ public interface Project_DAO {
 	// ④ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public ProjectDTO searchProject_Code(ProjectDTO dto) throws SQLException; 
+	public ProjectDTO searchProjectCode(ProjectDTO dto) throws SQLException; 
 
 	
 	
 	// 작업명 검색
-	public List<ProjectDTO> searchProject_Name(String Project_name) throws SQLException; 
+	public List<ProjectDTO> searchProjectName(String Project_name) throws SQLException; 
 
 	
 	
 	// 담당자명 검색
-	public List<ProjectDTO> searchProject_Manager(String Project_manager) throws SQLException; 
+	public List<ProjectDTO> searchProjectManager(String Project_manager) throws SQLException; 
 
 	
 	
 	// 날짜 검색
-	public List<ProjectDTO> searchProject_Date(String Project_date) throws SQLException; 
+	public List<ProjectDTO> searchProjectDate(String Project_date) throws SQLException; 
 
 	
 	
 	// 전체 작업 목록
-	public List<ProjectDTO> searchProject_All(String Project_date) throws SQLException; 
+	public List<ProjectDTO> searchProjectAll(String Project_date) throws SQLException; 
 
 	
 	
@@ -54,12 +54,12 @@ public interface Project_DAO {
 	// ⑤ 업무 구성비 관리
 	
 	  // 업무 구성비 등록
-	public int workCompInsert_Project(int input) throws SQLException; 
+	public int workCompInsertProject(int input) throws SQLException; 
 
 	
 	
 	  // 업무 구성비 수정
-	public int workCompUpdate_Project(int input) throws SQLException; 
+	public int workCompUpdateProject(int input) throws SQLException; 
 	
 	
 	

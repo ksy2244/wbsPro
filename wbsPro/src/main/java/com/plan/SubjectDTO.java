@@ -1,4 +1,4 @@
-package com.main;
+package com.plan;
 
 public class SubjectDTO {
 	private int prj_code; // 프로젝트 코드

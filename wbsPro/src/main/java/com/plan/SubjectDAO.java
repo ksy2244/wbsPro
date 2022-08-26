@@ -1,9 +1,9 @@
-package com.main;
+package com.plan;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Subject_DAO {
+public interface SubjectDAO {
 	/*
 	 * ProjectDTO : 프로젝트 객체
 	 * SubjectDTO : 대분류 객체
@@ -30,27 +30,27 @@ public interface Subject_DAO {
 	// ④ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public SubjectDTO searchSubject_Code(SubjectDTO dto) throws SQLException;
+	public SubjectDTO searchSubjectCode(SubjectDTO dto);
 
 	
 	
 	// 작업명 검색
-	public List<SubjectDTO> searchSubject_Name(String Subject_name) throws SQLException; 
+	public List<SubjectDTO> searchSubjectName(String Subject_name); 
 
 	
 	
 	// 담당자명 검색
-	public List<SubjectDTO> searchSubject_Manager(String Subject_manager) throws SQLException; 
+	public List<SubjectDTO> searchSubjectManager(String Subject_manager); 
 
 	
 	
 	// 날짜 검색
-	public List<SubjectDTO> searchSubject_Date(String Subject_date) throws SQLException; 
+	public List<SubjectDTO> searchSubjectDate(String Subject_date); 
 
 	
 	
 	// 전체 작업 목록
-	public List<SubjectDTO> searchSubject_All(String Subject_date) throws SQLException; 
+	public List<SubjectDTO> searchSubjectAll(String Subject_date); 
 
 	
 	
@@ -59,12 +59,12 @@ public interface Subject_DAO {
 	// ⑤ 업무 구성비 관리
 	
 	  // 업무 구성비 등록
-	public int workCompInsert_Subject(int input) throws SQLException; 
+	public int workCompInsertSubject(int input) throws SQLException; 
 
 	
 	
 	  // 업무 구성비 수정
-	public int workCompUpdate_Subject(int input) throws SQLException; 
+	public int workCompUpdateSubject(int input) throws SQLException; 
 
 	
 	

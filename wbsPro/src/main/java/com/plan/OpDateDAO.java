@@ -1,9 +1,9 @@
-package com.main;
+package com.plan;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface OpDate_DAO {
+public interface OpDateDAO {
 
 	
 	// ① 작업 등록 메뉴
@@ -22,23 +22,23 @@ public interface OpDate_DAO {
 	// ④ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public OpDateDTO  searchOpDate_Code(OpDateDTO dto)   throws SQLException;
+	public OpDateDTO  searchOpDateCode(OpDateDTO dto);
 	
 	
 	// 작업명 검색
-	public List<OpDateDTO>  searchOpDate_Name(String OpDate_name)   throws SQLException;
+	public List<OpDateDTO>  searchOpDateName(String OpDate_name);
 	
 	
 	// 담당자명 검색
-	public List<OpDateDTO>  searchOpDate_Manager (String OpDate_manager)  throws SQLException; 
+	public List<OpDateDTO>  searchOpDateManager (String OpDate_manager); 
 	
 	
 	// 날짜 검색
-	public List<OpDateDTO>  searchOpDate_Date (String OpDate_date)  throws SQLException; 
+	public List<OpDateDTO>  searchOpDateDate (String OpDate_date); 
 	
 	
 	// 전체 작업 목록
-	public List<OpDateDTO>  searchOpDate_All (String OpDate_date)  throws SQLException; 
+	public List<OpDateDTO>  searchOpDateAll (String OpDate_date); 
 	
 	
 	
@@ -46,11 +46,11 @@ public interface OpDate_DAO {
 	// ⑤ 업무 구성비 관리
 	
 	  // 업무 구성비 등록
-	public int workCompInsert_OpDate (int input) throws SQLException; 
+	public int workCompInsertOpDate (int input) throws SQLException; 
 	
 	
 	  // 업무 구성비 수정
-	public int workCompUpdate_OpDate (int input) throws SQLException; 
+	public int workCompUpdateOpDate (int input) throws SQLException; 
 	
 	
 }

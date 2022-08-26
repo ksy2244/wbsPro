@@ -1,4 +1,4 @@
-package com.main;
+package com.plan;
 
 public class OcDTO {
 	private int oc_code; // 발주업체 코드
