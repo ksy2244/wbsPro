@@ -3,7 +3,7 @@ package com.main;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface PlanDAO {
+public interface OpDate_DAO {
 
 	
 	// ① 작업 등록 메뉴

@@ -3,7 +3,7 @@ package com.main;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface PlanDAO {
+public interface Subject_DAO {
 	/*
 	 * ProjectDTO : 프로젝트 객체
 	 * SubjectDTO : 대분류 객체
