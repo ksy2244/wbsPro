@@ -13,7 +13,7 @@ public interface OpDateDAO {
 	public int updateOpDate (OpDateDTO dto)  throws SQLException; // 소분류 수정
 	
 	// ③ 작업 삭제 메뉴
-	public int deleteOpDate (int opDate_Code)  throws SQLException; // 소분류 삭제
+	public int deleteOpDate (int Op_date)  throws SQLException; // 소분류 삭제
 	
 	
 	
@@ -22,11 +22,11 @@ public interface OpDateDAO {
 	// ④ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public OpDateDTO  searchOpDateCode(OpDateDTO dto);
+	public OpDateDTO  searchOpDateCode(int Op_date);
 	
 	
 	// 작업명 검색
-	public List<OpDateDTO>  searchOpDateName(String OpDate_name);
+	public List<OpDateDTO>  searchOpDateName(String op_name);
 	
 	
 	// 담당자명 검색
