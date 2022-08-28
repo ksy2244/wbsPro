@@ -12,12 +12,6 @@ public interface CatDateDAO {
 	// ② 중분류일정 수정 메뉴
 	public int updateCatDate(CatDateDTO dto) throws SQLException; // 중분류 수정
 	
-	// ② 중분류실적시작일 추가 메뉴
-	public int updateCatDateStart(CatDateDTO dto) throws SQLException; // 중분류실적시작일 추가
-	
-	// ② 중분류실적종료일 추가 메뉴
-	public int updateCatDateEnd(CatDateDTO dto) throws SQLException; // 중분류실적종료일 추가
-	
 	// ④ 중분류일정 삭제 메뉴
 	public int deleteCatDate(String cat_date) throws SQLException; // 중분류 삭제
 
