@@ -8,11 +8,8 @@ public class App {
 		// TODO Auto-generated method stub
 		System.out.println("WBS 일정 관리 프로그램");
 		
-		EmployeeUI eu = new EmployeeUI();
-		eu.menu();
-		
-		//MainUI ui = new MainUI();
-		//ui.menu();
+		MainUI ui = new MainUI();
+		ui.menu();
 	}
 
 }
