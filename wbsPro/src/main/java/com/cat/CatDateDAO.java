@@ -6,13 +6,16 @@ import java.util.List;
 public interface CatDateDAO {
 
 	
-	// ① 작업 등록 메뉴
+	// ① 중분류일정 등록 메뉴
 	public int insertCatDate(CatDateDTO dto) throws SQLException; // 중분류 등록
 	
-	// ② 작업 수정 메뉴
+	// ② 중분류일정 수정 메뉴
 	public int updateCatDate(CatDateDTO dto) throws SQLException; // 중분류 수정
 	
-	// ③ 작업 삭제 메뉴
+	// ② 중분류실적종료일 추가 메뉴
+	public int updateCatDateEnd(CatDateDTO dto) throws SQLException; // 중분류실적종료일 추가
+	
+	// ④ 중분류일정 삭제 메뉴
 	public int deleteCatDate(int catDate_Code) throws SQLException; // 중분류 삭제
 
 	
@@ -20,7 +23,7 @@ public interface CatDateDAO {
 	
 	
 	
-	// ④ 작업 검색 메뉴
+	// ⑤ 작업 검색 메뉴
 	
 	// 코드명 검색
 	public CatDateDTO searchCatDateCode(CatDateDTO dto) ;
