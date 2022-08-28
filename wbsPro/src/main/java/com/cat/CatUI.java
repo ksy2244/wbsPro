@@ -137,7 +137,38 @@ public class CatUI {
 	}
 
 	public void searchCatDateName() {
+		System.out.println("\n 중분류 명 검색 !!! ");
 		
+		String cat_name;
+		
+		try {
+			System.out.println("검색할 중분류 명 ? ");
+			cat_name = br.readLine();
+			List<CatDateDTO>list = cdao.searchCatDateName(cat_name);
+			
+			if(list.size() == 0) {
+				System.out.println("등록된 자료가 없습니다.");
+				return;
+		}
+		
+			for(CatDateDTO dto : list) {
+				System.out.print(dto.getSub_date_code()+"\t");
+				System.out.print(dto.getCat_date()+"\t");
+				System.out.print(dto.getCat_name()+"\t");
+				System.out.print(dto.getUser_name()+"\t");		
+				System.out.print(dto.getCat_plan_start()+"\t");
+				System.out.print(dto.getCat_plan_end()+"\t");
+				System.out.print(dto.getCat_plan_per()+"\t");
+				System.out.print(dto.getCat_start()+"\t");
+				System.out.print(dto.getCat_end()+"\t");
+				System.out.print(dto.getCat_per()+"\t");
+				System.out.println(dto.getCat_comp());
+			}
+		} catch (Exception e) {
+			System.out.println("중분류 명 검색 실패 !!!");
+		}
+		
+		System.out.println();
 	}
 	
 	public void searchCatDateManager() {
@@ -151,7 +182,7 @@ public class CatUI {
 	public void searchCatDateAll() {
 		System.out.println("\n 전체 리스트 !!!");
 		
-		System.out.println("");
+		System.out.println("대분류일정코드\t중분류일정코드\t중분류\t중분류담당자\t중분류계획시작일\t중분류계획종료일\t중분류계획진척율\t중분류실적시작일\t중분류실적종료일\t중분류실적진척율\t업무구성비");
 		System.out.println("------------------------------------------------------------");
 		
 		List<CatDateDTO>list = cdao.searchCatDateAll();
@@ -159,14 +190,14 @@ public class CatUI {
 			System.out.print(dto.getSub_date_code()+"\t");
 			System.out.print(dto.getCat_date()+"\t");
 			System.out.print(dto.getCat_name()+"\t");
+			System.out.print(dto.getUser_name()+"\t");		
 			System.out.print(dto.getCat_plan_start()+"\t");
 			System.out.print(dto.getCat_plan_end()+"\t");
 			System.out.print(dto.getCat_plan_per()+"\t");
 			System.out.print(dto.getCat_start()+"\t");
 			System.out.print(dto.getCat_end()+"\t");
 			System.out.print(dto.getCat_per()+"\t");
-			System.out.print(dto.getCat_comp()+"\t");
-			System.out.println(dto.getUser_name());		
+			System.out.println(dto.getCat_comp());
 		}
 		System.out.println();
 	}

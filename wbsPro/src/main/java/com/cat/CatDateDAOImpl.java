@@ -139,9 +139,59 @@ public class CatDateDAOImpl implements CatDateDAO {
 	}
 
 	@Override
-	public List<CatDateDTO> searchCatDateName(String CatDate_name) {// 작업명 검색
-		// TODO Auto-generated method stub
-		return null;
+	public List<CatDateDTO> searchCatDateName(String cat_name) {// 작업명 검색
+		List<CatDateDTO> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+		
+		try {
+			sql = "SELECT sub_date_code FROM SUBDATE"
+					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
+					+ " FROM catdate"
+					+ " WHERE cat_name = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cat_name);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				CatDateDTO dto = new CatDateDTO();
+				
+				dto.setSub_date_code(rs.getInt("sub_date_code"));
+				dto.setCat_date(rs.getInt("cat_date"));
+				dto.setCat_name(rs.getString("cat_name"));
+				dto.setCat_plan_start(rs.getString("cat_plan_start"));
+				dto.setCat_plan_end(rs.getString("cat_plan_end"));
+				dto.setCat_plan_per(rs.getInt("Cat_plan_per"));
+				dto.setCat_start(rs.getString("Cat_start"));
+				dto.setCat_end(rs.getString("Cat_end"));
+				dto.setCat_per(rs.getInt("cat_per"));
+				dto.setCat_comp(rs.getInt("cat_comp"));
+				dto.setUser_name(rs.getString("user_name"));
+				
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override
@@ -165,7 +215,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 		try {
 			sql = "SELECT sub_date_code FROM SUBDATE"
-					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
+					+ "SELECT cat_date, cat_name, User_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp"
 					+ "FROM catdate";
 
 			pstmt = conn.prepareStatement(sql);
@@ -177,6 +227,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 				dto.setSub_date_code(rs.getInt("sub_date_code"));
 				dto.setCat_date(rs.getInt("cat_date"));
 				dto.setCat_name(rs.getString("cat_name"));
+				dto.setUser_name(rs.getString("user_name"));
 				dto.setCat_plan_start(rs.getString("cat_plan_start"));
 				dto.setCat_plan_end(rs.getString("cat_plan_end"));
 				dto.setCat_plan_per(rs.getInt("Cat_plan_per"));
@@ -184,7 +235,6 @@ public class CatDateDAOImpl implements CatDateDAO {
 				dto.setCat_end(rs.getString("Cat_end"));
 				dto.setCat_per(rs.getInt("cat_per"));
 				dto.setCat_comp(rs.getInt("cat_comp"));
-				dto.setUser_name(rs.getString("user_name"));
 
 				list.add(dto);
 			}
