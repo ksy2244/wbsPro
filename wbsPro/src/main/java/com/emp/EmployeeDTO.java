@@ -1,6 +1,10 @@
 package com.emp;
 
 public class EmployeeDTO{
+	
+	private final String adminId  = "admin";    // 관리자 아이디
+	private final String adminPwd = "admin123"; // 관리자 비밀번호
+	
 	private int user_code;     // 사원번호
 	private String name;       // 이름 
 	private String rrn;        // 주민번호

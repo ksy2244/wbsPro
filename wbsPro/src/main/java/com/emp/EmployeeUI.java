@@ -2,6 +2,7 @@ package com.emp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import com.util.DBConn;
 
@@ -49,7 +50,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 		}
 	}
 
-	private void workManage() {
+	private void workManage() { // 실적관리
 		// TODO Auto-generated method stub
 
 	}
@@ -93,6 +94,8 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 
 	private void insertCompany() {
 		System.out.println("[업체 입력]");
+		
+		
 		
 	}
 	
@@ -162,26 +165,26 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 		while (true) {
 
 			try {
-				System.out.print("1. 사원 관리 2. 사원 정보 수정 3.사원 삭제 4.사원 조회 5.뒤로가기 6. 로그아웃 7. 종료 ");
+				System.out.print("1. 사원 입력 2. 사원 정보 수정 3.사원 삭제 4.사원 조회 5.뒤로가기 6. 로그아웃 7. 종료 ");
 
 				ch = Integer.parseInt(br.readLine());
 				if (ch == 7) {
 					DBConn.close();
-					return;
+					System.exit(0);
 				}
 
 				switch (ch) {
 				case 1:
-					insertEmployee();
+					insertEmployee();     // 사원 데이터 입력
 					break;
 				case 2:
-					updateEmployee();
+					updateEmployee();     // 사원 데이터 수정
 					break;
 				case 3:
-					deleteEmployeeCode();
+					deleteEmployeeCode(); // 사원 데이터 삭제
 					break;
 				case 4:
-					findByEmployee();
+					findByEmployee();     // 사원 조회 서브 메뉴
 					break;
 				case 5:
 					menu();
@@ -196,6 +199,48 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 
 		}
 	}
+	
+	
+	
+	
+	
+	private void findByEmployee() { // 사원 조회 서브 메뉴
+		
+		while(true) {
+			
+			System.out.print("1. 사원 번호 조회 2. 사원 이름 조회 3. 전체 사원 조회 4. 뒤로가기 5. 종료");
+			
+			int ch;
+			
+			try {
+				
+				ch = Integer.parseInt(br.readLine());
+				
+				if(ch == 5) {
+					DBConn.close();
+					return;
+				}
+				
+				switch(ch) {
+				case 1: findByEmployeeCode(); break;  // 사원 코드 조회
+				case 2: searchName(); 		  break;  // 사원 이름 조회
+				case 3: findByEmployeeAll();  break;  // 전체 사원 조회
+				case 4: return; // 뒤로 가기
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	
+	
 
 	private void insertEmployee() {
 		System.out.println("[사원 등록]");
@@ -207,7 +252,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 			System.out.print("사원 번호 ? ");
 			dto.setUser_code(Integer.parseInt(br.readLine()));
 			
-			System.out.print("사원 비밀번호 ? (입력 안할 시 초기번호 1234");
+			System.out.print("사원 비밀번호 ? (입력 안할 시 초기번호 1234)");
 			dto.setPwd(br.readLine());
 			
 			System.out.print("사원 이름 ? ");
@@ -300,7 +345,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 			int result = dao.deleteEmployee(br.readLine());
 		
 			if(result != 0) {
-				System.out.println("[데이터 삭제 실패]");
+				System.out.println("[데이터 삭제 성공]");
 			}
 			
 		} catch (Exception e) {
@@ -311,9 +356,133 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 		
 
 	}
+	
 
-	private void findByEmployee() {
-		System.out.println("[사원 검색]");
+
+	private void findByEmployeeCode() { // 사원 코드 입력 받아 조회
+		System.out.println("[사원 코드 조회]");
+		
+		try {
+			
+			System.out.print("조회하실 사원의 코드를 입력해 주세요. => ");
+			EmployeeDTO dto = dao.readEmployee(br.readLine());
+			
+			
+			
+			if(dto != null) {
+				
+				System.out.println("사원코드\t사원이름\t주민등록번호\t전화번호\t\t자택주소"
+						+ "\t\t직무\t입사일\t\t퇴사일");
+				
+				System.out.print(dto.getUser_code() + "\t");
+				System.out.print(dto.getName() + "\t");
+				System.out.print(dto.getRrn() + "\t");
+				System.out.print(dto.getTel() + "\t");
+				System.out.print(dto.getAddress() + "\t");
+				System.out.print(dto.getDuty() + "\t");
+				System.out.print(dto.getHireDate() + "\t");
+				System.out.print(dto.getResigndate());
+			} else {
+				System.out.println("입력된 사원코드가 존재하지 않거나 잘못 입력하셨습니다.");
+			}
+			
+			System.out.println();
+		
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 조회 실패]");
+			
+		}
+
+	}
+	
+	
+	
+	private void searchName() {
+		
+			System.out.println("[사원 이름 조회]");
+		
+		try {
+			
+			System.out.print("조회하실 사원의 이름을 입력해 주세요. => ");
+			List<EmployeeDTO> list = dao.searchName(br.readLine());
+			
+			if(list.size() == 0) {
+				
+				System.out.println("입력한 사원의 이름을 가진 데이터가 존재하지 않습니다.");
+				
+			} else {
+				
+				System.out.println("사원코드\t사원이름\t주민등록번호\t전화번호\t\t자택주소"
+									+ "\t\t직무\t입사일\t\t퇴사일");
+
+				for(EmployeeDTO dto : list) {
+					
+					System.out.print(dto.getUser_code() + "\t");
+					System.out.print(dto.getName() + "\t");
+					System.out.print(dto.getRrn() + "\t");
+					System.out.print(dto.getTel() + "\t");
+					System.out.print(dto.getAddress() + "\t");
+					System.out.print(dto.getDuty() + "\t");
+					System.out.print(dto.getHireDate() + "\t");
+					System.out.print(dto.getResigndate());
+					System.out.println();
+					
+					
+				} 
+				System.out.println();
+				
+			}
+			
+			
+					
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 조회 실패]");
+			
+		}
+
+		
+	}
+	
+	
+	
+	private void findByEmployeeAll() { // 전체 사원 조회
+		System.out.println("[전체 사원 조회]");
+		
+		try {
+			
+			
+			List<EmployeeDTO> list = dao.listEmployee();
+			
+			if(list == null) {
+				System.out.println("데이터가 존재하지 않습니다.");
+			}
+			
+			
+			System.out.println("사원코드\t사원이름\t주민등록번호\t전화번호\t\t자택주소"
+								+ "\t\t직무\t입사일\t\t퇴사일");
+			
+			for(EmployeeDTO dto : list) {
+				
+				System.out.print(dto.getUser_code() + "\t");
+				System.out.print(dto.getName() + "\t");
+				System.out.print(dto.getRrn() + "\t");
+				System.out.print(dto.getTel() + "\t");
+				System.out.print(dto.getAddress() + "\t");
+				System.out.print(dto.getDuty() + "\t");
+				System.out.print(dto.getHireDate() + "\t");
+				System.out.print(dto.getResigndate());
+				System.out.println();
+				
+				
+			} 
+			System.out.println();
+		
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 조회 실패]");
+		}
 
 	}
 

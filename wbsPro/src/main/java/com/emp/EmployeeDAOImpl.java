@@ -22,7 +22,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			
-			sql = " INSERT INTO EMPLOYEE(USER_CODE, USER_NAME, USER_TEL, "
+			sql = " INSERT INTO EMPLOYEE(USER_CODE, USER_NAME, USER_RRN, USER_TEL, "
 				+ " USER_ADDRESS, DATE_ENTRY, DUTY, RESIGN_DATE, PWD) "
 				+ " VALUES(?, ?, ?, ?, ?, ?, ?, NVL(?,null), NVL(?,1234))";
 			
@@ -30,12 +30,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			
 			pstmt.setInt(1, dto.getUser_code());
 			pstmt.setString(2, dto.getName());
-			pstmt.setString(3, dto.getTel());
-			pstmt.setString(4, dto.getAddress());
-			pstmt.setString(5, dto.getHireDate());
-			pstmt.setString(6, dto.getDuty());
-			pstmt.setString(7, dto.getResigndate());
-			pstmt.setString(8, dto.getPwd());
+			pstmt.setString(3, dto.getRrn());
+			pstmt.setString(4, dto.getTel());
+			pstmt.setString(5, dto.getAddress());
+			pstmt.setString(6, dto.getHireDate());
+			pstmt.setString(7, dto.getDuty());
+			pstmt.setString(8, dto.getResigndate());
+			pstmt.setString(9, dto.getPwd());
 			
 			result = pstmt.executeUpdate(); // executeUpdate() : 실행할 때마다 1씩 증가
 			
@@ -80,20 +81,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			
-			sql = "UPDATE EMPLOYEE SET USER_NAME = ?, USER_RRN = ?, USER_TEL = ?, USER_ADDRESS = ?, "
+			sql = "UPDATE EMPLOYEE SET USER_NAME = ?, USER_TEL = ?, USER_ADDRESS = ?, "
 					   + " DATE_ENTRY = ?, DUTY = ?, RESIGN_DATE = ? WHERE USER_CODE = ? AND PWD = ? ";
 				
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, dto.getName());
-				pstmt.setString(2, dto.getRrn());
-				pstmt.setString(3, dto.getTel());
-				pstmt.setString(4, dto.getAddress());
-				pstmt.setString(5, dto.getHireDate());
-				pstmt.setString(6, dto.getDuty());
-				pstmt.setString(7, dto.getResigndate());
-				pstmt.setInt(8, dto.getUser_code());
-				pstmt.setString(9, dto.getPwd());
+				pstmt.setString(2, dto.getTel());
+				pstmt.setString(3, dto.getAddress());
+				pstmt.setString(4, dto.getHireDate());
+				pstmt.setString(5, dto.getDuty());
+				pstmt.setString(6, dto.getResigndate());
+				pstmt.setInt(7, dto.getUser_code());
+				pstmt.setString(8, dto.getPwd());
 				
 				result = pstmt.executeUpdate();
 				
@@ -166,7 +166,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			
-			sql = "SELECT * FROM employee WHERE USER_CODE = ? ";
+			sql = "SELECT user_code, user_name, user_rrn, user_tel, user_address, TO_CHAR(date_entry, "
+				+ "'YYYY-MM-DD') date_entry , duty, resign_date FROM employee WHERE USER_CODE = ? ";
+				
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -224,7 +226,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			
-			sql = "SELECT * FROM Employee";
+			sql = "SELECT user_code, user_name, user_rrn, user_tel, user_address, TO_CHAR(date_entry, "
+					+ "'YYYY-MM-DD') date_entry , duty, resign_date FROM employee ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -283,7 +286,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			
-			sql = "SELECT * FROM Employee WHERE USER_NAME = ?";
+			
+			sql = "SELECT user_code, user_name, user_rrn, user_tel, user_address, TO_CHAR(date_entry, "
+					+ "'YYYY-MM-DD') date_entry , duty, resign_date FROM employee WHERE USER_NAME = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
