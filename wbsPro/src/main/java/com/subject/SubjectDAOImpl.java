@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.util.DBConn;
 
-public class SubjectDAOImpl implements SubjectDAO{
+public class SubjectDAOImpl implements SubjectDAO {
 	private Connection conn = DBConn.getConnection();
 
 	@Override
@@ -16,19 +16,18 @@ public class SubjectDAOImpl implements SubjectDAO{
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			
+
 			conn.setAutoCommit(false); // 자동 커밋 해제
-			// 프로젝트 코드 찾는 sql 
-			sql = "SELECT prj_code FROM project WHERE prj_code = ?"; 
+			// 프로젝트 코드 찾는 sql
+			sql = "SELECT prj_code FROM project WHERE prj_code = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getPrj_code()); 
+			pstmt.setInt(1, dto.getPrj_code());
 			pstmt.executeQuery();
 			pstmt.close();
 			pstmt = null;
 
 			// 대분류 추가하는 sql
-			sql = "INSERT INTO subject(prj_code, sub_code, sub_name)"
-					+ "VALUES(?,?,?)"; 
+			sql = "INSERT INTO subdate(prj_code, sub_code, sub_name)" + "VALUES(?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 대분류 코드
 			pstmt.setInt(2, dto.getSub_code()); // 대분류 코드
@@ -36,10 +35,9 @@ public class SubjectDAOImpl implements SubjectDAO{
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
+
 			conn.commit(); // 커밋
 			System.out.println("대분류 추가");
-
 
 		} catch (SQLException e) {
 			// 롤백
@@ -73,12 +71,34 @@ public class SubjectDAOImpl implements SubjectDAO{
 		return 0;
 
 	}
-	
+
 	@Override
 	public int updateSubject(SubjectDTO dto) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 대분류일정 수정 sql
+			sql = "UPDATE subdate SET sub_name = ? WHERE sub_date_code = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getSub_name()); // 대분류명
+			pstmt.setInt(2, dto.getSub_code()); // 대분류 코드
+			pstmt.executeUpdate();
+			
+			System.out.println("대분류일정 추가");
+		} catch (SQLIntegrityConstraintViolationException e) {
+			if (e.getErrorCode() == 1) {
+				System.out.println("대분류일정 코드 중복입니다.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
+
+
 
 	@Override
 	public int deleteSubject(int subject_Code) throws SQLException {
