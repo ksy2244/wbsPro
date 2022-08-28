@@ -26,7 +26,7 @@ public interface CatDateDAO {
 	// ⑤ 작업 검색 메뉴
 	
 	// 코드명 검색
-	public CatDateDTO searchCatDateCode(CatDateDTO dto) ;
+	public CatDateDTO searchCatDateCode(String cat_date) ;
 	
 	
 	// 작업명 검색
@@ -43,8 +43,8 @@ public interface CatDateDAO {
 
 	
 	
-	// 전체 작업 목록
-	public List<CatDateDTO> searchCatDateAll(String CatDate_date);
+	// 중분류작업 목록
+	public List<CatDateDTO> searchCatDateAll();
 
 	
 	
