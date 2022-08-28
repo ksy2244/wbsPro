@@ -31,7 +31,7 @@ public class CatDateDTO {
 		return cat_date;
 	}
 
-	public void setCat_date_code(int cat_date) {
+	public void setCat_date(int cat_date) {
 		this.cat_date = cat_date;
 	}
 
