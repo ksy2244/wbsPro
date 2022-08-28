@@ -214,26 +214,27 @@ public class CatDateDAOImpl implements CatDateDAO {
 		}
 		return result;
 	}
+	
 	@Override
-	public CatDateDTO searchCatDateCode(CatDateDTO dto) {
+	public CatDateDTO searchCatDateCode(CatDateDTO dto) { // 코드명 검색
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CatDateDTO> searchCatDateName(String CatDate_name) {
+	public List<CatDateDTO> searchCatDateName(String CatDate_name) {// 작업명 검색
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CatDateDTO> searchCatDateManager(String CatDate_manager) {
+	public List<CatDateDTO> searchCatDateManager(String CatDate_manager) {// 담당자명 검색
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CatDateDTO> searchCatDateDate(String CatDate_date) {
+	public List<CatDateDTO> searchCatDateDate(String CatDate_date) {// 날짜 검색
 		// TODO Auto-generated method stub
 		return null;
 	}
