@@ -3,7 +3,7 @@ package com.cat;
 public class CatDateDTO {
 	
 	private int sub_date_code; //대분류 일정코드 
-	private int cat_date_code;//중분류일정코드
+	private int cat_date;//중분류일정코드
 	private String cat_name; //중분류명
 	
 	private String cat_plan_start; //중분류계획시작일
@@ -27,12 +27,12 @@ public class CatDateDTO {
 		this.sub_date_code = sub_date_code;
 	}
 
-	public int getCat_date_code() {
-		return cat_date_code;
+	public int getCat_date() {
+		return cat_date;
 	}
 
-	public void setCat_date_code(int cat_date_code) {
-		this.cat_date_code = cat_date_code;
+	public void setCat_date_code(int cat_date) {
+		this.cat_date = cat_date;
 	}
 
 	public String getCat_name() {
