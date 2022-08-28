@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
 import com.subject.SubjectDAO;
 import com.subject.SubjectDAOImpl;
 import com.util.DBConn;
@@ -15,7 +14,7 @@ public class CatUI {
 	CatDateDAO cdao = new CatDateDAOImpl();
 	SubjectDAO pdao = new SubjectDAOImpl();
 
-	public void categorymenu() throws NumberFormatException, IOException {
+	public void categorymenu() throws NumberFormatException, IOException{
 		// TODO Auto-generated method stub
 		ca = Integer.parseInt(br.readLine());
 
@@ -158,5 +157,5 @@ public class CatUI {
 		}
 		
 	}
-
+	
 }

@@ -251,9 +251,10 @@ public class CatDateDAOImpl implements CatDateDAO {
 		String sql;
 		
 		try {
-			sql = "SELECT sub_date_code From SUBDATE"
+			sql = "SELECT sub_date_code FROM SUBDATE"
 					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
-					+ "FROM cat_date";
+					+ "FROM catdate";
+
 	
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
