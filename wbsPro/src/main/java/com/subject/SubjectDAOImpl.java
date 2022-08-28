@@ -17,7 +17,7 @@ public class SubjectDAOImpl implements SubjectDAO{
 		String sql;
 		try {
 			
-			conn.setAutoCommit(false); // 자동 밋 해제
+			conn.setAutoCommit(false); // 자동 커밋 해제
 			// 프로젝트 코드 찾는 sql 
 			sql = "SELECT prj_code FROM project WHERE prj_code = ?"; 
 			pstmt = conn.prepareStatement(sql);
@@ -27,7 +27,7 @@ public class SubjectDAOImpl implements SubjectDAO{
 			pstmt = null;
 
 			// 대분류 추가하는 sql
-			sql = "INSERT INTO subject(prj_code, sub_code, sub_name)"
+			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name)"
 					+ "VALUES(?,?,?)"; 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 대분류 코드

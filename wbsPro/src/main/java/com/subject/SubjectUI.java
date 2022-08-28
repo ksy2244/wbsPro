@@ -6,7 +6,8 @@ import com.project.ProjectDAO;
 import com.project.ProjectDAOImpl;
 import com.project.ProjectDTO;
 
-public class SubjectUI {
+public class SubjectUI { 
+	// 대분류 UI
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	SubjectDAO dao = new SubjectDAOImpl();
 	ProjectDAO pdao = new ProjectDAOImpl();

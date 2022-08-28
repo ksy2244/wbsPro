@@ -182,11 +182,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return null;
 	}
 
-	@Override
-	public List<ProjectDTO> searchProjectAll(String Project_date) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public int workCompInsertProject(int input) throws SQLException {
@@ -198,6 +194,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public int workCompUpdateProject(int input) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<ProjectDTO> searchProjectAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
