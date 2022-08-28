@@ -105,6 +105,59 @@ public class CatDateDAOImpl implements CatDateDAO {
 		return result;
 	}
 
+	public int updateCatDateStart(CatDateDTO dto) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+
+			conn.setAutoCommit(false);
+			// 대분류일정코드 찾는 sql
+			sql = "SELECT cat_date FROM catdate WHERE cat_date = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getCat_date());
+			pstmt.executeQuery();
+			pstmt.close();
+			pstmt = null;
+
+			// 중분류실적시작일 추가 sql
+			sql = " UPDATE INTO catdate(cat_start) VALUES(?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getCat_start()); // 중분류실적시작일
+			pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			conn.commit(); // 커밋
+			System.out.println("중분류실적시작일 추가 완료");
+		} catch (SQLException e) {
+			// 롤백
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+			}
+			System.out.println("중분류실적시작일 추가 실패");
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
+			try {
+				// 다시 커밋 되도록 설정
+				conn.setAutoCommit(true);
+			} catch (Exception e) {
+			}
+			DBConn.close();
+		}
+		return result;
+	}
+
+	
 	public int updateCatDateEnd(CatDateDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -217,14 +270,8 @@ public class CatDateDAOImpl implements CatDateDAO {
 		try {
 			sql = "SELECT sub_date_code FROM SUBDATE"
 					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
-<<<<<<< HEAD
 					+ "FROM catdate";
 
-	
-=======
-					+ "FROM cat_date";
-
->>>>>>> branch 'master' of https://github.com/ksy2244/wbsPro.git
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			// score 테이블의 모든 레코드를 읽어 List 객체에 저장
