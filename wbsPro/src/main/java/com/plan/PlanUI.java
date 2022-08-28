@@ -88,7 +88,7 @@ public class PlanUI {
 					subjectUI.addSubject();
 					break;
 				case 3:
-					catUI.addCategory();
+					catUI.insertCatDate();
 					break;
 				case 4:
 					opUI.addOpDate();
@@ -126,7 +126,7 @@ public class PlanUI {
 					subjectUI.addSubject();
 					break;
 				case 3:
-					catUI.updateCategory();
+					catUI.updateCatDate();
 					break;
 				case 4:
 					opUI.updateOpDate();
@@ -168,7 +168,7 @@ public class PlanUI {
 					subjectUI.deleteSubject();
 					break;
 				case 3:
-					catUI.deleteCategory();
+					catUI.deleteCatDate();
 					
 					break;
 				case 4:

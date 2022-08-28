@@ -189,11 +189,31 @@ public class CatDateDAOImpl implements CatDateDAO {
 	}
 	
 	@Override
-	public int deleteCatDate(int catDate_Code) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int deleteCatDate(String catDate_Code) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			sql = "DELETE cat_date FROM catdate WHERE cat_date = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			result = pstmt.executeUpdate();
+		
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+			}
+		}
+		}
+		return result;
+	}
 	@Override
 	public CatDateDTO searchCatDateCode(CatDateDTO dto) {
 		// TODO Auto-generated method stub

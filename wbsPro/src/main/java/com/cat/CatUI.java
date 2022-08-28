@@ -42,7 +42,7 @@ public class CatUI {
 					updateCatDateEnd();
 					break;
 				case 4:
-					deleteCategory();
+					deleteCatDate();
 					break;
 
 				}
@@ -137,8 +137,25 @@ public class CatUI {
 		
 	}
 
-	public void deleteCategory() {
-		// TODO Auto-generated method stub
+	public void deleteCatDate() {
+		System.out.println("\n 데이터 삭제!!!");
+		
+		String cat_date;
+		
+		try {
+			System.out.println("삭제할 중분류일정코드 ?");
+			cat_date = br.readLine();
+			
+			int result = cdao.deleteCatDate(cat_date);
+			if(result == 0) {
+				System.out.println("등록된 자료가 아닙니다.");
+			}else {
+				System.out.println("데이터를 삭제했습니다.");
+			}
+			
+		} catch (Exception e) {
+			System.out.println();
+		}
 		
 	}
 
