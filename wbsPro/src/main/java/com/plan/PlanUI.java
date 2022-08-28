@@ -123,7 +123,7 @@ public class PlanUI {
 					projectUI.updateProject();
 					break;
 				case 2:
-					subjectUI.addSubject();
+					subjectUI.updateSubject();
 					break;
 				case 3:
 					catUI.updateCatDate();
