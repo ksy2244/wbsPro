@@ -8,15 +8,17 @@ import com.util.DBConn;
 public class EmployeeUI { // EmployeeUI로 이름 수정
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	EmployeeDAO dao = new EmployeeDAOImpl();
+	
 	int ch ;
 	
 	public void menu() {
-		// TODO Auto-generated method stub
+		
 		
 		while (true) {
 
 			try {
-				System.out.print("1. 인사관리 2. 업체 관리 3. 일정 관리 4.로그아웃 5. 종료 ");
+				System.out.print("1. 인사 관리 2. 업체 관리 3. 일정 관리 4. 로그아웃 5. 종료 ");
 
 				 ch = Integer.parseInt(br.readLine());
 
@@ -41,6 +43,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 				}
 
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		}
@@ -51,11 +54,11 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 
 	}
 
-	private void companyManage() {
+	private void companyManage() { // 업체 관리 메인 메뉴
 		while (true) {
 
 			try {
-				System.out.print("1. 업체 관리 2. 업체 수정 3. 업체 삭제 4. 업체 조회");
+				System.out.print("1. 업체 입력 2. 업체 수정 3. 업체 삭제 4. 업체 조회");
 
 				ch = Integer.parseInt(br.readLine());
 				if (ch == 5) {
@@ -89,22 +92,22 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 
 
 	private void insertCompany() {
-		// TODO Auto-generated method stub
+		System.out.println("[업체 입력]");
 		
 	}
 	
 	
 	private void updateCompany() {
-		// TODO Auto-generated method stub
+		System.out.println("[업체 수정]");
 		
 	}
 	
 	private void deleteCompany() {
-		// TODO Auto-generated method stub
+		System.out.println("[업체 삭제]");
 		
 	}
 
-	private void searchCompany() {
+	private void searchCompany() { // 업체 조회 서브 메뉴
 		while (true) {
 
 			try {
@@ -155,7 +158,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 	}
 	
 
-	public void employeeManage() {
+	public void employeeManage() { // 인사 관리 메인 메뉴
 		while (true) {
 
 			try {
@@ -175,7 +178,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 					updateEmployee();
 					break;
 				case 3:
-					deleteEmployee();
+					deleteEmployeeCode();
 					break;
 				case 4:
 					findByEmployee();
@@ -195,22 +198,122 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 	}
 
 	private void insertEmployee() {
-		System.out.println("사원 등록");
-
+		System.out.println("[사원 등록]");
+		
+		
+		try {
+			EmployeeDTO dto = new EmployeeDTO();
+			
+			System.out.print("사원 번호 ? ");
+			dto.setUser_code(Integer.parseInt(br.readLine()));
+			
+			System.out.print("사원 비밀번호 ? (입력 안할 시 초기번호 1234");
+			dto.setPwd(br.readLine());
+			
+			System.out.print("사원 이름 ? ");
+			dto.setName(br.readLine());
+			
+			System.out.print("사원 주민번호 ? ");
+			dto.setRrn(br.readLine());
+			
+			System.out.print("사원 전화번호 ? ");
+			dto.setTel(br.readLine());
+			
+			System.out.print("사원 주소 ? ");
+			dto.setAddress(br.readLine());
+			
+			System.out.print("사원 입사일 ? ");
+			dto.setHireDate(br.readLine());
+			
+			System.out.print("사원 직무 ? ");
+			dto.setDuty(br.readLine());
+			
+			System.out.print("사원 퇴사일 ? (재직중일 경우 생략)");
+			dto.setResigndate(br.readLine());
+			
+			
+			
+			int result = dao.insertEmployee(dto);
+			
+			if(result != 0) {
+				System.out.println("[데이터 입력 성공]");
+			} 
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 입력 실패]");
+		}
+		
 	}
 
 	private void updateEmployee() {
-		System.out.println("사원 수정");
+		System.out.println("[사원 수정]");
 
+		
+		try {
+			EmployeeDTO dto = new EmployeeDTO();
+			
+			System.out.print("사원 번호 ? ");
+			dto.setUser_code(Integer.parseInt(br.readLine()));
+			
+			System.out.print("사원 비밀번호 ? (입력 안할 시 초기번호 1234");
+			dto.setPwd(br.readLine());
+			
+			System.out.print("사원 이름 ? ");
+			dto.setName(br.readLine());
+			
+			System.out.print("사원 전화번호 ? ");
+			dto.setTel(br.readLine());
+			
+			System.out.print("사원 주소 ? ");
+			dto.setAddress(br.readLine());
+			
+			System.out.print("사원 입사일 ? ");
+			dto.setHireDate(br.readLine());
+			
+			System.out.print("사원 직무 ? ");
+			dto.setDuty(br.readLine());
+			
+			System.out.print("사원 퇴사일 ? (재직중일 경우 생략)");
+			dto.setResigndate(br.readLine());
+			
+			
+			
+			int result = dao.updateEmployee(dto);
+			
+			if(result != 0) {
+				System.out.println("데이터 수정 성공 !!");
+			} 
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 수정 실패]");
+			System.out.println("사원 코드 또는 비밀번호가 잘못 입력 되었습니다.");
+		}
+		
 	}
 
-	private void deleteEmployee() {
-		System.out.println("사원 삭제");
+	private void deleteEmployeeCode() {    // 사원 번호 입력 받아 삭제
+		System.out.println("[사원 삭제]");
+		
+		try {
+			
+			System.out.print("사원 번호를 입력해 주세요.");
+			int result = dao.deleteEmployee(br.readLine());
+		
+			if(result != 0) {
+				System.out.println("[데이터 삭제 실패]");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("[데이터 삭제 실패]");
+			System.out.println("입력된 사원코드가 존재하지 않거나 잘못 입력하셨습니다.");
+		}
+		
+		
 
 	}
 
 	private void findByEmployee() {
-		System.out.println("사원 검색");
+		System.out.println("[사원 검색]");
 
 	}
 

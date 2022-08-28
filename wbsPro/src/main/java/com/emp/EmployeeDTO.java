@@ -1,15 +1,23 @@
 package com.emp;
 
 public class EmployeeDTO{
-	private String user_code; //사원번호
-	private String name; //이름 
-	private String rrn; //주민번호
-	private String tel; //전화번호
-	private String hireDate; //입사일
-	private String resigndate; //퇴사일
-	private String address; //주소
-	private String duty; //직무 
+	private int user_code;     // 사원번호
+	private String name;       // 이름 
+	private String rrn;        // 주민번호
+	private String tel;        // 전화번호
+	private String hireDate;   // 입사일
+	private String resigndate; // 퇴사일
+	private String address;    // 주소
+	private String duty;       // 직무 
+	private String pwd;        // 패스워드
 	
+	
+	public int getUser_code() {
+		return user_code;
+	}
+	public void setUser_code(int user_code) {
+		this.user_code = user_code;
+	}
 	public String getName() {
 		return name;
 	}
@@ -34,6 +42,12 @@ public class EmployeeDTO{
 	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
+	public String getResigndate() {
+		return resigndate;
+	}
+	public void setResigndate(String resigndate) {
+		this.resigndate = resigndate;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -46,4 +60,12 @@ public class EmployeeDTO{
 	public void setDuty(String duty) {
 		this.duty = duty;
 	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	
+	
 }
