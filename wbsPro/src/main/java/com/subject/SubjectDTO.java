@@ -1,4 +1,4 @@
-package com.plan;
+package com.subject;
 
 public class SubjectDTO {
 	private int prj_code; // 프로젝트 코드
@@ -16,6 +16,7 @@ public class SubjectDTO {
 	private String sub_end;   // 대분류 실적 종류일
 	private String sub_per;   // 대분류 실적 진척율
 	private int sub_comp; // 업무 구성비
+	
 	public int getPrj_code() {
 		return prj_code;
 	}
@@ -87,6 +88,10 @@ public class SubjectDTO {
 	}
 	public void setSub_comp(int sub_comp) {
 		this.sub_comp = sub_comp;
+	}
+	public int setPrj_code() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

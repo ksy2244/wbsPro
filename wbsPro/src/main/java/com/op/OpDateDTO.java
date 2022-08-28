@@ -1,4 +1,4 @@
-package com.main;
+package com.op;
 
 public class OpDateDTO {
 	private String cat_date; // 중분류 코드
@@ -104,8 +104,5 @@ public class OpDateDTO {
 	public void setOp_comp(String op_comp) {
 		this.op_comp = op_comp;
 	}
-	
-
-	
 
 }

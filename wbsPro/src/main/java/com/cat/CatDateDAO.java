@@ -1,4 +1,4 @@
-package com.plan;
+package com.cat;
 
 import java.sql.SQLException;
 import java.util.List;

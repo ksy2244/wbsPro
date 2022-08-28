@@ -1,4 +1,4 @@
-package com.plan;
+package com.cat;
 
 public class CatDateDTO {
 	
