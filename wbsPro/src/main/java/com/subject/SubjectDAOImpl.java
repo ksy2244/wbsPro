@@ -17,7 +17,7 @@ public class SubjectDAOImpl implements SubjectDAO{
 		String sql;
 		try {
 			
-			conn.setAutoCommit(false); // 자동 밋 해제
+			conn.setAutoCommit(false); // 자동 커밋 해제
 			// 프로젝트 코드 찾는 sql 
 			sql = "SELECT prj_code FROM project WHERE prj_code = ?"; 
 			pstmt = conn.prepareStatement(sql);
