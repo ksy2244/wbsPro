@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.subject.SubjectDAO;
 import com.subject.SubjectDAOImpl;
-import com.util.DBConn;
+
 
 public class CatUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
