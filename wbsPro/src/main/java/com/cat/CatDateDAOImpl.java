@@ -94,7 +94,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 			pstmt.executeUpdate();
 
-			System.out.println("중분류일정 추가");
+			System.out.println("중분류 일정 수정 완료");
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getErrorCode() == 1) {
 				System.out.println("중분류일정 코드 중복입니다.");

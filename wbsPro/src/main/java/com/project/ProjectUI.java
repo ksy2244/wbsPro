@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import com.plan.PlanDTO;
+
 public class ProjectUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private ProjectDAO dao = new ProjectDAOImpl();
@@ -109,6 +111,7 @@ public class ProjectUI {
 				System.out.println("등록된 자료가 없습니다");
 				return;
 			}
+			
 
 			for (ProjectDTO dto : list) {
 

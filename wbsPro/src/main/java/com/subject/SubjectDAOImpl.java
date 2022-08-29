@@ -27,10 +27,10 @@ public class SubjectDAOImpl implements SubjectDAO {
 			pstmt = null;
 
 			// 대분류 추가하는 sql
-			sql = "INSERT INTO subdate(prj_code, sub_code, sub_name)" + "VALUES(?,?,?)";
+			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name)" + " VALUES(?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 대분류 코드
-			pstmt.setInt(2, dto.getSub_code()); // 대분류 코드
+			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			pstmt.setString(3, dto.getSub_name()); // 대분류명
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -84,7 +84,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
-			pstmt.setInt(2, dto.getSub_code()); // 대분류 코드
+			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			pstmt.executeUpdate();
 			
 			System.out.println("대분류일정 추가");

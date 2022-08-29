@@ -17,7 +17,6 @@ public class MainUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private Login login = new Login();
 	private EmployeeDAO dao = new EmployeeDAOImpl();
-	// private MemberDAO dao = new MemberDAOImpl();
 
 	public void initial() {
 		while (true) {
@@ -37,7 +36,7 @@ public class MainUI {
 				int ch = Integer.parseInt(br.readLine());
 
 				if (ch == 3) {
-					DBConn.close();
+					System.exit(0);
 					return;
 				}
 

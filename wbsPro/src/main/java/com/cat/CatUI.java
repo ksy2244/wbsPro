@@ -27,17 +27,16 @@ public class CatUI {
 			int n = Integer.parseInt(br.readLine());
 			dto.setCat_date(n);
 			
-			System.out.print("중분류일정 명"); // 중분류 명
+			System.out.print("중분류 일정명"); // 중분류일정명
 			dto.setCat_name(br.readLine());
 			
-			System.out.print("중분류계획시작일"); // 중분류 명
+			System.out.print("중분류 계획 시작일 "); // 중분류 계획 시작일 
 			dto.setCat_name(br.readLine());
 			
-			System.out.print("중분류계획종료일"); // 중분류 명
+			System.out.print("중분류 계획 종료일 "); // 중분류 계획 종료일
 			dto.setCat_plan_start(br.readLine());
 			
-			System.out.print("중분류실적시작일"); // 중분류 명
-			dto.setCat_start(br.readLine());
+			cdao.insertCatDate(dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,21 +49,21 @@ public class CatUI {
 		try {
 			CatDateDTO dto = new CatDateDTO();
 			System.out.println("[중분류 일정 수정]"); // 대분류 일정코드
-			System.out.print("수정할 중분류 일정 코드");
-			dto.setCat_date(Integer.parseInt(br.readLine()));
 			
-			System.out.print("중분류일정 코드?"); // 중분류 일정코드
+			System.out.print("수정할 중분류일정 코드?"); // 중분류 일정코드
 			int n = Integer.parseInt(br.readLine());
 			dto.setCat_date(n);
 			
-			System.out.print("중분류일정 명"); // 중분류 명
+			System.out.print("중분류일정명"); // 중분류 일정명 숮어 
 			dto.setCat_name(br.readLine());
 			
-			System.out.print("중분류계획시작일"); // 중분류 명
+			System.out.print("중분류 계획 시작일"); // 중분류 계획 시작일 수정
 			dto.setCat_plan_start(br.readLine());
 			
-			System.out.print("중분류계획종료일"); // 중분류 명
+			System.out.print("중분류 계획 종료일"); // 중분류 계획 종료일 수정 
 			dto.setCat_plan_end(br.readLine());
+		
+			cdao.updateCatDate(dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

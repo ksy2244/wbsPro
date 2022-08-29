@@ -23,7 +23,7 @@ public class SubjectUI {
 
 			System.out.print("대분류 코드? "); // 대분류 코드
 			int n = Integer.parseInt(br.readLine());
-			dto.setSub_code(n);
+			dto.setSub_date_code(n);
 			 
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
@@ -43,7 +43,7 @@ public class SubjectUI {
 			SubjectDTO dto = new SubjectDTO();
 			System.out.println("[대분류 수정]");
 			System.out.print("수정할 대분류 코드 "); // 대분류 코드
-			dto.setSub_code(Integer.parseInt(br.readLine()));
+			dto.setSub_date_code(Integer.parseInt(br.readLine()));
 			 
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
@@ -63,7 +63,7 @@ public class SubjectUI {
 			SubjectDTO dto = new SubjectDTO();
 			System.out.println("[프로젝트 삭제]");
 			System.out.print("삭제할 프로젝트 코드 ");
-			dto.setSub_code((br.read()));
+			dto.setSub_date_code((br.read()));
 			//dao.deleteSubject(sub_code);
 
 

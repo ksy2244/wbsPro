@@ -2,7 +2,6 @@ package com.subject;
 
 public class SubjectDTO {
 	private int prj_code; // 프로젝트 코드
-	private int sub_code; // 대분류 코드
 	private int sub_date_code; // 대분류 일정코드
 	
 	private String sub_name; // 대분류명
@@ -22,12 +21,6 @@ public class SubjectDTO {
 	}
 	public void setPrj_code(int prj_code) {
 		this.prj_code = prj_code;
-	}
-	public int getSub_code() {
-		return sub_code;
-	}
-	public void setSub_code(int sub_code) {
-		this.sub_code = sub_code;
 	}
 	public int getSub_date_code() {
 		return sub_date_code;
