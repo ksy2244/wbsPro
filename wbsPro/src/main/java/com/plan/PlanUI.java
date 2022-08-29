@@ -68,6 +68,7 @@ public class PlanUI {
 
 	private void workList() throws SQLException, NumberFormatException, IOException {
 		int prj_code;
+		int a =0;
 		System.out.println("전체 리스트 조회");
 		System.out.print("검색할 프로젝트 작업명? ");
 
@@ -81,13 +82,20 @@ public class PlanUI {
 			return;
 		}
 		
-		System.out.println("------------------------------------------");
-		System.out.println("프로젝트 코드 \t 프로젝트 이름 \t 대분류 코드\t 대분류명 ");
+		System.out.println("-------------------------------------------------------------------------------------------");
+		System.out.println(" NO | PRJ CODE  NAME | SUB CODE    NAME  | CAT CODE  NAME | OP CODE DATE ");
+		System.out.println("-------------------------------------------------------------------------------------------");
 		for (PlanDTO dto : list) {
+			System.out.print("  "+(a++)+ "\t");
 			System.out.print(dto.getPrj_code() + "\t");
 			System.out.print(dto.getPrj_name() + "\t");
 			System.out.print(dto.getSub_date_code() + "\t");
-			System.out.println(dto.getSub_name() + "\t");
+			System.out.print(dto.getSub_name() + "\t");
+			System.out.print(dto.getCat_date() + "\t");
+			System.out.print(dto.getCat_name() + "\t");
+			System.out.print(dto.getOp_date() + "\t");
+			System.out.println(dto.getOp_name()+ "\t");
+			
 		}
 		System.out.println();
 

@@ -21,17 +21,16 @@ public class PlanImpl {
 		String sql = null;
 		List<PlanDTO> list = new ArrayList<>();
 
-		System.out.println("sql 시작 전");
-
 		try {
-			sql = "SELECT p.prj_code, p.prj_name, s.sub_date_code, s.sub_name "
+			sql = " SELECT p.prj_code, p.prj_name, s.sub_date_code, s.sub_name, c.cat_date, c.cat_name, o.op_date, o.op_name "
 					+ "FROM project p "
-					+ "LEFT OUTER JOIN subdate s "
-					+ "ON p.prj_code = s.prj_code "
+					+ "LEFT OUTER JOIN subdate s ON p.prj_code = s.prj_code "
+					+ "LEFT OUTER JOIN catdate c ON s.sub_date_code = c.sub_date_code "
+					+ "LEFT OUTER JOIN opdate o ON c.cat_date = o.cat_date "
 					+ "WHERE p.prj_code = ? "
-					+ "GROUP BY  p.prj_code, p.prj_name, s.sub_date_code, s.sub_name "
-					+ "ORDER BY  p.prj_code, s.sub_date_code ";
-
+					+ "GROUP BY  p.prj_code, p.prj_name, s.sub_date_code, s.sub_name, c.cat_date, c.cat_name, o.op_date, o.op_name "
+					+ "ORDER BY  p.prj_code, s.sub_date_code, c.cat_date,o.op_date ";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, prj_code); 
 			rs = pstmt.executeQuery();
@@ -41,8 +40,16 @@ public class PlanImpl {
 				PlanDTO dto = new PlanDTO();
 				dto.setPrj_code(rs.getInt("prj_code"));
 				dto.setPrj_name(rs.getString("prj_name"));
+				
 				dto.setSub_date_code(rs.getInt("sub_date_code"));
 				dto.setSub_name(rs.getString("sub_name"));
+				
+				dto.setCat_date(rs.getInt("cat_date"));
+				dto.setCat_name(rs.getString("cat_name"));
+
+				dto.setOp_date(rs.getInt("op_date"));
+				dto.setOp_name(rs.getString("op_name"));
+
 				list.add(dto);
 			}
 
