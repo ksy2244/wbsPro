@@ -12,6 +12,8 @@ import com.project.ProjectUI;
 import com.subject.SubjectUI;
 import com.util.DBConn;
 
+import com.user.Login;
+
 public class PlanUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	int ch;
@@ -20,20 +22,24 @@ public class PlanUI {
 	SubjectUI subjectUI= new SubjectUI();
 	CatUI catUI= new CatUI();
 	private PlanImpl plan = new PlanImpl();
+	private Login login = new Login();
 
 	
 	public void menu() throws NumberFormatException, IOException {
-		// TODO Auto-generated method stub
 		ch = Integer.parseInt(br.readLine());
 
 		while (true) {
 
 			try {
-				System.out.print("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 5. 전체 작업 목록 6.업무 구성비 7. 종료 ");
+				System.out.println("-------------------------------------------");
+				System.out.println("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 ");
+				System.out.println("5. 전체 작업 목록 6.업무 구성비 7. 로그아웃 8. 종료 ");
+				System.out.println("-------------------------------------------");
 
+				System.out.print("메뉴를 선택 => ");
 				ch = Integer.parseInt(br.readLine());
 
-				if (ch == 7) {
+				if (ch == 8) {
 					DBConn.close();
 					return;
 				}
@@ -55,6 +61,9 @@ public class PlanUI {
 				case 5:
 					workList();
 					break;
+				case 7:
+					login.logout();
+					System.out.println("로그아웃");
 					
 
 				}
