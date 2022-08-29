@@ -13,42 +13,6 @@ public class CatUI {
 	CatDateDAO cdao = new CatDateDAOImpl();
 	SubjectDAO pdao = new SubjectDAOImpl();
 
-	public void categorymenu() {
-		// TODO Auto-generated method stub
-		int ca;
-
-		while (true) {
-
-			try {
-				System.out.print("1.중분류일정 등록 2. 중분류일정 수정 3. 중분류일정 삭제 4. 업무 구성비");
-
-				ca = Integer.parseInt(br.readLine());
-
-				if (ca == 4) {
-					DBConn.close();
-					return;
-				}
-
-				switch (ca) {
-				case 1:
-					insertCatDate();
-					break;
-				case 2:
-					updateCatDate();
-					break;
-				case 3:
-					deleteCatDate();
-					break;
-
-				}
-
-			} catch (Exception e) {
-			}
-
-		}
-
-	}
-	
 	public void insertCatDate() {
 		System.out.println("[중분류 일정 등록]");
 		int sub_date_code;
