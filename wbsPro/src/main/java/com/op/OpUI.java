@@ -8,7 +8,7 @@ import com.cat.CatDateDAOImpl;
 
 public class OpUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private OpDateDAO dao = new opDateDAOimpl();
+     OpDateDAO dao = new opDateDAOimpl();
     CatDateDAO cdao = new CatDateDAOImpl();
 	
 	public void addOpDate() {
@@ -23,7 +23,7 @@ public class OpUI {
 			dto.setCat_date(cat_date);
 			
 			System.out.print("소분류 코드 ?");
-			dto.setCat_date(Integer.parseInt(br.readLine()));
+			dto.setOp_date(Integer.parseInt(br.readLine()));
 			
 			System.out.print("소분류 일정 이름 ?");
 			dto.setOp_name(br.readLine());
@@ -69,19 +69,22 @@ public class OpUI {
 	}
 
 	public void deleteOpDate() {
-		int op_date = 0;
+	
 		
 		
 		try {
 			OpDateDTO dto = new OpDateDTO();
 			System.out.println("[소분류 삭제]");
 			System.out.print("삭제할 소분류 코드 ?");
-			dto.setOp_date(Integer.parseInt(br.readLine()));
+		
+			int result = dao.deleteOpDate(Integer.parseInt(br.readLine()));
 			
-			dao.deleteOpDate(op_date);
+			if(result != 0 ) {
+				System.out.println("코드가 삭제되었습니다.");
+			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("소분류 코드가 존재하지않아 삭제가 불가능합니다.");
 		}
 		
 	}

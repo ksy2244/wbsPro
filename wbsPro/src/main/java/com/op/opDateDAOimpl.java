@@ -14,11 +14,12 @@ public class opDateDAOimpl implements OpDateDAO {
 
 	@Override
 	public int insertOpDate(OpDateDTO dto) throws SQLException {
+	
 		PreparedStatement pstmt = null;
 		String sql;
 		
 		try {
-			conn.setAutoCommit(true);
+			conn.setAutoCommit(false);
 			
 			sql = "SELECT cat_date FROM catdate WHERE cat_date = ?";
 			
@@ -29,6 +30,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			pstmt = null;
 			
 			sql ="INSERT INTO opdate(Cat_date, op_date, op_name, op_plan_start, op_plan_end) VALUES (?,?,?,?,?)";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCat_date());
 			pstmt.setInt(2, dto.getOp_date());
@@ -38,22 +40,24 @@ public class opDateDAOimpl implements OpDateDAO {
 	        
 	        pstmt.executeUpdate();
 	        pstmt.close();
-		
+	        pstmt = null;
 			
 			conn.commit();
-			System.out.println("소분류 추가");
 			
+			System.out.println("소분류일정 추가");
+
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
 			} catch (Exception e2) {
-				
+
 			}
-			
+
 			System.out.println("소분류일정 등록 실패");
-		}catch (Exception e2) {
+		} catch (Exception e2) {
 			e2.printStackTrace();
-		}finally {
+
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -63,15 +67,14 @@ public class opDateDAOimpl implements OpDateDAO {
 
 			}
 			try {
-			
+
 				conn.setAutoCommit(true);
 			} catch (Exception e) {
-				
+
 			}
 
 			DBConn.close();
 		}
-		
 
 		return 0;
 	}
@@ -82,7 +85,7 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql; 
 		
 		try {
-			sql = "UPDATE SET op_name = ?, op_plan_start = ?, op_plan_end = ? WHERE Op_date = ?";
+			sql = "UPDATE opdate SET op_name = ?, op_plan_start = ?, op_plan_end = ? WHERE Op_date = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -95,7 +98,7 @@ public class opDateDAOimpl implements OpDateDAO {
 	        pstmt.executeUpdate();
 	        pstmt.close();
 		
-			
+	    	System.out.println("소분류일정 수정 완료");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,6 +109,7 @@ public class opDateDAOimpl implements OpDateDAO {
 
 	@Override
 	public int deleteOpDate(int Op_date) throws SQLException {
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		
@@ -116,7 +120,8 @@ public class opDateDAOimpl implements OpDateDAO {
 
 			pstmt.setInt(1, Op_date);
 
-			pstmt.executeUpdate();
+		
+			result = pstmt.executeUpdate();
 
 			
 			
@@ -125,7 +130,7 @@ public class opDateDAOimpl implements OpDateDAO {
 		}
 		
 
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -247,7 +252,7 @@ public class opDateDAOimpl implements OpDateDAO {
 	}
 
 	@Override
-	public int workCompUpdateOpDate(int input) throws SQLException {
+	public int workCompUpdateOpDate(int input) throws SQLException { 
 		// TODO Auto-generated method stub
 		return 0;
 	}
