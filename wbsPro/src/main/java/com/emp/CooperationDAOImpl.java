@@ -259,7 +259,7 @@ public class CooperationDAOImpl implements CooperationDAO{
 		
 		try {
 			
-			sql = "DELETE FROM COOPERATION WHERE COO_CODE = ? ";
+			sql = "DELETE FROM COOPERATION WHERE COO_NAME = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -355,11 +355,11 @@ public class CooperationDAOImpl implements CooperationDAO{
 		
 		try {
 			
-			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, WORK_START_DATE, "
-				+ " WORK_END_DATE, USER_CODE"
+			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, TO_CHAR(WORK_START_DATE, 'YYYY-MM-DD') WORK_START_DATE, "
+				+ " TO_CHAR(WORK_END_DATE,'YYYY-MM-DD') WORK_END_DATE, USER_CODE "
 				+ " FROM COOPERATION cp"
 				+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE "
-				+ " WHERE COO_CODE = ? ";
+				+ " WHERE cu.COO_CODE = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -419,11 +419,11 @@ public class CooperationDAOImpl implements CooperationDAO{
 		
 		try {
 			
-			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, WORK_START_DATE, "
-				+ " WORK_END_DATE, USER_CODE"
-				+ " FROM COOPERATION cp"
-				+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE "
-				+ " WHERE COO_NAME = ? ";
+			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, TO_CHAR(WORK_START_DATE, 'YYYY-MM-DD') WORK_START_DATE, "
+					+ " TO_CHAR(WORK_END_DATE,'YYYY-MM-DD') WORK_END_DATE, USER_CODE "
+					+ " FROM COOPERATION cp"
+					+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE "
+					+ " WHERE COO_NAME = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -483,10 +483,10 @@ public class CooperationDAOImpl implements CooperationDAO{
 		
 		try {
 			
-			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, WORK_START_DATE, "
-				+ " WORK_END_DATE, USER_CODE"
-				+ " FROM COOPERATION cp"
-				+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE ";
+			sql = "SELECT cu.COO_CODE, COO_NAME, COO_TEL, COO_MANAGER, TO_CHAR(WORK_START_DATE, 'YYYY-MM-DD') WORK_START_DATE, "
+					+ " TO_CHAR(WORK_END_DATE,'YYYY-MM-DD') WORK_END_DATE, USER_CODE "
+					+ " FROM COOPERATION cp"
+					+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -544,8 +544,8 @@ public class CooperationDAOImpl implements CooperationDAO{
 		
 		try {
 			
-			sql = "SELECT COO_CODE, COO_NAME, COO_USER_CODE, WORK_START_DATE, "
-				+ " WORK_END_DATE, USER_CODE"
+		sql ="SELECT COO_USER_CODE, COO_NAME, COO_TEL, COO_MANAGER, TO_CHAR(WORK_START_DATE, 'YYYY-MM-DD') WORK_START_DATE, "
+				+ " TO_CHAR(WORK_END_DATE,'YYYY-MM-DD') WORK_END_DATE, USER_CODE "
 				+ " FROM COOPERATION cp"
 				+ " LEFT OUTER JOIN COOUSER cu ON cp.COO_CODE = cu.COO_CODE "
 				+ " WHERE COO_USER_CODE = ?";
@@ -559,9 +559,11 @@ public class CooperationDAOImpl implements CooperationDAO{
 			if(rs.next()) {
 				dto = new CooperationDTO();
 				
-				dto.setCoo_code(rs.getInt("COO_CODE")); 
+				dto.setCoo_user_code(rs.getInt("COO_USER_CODE")); 
 				dto.setCoo_name(rs.getString("COO_NAME"));
 				dto.setCoo_code(rs.getInt("COO_USER_CODE")); 
+				dto.setCoo_manager(rs.getString("COO_MANAGER"));
+				dto.setCoo_tel(rs.getString("COO_TEL"));
 				dto.setWork_start_date(rs.getString("WORK_START_DATE"));
 				dto.setWork_end_date(rs.getString("WORK_END_DATE"));
 				dto.setUser_code(rs.getInt("USER_CODE"));

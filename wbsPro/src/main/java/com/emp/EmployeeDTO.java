@@ -1,6 +1,6 @@
 package com.emp;
 
-public class EmployeeDTO{
+public class EmployeeDTO {
 	
 	private final String adminId  = "admin";    // 관리자 아이디
 	private final String adminPwd = "admin123"; // 관리자 비밀번호
