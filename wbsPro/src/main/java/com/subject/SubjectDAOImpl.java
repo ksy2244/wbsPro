@@ -99,9 +99,34 @@ public class SubjectDAOImpl implements SubjectDAO {
 	}
 
 	@Override
-	public int deleteSubject(int subject_Code) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteSubject(int sub_date_code) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+          sql = " DELETE FROM subdate WHERE sub_date_code = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, sub_date_code);
+
+            result = pstmt.executeUpdate();
+            
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+			
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+		
+		
+		return result;
 	}
 
 	@Override

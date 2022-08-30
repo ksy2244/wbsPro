@@ -12,7 +12,7 @@ public interface SubjectDAO {
 	public int updateSubject(SubjectDTO dto) throws SQLException; // 대분류 수정
 
 	// ③ 작업 삭제 메뉴
-	public int deleteSubject(int subject_Code) throws SQLException; // 대분류 삭제
+	public int deleteSubject(int sub_date_code) throws SQLException; // 대분류 삭제
 
 	// ④ 작업 검색 메뉴
 	public SubjectDTO searchSubjectCode(SubjectDTO dto); // 코드명 검색

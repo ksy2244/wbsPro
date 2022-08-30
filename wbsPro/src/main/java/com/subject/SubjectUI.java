@@ -1,10 +1,11 @@
 package com.subject;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import com.project.ProjectDAO;
 import com.project.ProjectDAOImpl;
-import com.project.ProjectDTO;
+
 
 public class SubjectUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -55,16 +56,26 @@ public class SubjectUI {
 	}
 
 	public void deleteSubject() {
-		int prj_code = 0;
+		System.out.println("[대분류 삭제]");
+
+		int sub_date_code;
+
 		try {
-			SubjectDTO dto = new SubjectDTO();
-			System.out.println("[프로젝트 삭제]");
-			System.out.print("삭제할 프로젝트 코드 ");
-			dto.setSub_date_code((br.read()));
-			// dao.deleteSubject(sub_code);
+
+			System.out.print("삭제할 프로젝트 코드 ?");
+
+			sub_date_code = Integer.parseInt(br.readLine());
+
+			int result = dao.deleteSubject(sub_date_code);
+
+			if (result == 0) {
+				System.out.println("등록된 자료가 아닙니다.");
+			} else {
+				System.out.println("코드가 삭제되었습니다.");
+			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("코드 삭제가 실패했습니다");
 		}
 
 	}
