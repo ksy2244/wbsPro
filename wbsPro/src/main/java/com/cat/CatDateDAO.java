@@ -12,7 +12,7 @@ public interface CatDateDAO {
 	public int updateCatDate(CatDateDTO dto) throws SQLException; // 중분류 수정
 
 	// ④ 중분류일정 삭제 메뉴
-	public int deleteCatDate(String cat_date) throws SQLException; // 중분류 삭제
+	public int deleteCatDate(int cat_date) throws SQLException; // 중분류 삭제
 
 	// ⑤ 작업 검색 메뉴
 

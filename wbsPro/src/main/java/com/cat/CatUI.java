@@ -70,23 +70,27 @@ public class CatUI {
 	}
 
 	public void deleteCatDate() {
-		System.out.println("\n 데이터 삭제!!!");
+		 System.out.println("[중분류 삭제]");
 
-		String cat_date;
+		int cat_date;
 
 		try {
-			System.out.println("삭제할 중분류일정코드 ?");
-			cat_date = br.readLine();
-
+			
+			System.out.print("삭제할 중분류 코드 ?");
+			
+			cat_date = Integer.parseInt(br.readLine());
+			
 			int result = cdao.deleteCatDate(cat_date);
+			
+		
 			if (result == 0) {
 				System.out.println("등록된 자료가 아닙니다.");
 			} else {
-				System.out.println("데이터를 삭제했습니다.");
+				System.out.println("코드가 삭제되었습니다.");
 			}
-
+           
 		} catch (Exception e) {
-			System.out.println();
+			System.out.println("코드 삭제가 실패했습니다");
 		}
 
 	}

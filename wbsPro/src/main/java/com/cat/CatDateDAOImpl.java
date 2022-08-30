@@ -105,16 +105,23 @@ public class CatDateDAOImpl implements CatDateDAO {
 		return result;
 	}
 
-	@Override
-	public int deleteCatDate(String catDate_Code) throws SQLException {
+	@Override  
+	public int deleteCatDate(int cat_date) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
+
 		try {
-			sql = "DELETE cat_date FROM catdate WHERE cat_date = ?";
+
+        
+		
+			sql = " DELETE FROM catdate WHERE cat_date = ?";
+			
 			pstmt = conn.prepareStatement(sql);
 
-			result = pstmt.executeUpdate();
+            pstmt.setInt(1, cat_date);
+
+            result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
