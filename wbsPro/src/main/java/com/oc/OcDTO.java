@@ -1,12 +1,11 @@
-package com.OcDTO;
+package com.oc;
 
 public class OcDTO {
 	private int oc_code; // 발주업체 코드
 	private String oc_name; // 발주업체 이름
 	private String oc_tel; // 업체 전화번호 
 	
-	
-	
+
 	
 	public int getOc_code() {
 		return oc_code;
