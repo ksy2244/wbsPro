@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.cat.CatDateDTO;
+import com.op.OpDateDTO;
+import com.subject.SubjectDTO;
+
 import com.util.DBConn;
 
 public class ResultDAOImpl implements ResultDAO {
@@ -29,6 +33,154 @@ public class ResultDAOImpl implements ResultDAO {
 		return 0;
 	}
 
+	@Override // 대분류 실적시작일
+	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 대분류일정 수정 sql
+			sql = "UPDATE subdate SET sub_start = ? WHERE sub_date_code = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getSub_start()); // 대분류실적시작일
+			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
+			pstmt.executeUpdate();
+			
+			System.out.println("대분류실적시작일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return result;
+	}
+
+
+	
+	@Override // 대분류 실적종료일시작
+	public int resultProgressSubDateEndInput(SubjectDTO dto) throws SQLException{
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 대분류일정 수정 sql
+			sql = "UPDATE subdate SET sub_end = ? WHERE sub_date_code = ? AND sub_start is not null";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getSub_end()); // 대분류실적종료일
+			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
+			result = pstmt.executeUpdate();
+			
+			System.out.println("대분류실적종료일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+	}
+
+	@Override // 중분류 실적시작일
+	public int resultProgressCatDateStartInput(CatDateDTO dto) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 중분류일정 수정 sql
+			sql = "UPDATE catdate SET cat_start = ? WHERE cat_date = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getCat_start()); // 중분류실적시작일
+			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
+			pstmt.executeUpdate();
+			
+			System.out.println("중분류실적시작일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+	}
+
+	
+	@Override // 중분류실적종료일시작
+	public int resultProgressCatDateEndInput(CatDateDTO dto) throws SQLException{
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 중분류일정 수정 sql
+			sql = "UPDATE catdate SET cat_end = ? WHERE cat_date = ? AND cat_start is not null";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getCat_end()); // 중분류실적종료일
+			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
+			pstmt.executeUpdate();
+			
+			System.out.println("중분류실적종료일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+	}
+	
+	@Override // 소분류 실적시작일
+	public int resultProgressOpDateStartInput(OpDateDTO dto) throws SQLException {
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			// 소분류일정 수정 sql
+			sql = "UPDATE opdate SET op_start = ? WHERE op_date = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getOp_start()); // 소분류실적시작일
+			pstmt.setInt(2, dto.getOp_date()); // 소분류 코드
+			pstmt.executeUpdate();
+			
+			System.out.println("소분류실적시작일 추가");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+
+	
+	@Override // 소분류실적종료일시작
+	public int resultProgressOpDateEndInput(OpDateDTO dto) throws SQLException{
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			//소분류일정 수정 sql
+			sql = "UPDATE opdate SET op_end = ? WHERE op_date = ? AND op_start is not null";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getOp_end()); // 소분류실적종료일
+			pstmt.setInt(2, dto.getOp_date()); // 소분류 코드
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			System.out.println("소분류실적종료일 추가");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	
 
 	@Override
@@ -287,5 +439,6 @@ public class ResultDAOImpl implements ResultDAO {
 		return output;
 		
 	}
+
 
 }

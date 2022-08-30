@@ -20,22 +20,22 @@ public interface ResultDAO { // 실적 관리
 	
 	
 	// 대분류실적시작일시작
-		public int ResultProgressSubDateStartInput(SubjectDTO dto) throws SQLException;
+	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException;
 		
-		// 대분류실적종료일시작
-		public int ResultProgressSubDateEndInput(SubjectDTO dto) throws SQLException;
+	// 대분류실적종료일시작
+	public int resultProgressSubDateEndInput(SubjectDTO dto) throws SQLException;
 		
-		// 중분류실적시작일시작
-		public int ResultProgressCatDateStartInput(CatDateDTO dto) throws SQLException;
-			
-		// 중분류실적종료일시작
-		public int ResultProgressCatDateEndInput(CatDateDTO dto) throws SQLException;
-			
-		// 소분류실적시작일시작
-		public int ResultProgressOpDateStartInput(OpDateDTO dto) throws SQLException;
-			
-		// 소분류실적종료일시작
-		public int ResultProgressOpDateEndInput(OpDateDTO dto) throws SQLException;
-	
-	
+	// 중분류실적시작일시작
+	public int resultProgressCatDateStartInput(CatDateDTO dto) throws SQLException;
+		
+	// 중분류실적종료일시작
+	public int resultProgressCatDateEndInput(CatDateDTO dto) throws SQLException;
+		
+	// 소분류실적시작일시작
+	public int resultProgressOpDateStartInput(OpDateDTO dto) throws SQLException;
+		
+	// 소분류실적종료일시작
+	public int resultProgressOpDateEndInput(OpDateDTO dto) throws SQLException;
+
+
 }
