@@ -18,8 +18,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) " 
-				+ "VALUES (?, ?, ?, ?)";
+			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) "
+					+ "VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
 			pstmt.setString(2, dto.getPrj_name()); // 프로젝트명

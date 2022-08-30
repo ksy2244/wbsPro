@@ -1,24 +1,23 @@
 package com.cat;
 
 public class CatDateDTO {
-	
-	private int sub_date_code; //대분류 일정코드 
-	private int cat_date;//중분류일정코드
-	private String cat_name; //중분류명
-	
-	private String cat_plan_start; //중분류계획시작일
-	private String cat_plan_end; //중분류계획종료일
-	private int cat_plan_per; //중분류계획진척율
-	
+
+	private int sub_date_code; // 대분류 일정코드
+	private int cat_date;// 중분류일정코드
+	private String cat_name; // 중분류명
+
+	private String cat_plan_start; // 중분류계획시작일
+	private String cat_plan_end; // 중분류계획종료일
+	private int cat_plan_per; // 중분류계획진척율
+
 	private String cat_start; // 중분류실적시작일
 	private String cat_end; // 중분류실적종료일
 	private int cat_per; // 중분류실적진척율
-	
+
 	private int cat_comp; // 업무구성비
-	
-	private String user_name;  // 중분류 담당자
-	
-	
+
+	private String user_name; // 중분류 담당자
+
 	public int getSub_date_code() {
 		return sub_date_code;
 	}
@@ -107,6 +106,4 @@ public class CatDateDTO {
 		this.user_name = user_name;
 	}
 
-	
-	
 }

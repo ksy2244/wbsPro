@@ -17,14 +17,13 @@ import com.user.Login;
 public class PlanUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	int ch;
-	ProjectUI projectUI= new ProjectUI();
-	OpUI opUI= new OpUI();
-	SubjectUI subjectUI= new SubjectUI();
-	CatUI catUI= new CatUI();
+	ProjectUI projectUI = new ProjectUI();
+	OpUI opUI = new OpUI();
+	SubjectUI subjectUI = new SubjectUI();
+	CatUI catUI = new CatUI();
 	private PlanImpl plan = new PlanImpl();
 	private Login login = new Login();
 
-	
 	public void menu() throws NumberFormatException, IOException {
 		ch = Integer.parseInt(br.readLine());
 
@@ -57,14 +56,13 @@ public class PlanUI {
 				case 4:
 					projectUI.searchWork();
 					break;
-					
+
 				case 5:
 					workList();
 					break;
 				case 7:
 					login.logout();
 					System.out.println("로그아웃");
-					
 
 				}
 
@@ -77,25 +75,27 @@ public class PlanUI {
 
 	private void workList() throws SQLException, NumberFormatException, IOException {
 		int prj_code;
-		int a =0;
+		int a = 0;
 		System.out.println("전체 리스트 조회");
 		System.out.print("검색할 프로젝트 작업명? ");
 
 		prj_code = Integer.parseInt(br.readLine());
-			
+
 		List<PlanDTO> list = plan.listAll(prj_code);
-		
+
 		System.out.println(list.size());
 		if (list.size() == 0) {
 			System.out.println("등록된 자료가 없습니다");
 			return;
 		}
-		
-		System.out.println("-------------------------------------------------------------------------------------------");
+
+		System.out
+				.println("-------------------------------------------------------------------------------------------");
 		System.out.println(" NO | PRJ CODE  NAME | SUB CODE    NAME  | CAT CODE  NAME | OP CODE DATE ");
-		System.out.println("-------------------------------------------------------------------------------------------");
+		System.out
+				.println("-------------------------------------------------------------------------------------------");
 		for (PlanDTO dto : list) {
-			System.out.print("  "+(a++)+ "\t");
+			System.out.print("  " + (a++) + "\t");
 			System.out.print(dto.getPrj_code() + "\t");
 			System.out.print(dto.getPrj_name() + "\t");
 			System.out.print(dto.getSub_date_code() + "\t");
@@ -103,8 +103,8 @@ public class PlanUI {
 			System.out.print(dto.getCat_date() + "\t");
 			System.out.print(dto.getCat_name() + "\t");
 			System.out.print(dto.getOp_date() + "\t");
-			System.out.println(dto.getOp_name()+ "\t");
-			
+			System.out.println(dto.getOp_name() + "\t");
+
 		}
 		System.out.println();
 
@@ -112,11 +112,10 @@ public class PlanUI {
 
 	private void insert() {
 		System.out.println("[작업 등록]");
-		ProjectUI projectUI = new ProjectUI(); //프로젝
-		SubjectUI subjectUI = new SubjectUI(); // 대분류 
+		ProjectUI projectUI = new ProjectUI(); // 프로젝
+		SubjectUI subjectUI = new SubjectUI(); // 대분류
 		CatUI catUI = new CatUI(); // 중분류
 		OpUI opUI = new OpUI();
-		
 
 		while (true) {
 
@@ -151,7 +150,6 @@ public class PlanUI {
 		}
 
 	}
-
 
 	private void update() {
 		System.out.println("[작업 수정]");
@@ -190,13 +188,7 @@ public class PlanUI {
 
 	}
 
-
-
-
-
-
 	private void delete() {
-
 
 		while (true) {
 
@@ -219,7 +211,7 @@ public class PlanUI {
 					break;
 				case 3:
 					catUI.deleteCatDate();
-					
+
 					break;
 				case 4:
 					opUI.deleteOpDate();
@@ -230,13 +222,7 @@ public class PlanUI {
 			} catch (Exception e) {
 			}
 		}
-		
-		
 
 	}
 
-	
-	
-	
-	
 }

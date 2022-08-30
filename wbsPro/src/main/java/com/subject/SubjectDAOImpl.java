@@ -86,7 +86,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			pstmt.executeUpdate();
-			
+
 			System.out.println("대분류일정 추가");
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getErrorCode() == 1) {
@@ -97,8 +97,6 @@ public class SubjectDAOImpl implements SubjectDAO {
 		}
 		return result;
 	}
-
-
 
 	@Override
 	public int deleteSubject(int subject_Code) throws SQLException {

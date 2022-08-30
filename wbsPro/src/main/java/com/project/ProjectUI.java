@@ -9,20 +9,19 @@ import com.plan.PlanDTO;
 public class ProjectUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private ProjectDAO dao = new ProjectDAOImpl();
-	
+
 	public void addProject() { // 프로젝트 등록
 		System.out.println("[프로젝트 등록]");
 		// 프로젝트 담당자 없음. 사원코드로 넣어줘야 할 것 같음
 		// 프로젝트 시작일과 프로젝트 종료일은 전체 목록을 볼 때 Select로 설정?
-		
+
 		try {
-			
+
 			ProjectDTO dto = new ProjectDTO();
-			
+
 			System.out.print("프로젝트 코드? "); // 프로젝트 코드
 			int n = Integer.parseInt(br.readLine());
 			dto.setPrj_code(n);
-			 
 
 			System.out.print("프로젝트명? "); // 프로젝트명
 			dto.setPrj_name(br.readLine());
@@ -34,17 +33,15 @@ public class ProjectUI {
 			dto.setPrj_plan(br.readLine());
 
 			dao.insertProject(dto);
-			
+
 			System.out.println("프로젝트 개설 완료!");
-
-
 
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
 	}
-	
+
 	public void updateProject() {
 
 		try {
@@ -52,7 +49,6 @@ public class ProjectUI {
 			System.out.println("[프로젝트 수정]");
 			System.out.print("수정할 프로젝트 코드 "); // 프로젝트 코드
 			dto.setPrj_code(Integer.parseInt(br.readLine()));
-			
 
 			System.out.print("프로젝트명? "); // 프로젝트명
 			dto.setPrj_name(br.readLine());
@@ -70,21 +66,20 @@ public class ProjectUI {
 		}
 
 	}
-	
-	
+
 	public void findByCode() { // 코드명 검색
 		try {
 			ProjectDTO dto = new ProjectDTO();
 			System.out.print("검색할 프로젝트 코드? ");
 			int prj_code = Integer.parseInt(br.readLine());
-			
+
 			dto = dao.searchProjectCode(prj_code);
-			
-			if(dto==null) {
+
+			if (dto == null) {
 				System.out.println("프로젝트가 존재하지 않습니다");
 				return;
 			}
-			
+
 			System.out.print(dto.getPrj_code() + "\t");
 			System.out.print(dto.getPrj_name() + "\t");
 			System.out.print(dto.getPrj_ov() + "\t");
@@ -111,7 +106,6 @@ public class ProjectUI {
 				System.out.println("등록된 자료가 없습니다");
 				return;
 			}
-			
 
 			for (ProjectDTO dto : list) {
 
@@ -126,7 +120,7 @@ public class ProjectUI {
 		}
 		System.out.println();
 	}
-	
+
 	public void searchWork() {
 		try {
 			ProjectDTO dto = new ProjectDTO();
@@ -159,14 +153,10 @@ public class ProjectUI {
 
 			dao.deleteProject(prj_code);
 
-
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-	}
 
-	
-	
+	}
 
 }

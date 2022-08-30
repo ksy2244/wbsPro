@@ -94,7 +94,7 @@ public class OcDAOImpl implements OcDAO {
 		return result;
 	}
 
-	@Override // 코드 수정 
+	@Override // 코드 수정
 	public int UpdateOcCode(OcDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -131,7 +131,6 @@ public class OcDAOImpl implements OcDAO {
 		return result;
 	}
 
-	
 	@Override // 전화번호 수정
 	public int UpdateOcTel(OcDTO dto) throws SQLException {
 		int result = 0;
@@ -168,24 +167,24 @@ public class OcDAOImpl implements OcDAO {
 		return result;
 	}
 
-	@Override // 삭제 
+	@Override // 삭제
 	public int DeleteOc(OcDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql; 
-		
+		String sql;
+
 		try {
 			sql = "DELETE FROM Oc WHERE Oc_code = ? ";
-			
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 			throw e;
-			
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -196,39 +195,36 @@ public class OcDAOImpl implements OcDAO {
 		}
 		return result;
 	}
-	
-	
-	@Override // 업체명 검색 
-	public List<OcDTO> OcNameSearch(String Oc_name)  { // 업체명 검색
+
+	@Override // 업체명 검색
+	public List<OcDTO> OcNameSearch(String Oc_name) { // 업체명 검색
 		List<OcDTO> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		String sql;
 		ResultSet rs = null;
-		
+
 		try {
-			
-			sql = " SELECT Oc_name, Oc_code , Oc_tel" 
-					+ "FROM Oc"
-					+ "WHERE Oc_name = ? "; 
-			
+
+			sql = " SELECT Oc_name, Oc_code , Oc_tel" + "FROM Oc" + "WHERE Oc_name = ? ";
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, Oc_name);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				OcDTO dto = new OcDTO();
 				dto.setOc_name(rs.getString("Oc_name"));
 				dto.setOc_code(rs.getInt("Oc_code"));
 				dto.setOc_tel(rs.getString("Oc_tel"));
 				list.add(dto);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -239,39 +235,36 @@ public class OcDAOImpl implements OcDAO {
 		}
 		return list;
 	}
-	
-	
-	@Override	// 전화번호 검색
+
+	@Override // 전화번호 검색
 	public List<OcDTO> OcTelSearch(String Oc_tel) {
 		List<OcDTO> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		String sql;
 		ResultSet rs = null;
-		
+
 		try {
-			
-			sql = " SELECT Oc_name, Oc_code , Oc_tel" 
-					+ "FROM Oc"
-					+ "WHERE Oc_tel = ? "; 
-			
+
+			sql = " SELECT Oc_name, Oc_code , Oc_tel" + "FROM Oc" + "WHERE Oc_tel = ? ";
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, Oc_tel);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				OcDTO dto = new OcDTO();
 				dto.setOc_name(rs.getString("Oc_name"));
 				dto.setOc_code(rs.getInt("Oc_code"));
 				dto.setOc_tel(rs.getString("Oc_tel"));
 				list.add(dto);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -282,39 +275,35 @@ public class OcDAOImpl implements OcDAO {
 		}
 		return list;
 	}
-	
 
-	
 	@Override // 코드 검색
-	public OcDTO OcCodeSearch(Integer Oc_code)throws SQLException {
+	public OcDTO OcCodeSearch(Integer Oc_code) throws SQLException {
 		OcDTO dto = new OcDTO();
 		PreparedStatement pstmt = null;
 		String sql;
 		ResultSet rs = null;
-		
+
 		try {
-			
-			sql = " SELECT Oc_name, Oc_code , Oc_tel" 
-					+ "FROM Oc"
-					+ "WHERE Oc_code = ? "; 
-			
+
+			sql = " SELECT Oc_name, Oc_code , Oc_tel" + "FROM Oc" + "WHERE Oc_code = ? ";
+
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1,Oc_code );
-			
+
+			pstmt.setInt(1, Oc_code);
+
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				dto = new OcDTO();
 				dto.setOc_name(rs.getString("Oc_name"));
 				dto.setOc_code(rs.getInt("Oc_code"));
 				dto.setOc_tel(rs.getString("Oc_tel"));
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -324,5 +313,5 @@ public class OcDAOImpl implements OcDAO {
 			}
 		}
 		return dto;
-		}
 	}
+}

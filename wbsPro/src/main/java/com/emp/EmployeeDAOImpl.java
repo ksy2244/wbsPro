@@ -340,9 +340,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			pstmt.executeUpdate();
 
-		}  catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 
 		return result;
 	}
