@@ -31,10 +31,10 @@ public class CatUI {
 			dto.setCat_name(br.readLine());
 			
 			System.out.print("중분류 계획 시작일 "); // 중분류 계획 시작일 
-			dto.setCat_name(br.readLine());
+			dto.setCat_plan_start(br.readLine());
 			
 			System.out.print("중분류 계획 종료일 "); // 중분류 계획 종료일
-			dto.setCat_plan_start(br.readLine());
+			dto.setCat_plan_end(br.readLine());
 			
 			cdao.insertCatDate(dto);
 			
