@@ -29,7 +29,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			pstmt.close();
 			pstmt = null;
 			
-			sql ="INSERT INTO opdate(Cat_date, op_date, op_name, op_plan_start, op_plan_end, user_name) VALUES (?,?,?,?,?,?)";
+			sql ="INSERT INTO opdate(Cat_date, op_date, op_name, op_plan_start, op_plan_end) VALUES (?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCat_date());
@@ -37,7 +37,6 @@ public class opDateDAOimpl implements OpDateDAO {
 	        pstmt.setString(3, dto.getOp_name());
 	        pstmt.setString(4, dto.getOp_plan_start());
 	        pstmt.setString(5, dto.getOp_plan_end());
-	        pstmt.setString(6, dto.getUser_name());
 	        
 	        pstmt.executeUpdate();
 	        pstmt.close();

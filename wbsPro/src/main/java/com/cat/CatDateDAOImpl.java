@@ -31,7 +31,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt = null;
 
 			// catdate 추가 sql
-			sql = " INSERT INTO catdate(sub_date_code, cat_date, cat_name, cat_plan_start, cat_plan_end, user_name) VALUES(?,?,?,?,?,?)";
+			sql = " INSERT INTO catdate(sub_date_code, cat_date, cat_name, cat_plan_start, cat_plan_end) VALUES(?,?,?,?,?)";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getSub_date_code()); // 대분류 일정코드
@@ -39,7 +39,6 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.setString(3, dto.getCat_name()); // 중분류 일정명
 			pstmt.setString(4, dto.getCat_plan_start()); // 중분류계획시작일
 			pstmt.setString(5, dto.getCat_plan_end()); // 중분류계획종료일
-			pstmt.setString(6, dto.getUser_name()); // 중분류 담당자
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
@@ -135,62 +134,8 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 	@Override
 	public CatDateDTO searchCatDateCode(String cat_date) { // 코드명 검색
-		CatDateDTO dto = new CatDateDTO();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql;
-		
-		try {
-			sql = "SELECT sub_date_code FROM SUBDATE"
-					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
-					+ " FROM catdate"
-					+ " WHERE cat_name = ?";
-		
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, cat_date);
-			rs = pstmt.executeQuery();
-		
-			
-			if(rs.next()) {
-				dto.setSub_date_code(rs.getInt("sub_date_code"));
-				dto.setCat_date(rs.getInt("cat_date"));
-				dto.setCat_name(rs.getString("cat_name"));
-				dto.setCat_plan_start(rs.getString("cat_plan_start"));
-				dto.setCat_plan_end(rs.getString("cat_plan_end"));
-				dto.setCat_plan_per(rs.getInt("Cat_plan_per"));
-				dto.setCat_start(rs.getString("Cat_start"));
-				dto.setCat_end(rs.getString("Cat_end"));
-				dto.setCat_per(rs.getInt("cat_per"));
-				dto.setCat_comp(rs.getInt("cat_comp"));
-				dto.setUser_name(rs.getString("user_name"));
-				
-				
-			}
-			
-			
-			
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e2) {
-				}
-			}
-
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e2) {
-				}
-			}
-		}
-		
-		
-		return dto;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
