@@ -31,7 +31,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt = null;
 
 			// catdate 추가 sql
-			sql = " INSERT INTO catdate(sub_date_code, cat_date, cat_name, cat_plan_start, cat_plan_end) VALUES(?,?,?,?,?)";
+			sql = " INSERT INTO catdate(sub_date_code, cat_date, cat_name, cat_plan_start, cat_plan_end, user_name) VALUES(?,?,?,?,?,?)";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getSub_date_code()); // 대분류 일정코드
@@ -39,6 +39,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.setString(3, dto.getCat_name()); // 중분류 일정명
 			pstmt.setString(4, dto.getCat_plan_start()); // 중분류계획시작일
 			pstmt.setString(5, dto.getCat_plan_end()); // 중분류계획종료일
+			pstmt.setString(6, dto.getUser_name()); // 중분류 담당자
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
