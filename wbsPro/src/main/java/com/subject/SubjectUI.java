@@ -29,12 +29,16 @@ public class SubjectUI {
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
 
-			dao.insertSubject(dto);
+			int result = dao.insertSubject(dto);
 			
-			System.out.println("[대분류 등록 성공]");
+			if(result != 0) {
+				 System.out.println("[대분류 등록 성공]");
+			 } else {
+				 System.out.println("[대분류 등록 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[대분류 등록 실패]");
+			System.out.println("[대분류 등록 오류]");
 		}
 
 	}
@@ -49,37 +53,40 @@ public class SubjectUI {
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
 
-			dao.updateSubject(dto);
+			int result = dao.updateSubject(dto);
 			
-			System.out.println("[대분류 수정 성공]");
+			 if(result != 0) {
+				 System.out.println("[대분류 수정 성공]");
+			 } else {
+				 System.out.println("[대분류 수정 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[대분류 수정 실패]");
+			System.out.println("[대분류 수정 오류]");
 		}
 
 	}
 
 	public void deleteSubject() {
-		System.out.println("[대분류 삭제]");
+		
 
-		int sub_date_code;
+	
 
 		try {
-
+            System.out.println("[대분류 삭제]");
 			System.out.print("삭제할 대분류 코드 ?");
 
-			sub_date_code = Integer.parseInt(br.readLine());
 
-			int result = dao.deleteSubject(sub_date_code);
+			int result = dao.deleteSubject(Integer.parseInt(br.readLine()));
 
-			if (result == 0) {
-				System.out.println("등록된 코드가 아닙니다.");
-			} else {
-				System.out.println("[대분류 삭제 성공]");
-			}
-
+			 if(result != 0) {
+				 System.out.println("[대분류 삭제 성공]");
+			 } else {
+				 System.out.println("[대분류 삭제 실패]");
+			 }
+			 
 		} catch (Exception e) {
-			System.out.println("[대분류 삭제 실패]");
+			System.out.println("[대분류 삭제 오류]");
 		}
 
 	}

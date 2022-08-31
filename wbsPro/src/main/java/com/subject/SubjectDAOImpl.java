@@ -14,6 +14,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	@Override
 	public int insertSubject(SubjectDTO dto) throws SQLException {
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
@@ -33,7 +34,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			pstmt.setInt(1, dto.getPrj_code()); // 대분류 코드
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			pstmt.setString(3, dto.getSub_name()); // 대분류명
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 
@@ -97,7 +98,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			DBConn.close();
 		}
-		return 0;
+		return result;
 
 	}
 
@@ -114,7 +115,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getErrorCode() == 1) {
