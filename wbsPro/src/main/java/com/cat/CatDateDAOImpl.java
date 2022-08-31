@@ -3,6 +3,7 @@ package com.cat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 	@Override
 	public int insertCatDate(CatDateDTO dto) throws SQLException {
-		int result = 0;
+	
 		PreparedStatement pstmt = null;
 		String sql;
 
@@ -44,36 +45,67 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt = null;
 
 			conn.commit(); // 커밋
-			System.out.println("중분류일정 추가");
+		
 
 		} catch (SQLIntegrityConstraintViolationException e) {
-			if (e.getErrorCode() == 1) {
-				System.out.println("중분류일정 코드 중복입니다.");
-			}
-		} catch (SQLException e) {
+
 			// 롤백
+			try {
+
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
+			if (e.getErrorCode() == 1) {
+				System.out.println("코드 중복으로 등록이 불가능합니다");
+			} else if (e.getErrorCode() == 1400) {
+				System.out.println("필수사항을 입력하지않았습니다.");
+			} else if (e.getErrorCode() == 2291) {
+				System.out.println("대분류 코드를 잘못입력했습니다");
+			} else {
+				System.out.println(e.toString()); // 오류메세지 찍기
+			}
+			throw e;
+
+		} catch (SQLDataException e2) {
+			try {
+				conn.rollback();
+			} catch (Exception e3) {
+			}
+
+			if (e2.getErrorCode() == 1840 || e2.getErrorCode() == 1861) {
+                System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
+			} else {
+				System.out.println(e2.toString());
+			}
+			throw e2;
+
+		} catch (SQLException e) {
 			try {
 				conn.rollback();
 			} catch (Exception e2) {
 			}
-			System.out.println("중분류일정 등록 실패");
-		} catch (Exception e2) {
-			e2.printStackTrace();
+
 		} finally {
+
 			if (pstmt != null) {
 				try {
 					pstmt.close();
-				} catch (Exception e) {
+				} catch (Exception e2) {
+
 				}
+
 			}
 			try {
-				// 다시 커밋 되도록 설정
+				// 다시 커밋되도록 설정
 				conn.setAutoCommit(true);
 			} catch (Exception e) {
+				// TODO: handle exception
 			}
+
 			DBConn.close();
 		}
-		return result;
+		return 0;
 	}
 
 	@Override
@@ -94,13 +126,20 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 			pstmt.executeUpdate();
 
-			System.out.println("중분류 일정 수정 완료");
+			
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getErrorCode() == 1) {
 				System.out.println("중분류일정 코드 중복입니다.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
 		}
 		return result;
 	}

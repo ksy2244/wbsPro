@@ -18,8 +18,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) "
-					+ "VALUES (?, ?, ?, ?)";
+			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) " + "VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
 			pstmt.setString(2, dto.getPrj_name()); // 프로젝트명
@@ -39,18 +38,31 @@ public class ProjectDAOImpl implements ProjectDAO {
 			} else {
 				System.out.println(e.toString());
 			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();	
+			
+			
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
 		}
+
 		return 0;
 
 	}
 
 	@Override
 	public int updateProject(ProjectDTO dto) throws SQLException {
-
+		PreparedStatement pstmt = null;
+		String sql;
 		try {
-
-			PreparedStatement pstmt = null;
-			String sql;
 
 			sql = "UPDATE project SET Prj_name = ?, Prj_ov = ?, Prj_plan = ? WHERE Prj_code = ?";
 
@@ -64,6 +76,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
 		}
 
 		return 0;
@@ -72,14 +91,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public int deleteProject(int project_Code) throws SQLException {
 		int result = 0;
-		
+		PreparedStatement pstmt = null;
+		String sql;
+
 		try {
 
-			PreparedStatement pstmt = null;
-			String sql;
-			
 			sql = "DELETE FROM project WHERE prj_code = ? ";
-			
+
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, project_Code);
@@ -87,7 +105,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+				}
+			}
 		}
 
 		return result;

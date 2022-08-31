@@ -13,58 +13,62 @@ public class CatUI {
 	SubjectDAO pdao = new SubjectDAOImpl();
 
 	public void insertCatDate() {
-		System.out.println("[중분류 일정 등록]");
+		System.out.println("[중분류 등록]");
+		
 		int sub_date_code;
 		try {
 			CatDateDTO dto = new CatDateDTO();
-			System.out.print("대분류 일정 코드 ? "); // 대분류 일정코드
+			System.out.print("대분류 코드 ? "); // 대분류 일정코드
 			sub_date_code = Integer.parseInt(br.readLine());
 
 			dto.setSub_date_code(sub_date_code);
 
-			System.out.print("중분류 일정 코드?"); // 중분류 일정코드
+			System.out.print("중분류 코드?"); // 중분류 일정코드
 			int n = Integer.parseInt(br.readLine());
 			dto.setCat_date(n);
 
-			System.out.print("중분류 일정명"); // 중분류일정명
+			System.out.print("중분류명 ?"); // 중분류일정명
 			dto.setCat_name(br.readLine());
 
-			System.out.print("중분류 계획 시작일 "); // 중분류 계획 시작일
+			System.out.print("중분류 계획 시작일 ?"); // 중분류 계획 시작일
 			dto.setCat_plan_start(br.readLine());
 
-			System.out.print("중분류 계획 종료일 "); // 중분류 계획 종료일
+			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일
 			dto.setCat_plan_end(br.readLine());
 
 			cdao.insertCatDate(dto);
 
+			System.out.println("[중분류 등록 성공]");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[중분류 등록 실패]");
 		}
 
 	}
 
 	public void updateCatDate() {
+		System.out.println("[중분류 수정]");
 		try {
 			CatDateDTO dto = new CatDateDTO();
-			System.out.println("[중분류 일정 수정]"); // 대분류 일정코드
 
-			System.out.print("수정할 중분류일정 코드?"); // 중분류 일정코드
+			System.out.print("수정할 중분류 코드?"); // 중분류 일정코드
 			int n = Integer.parseInt(br.readLine());
 			dto.setCat_date(n);
 
-			System.out.print("중분류일정명"); // 중분류 일정명 수정
+			System.out.print("중분류명 ?"); // 중분류 일정명 수정
 			dto.setCat_name(br.readLine());
 
-			System.out.print("중분류 계획 시작일"); // 중분류 계획 시작일 수정
+			System.out.print("중분류 계획 시작일 ?"); // 중분류 계획 시작일 수정
 			dto.setCat_plan_start(br.readLine());
 
-			System.out.print("중분류 계획 종료일"); // 중분류 계획 종료일 수정
+			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일 수정
 			dto.setCat_plan_end(br.readLine());
 
 			cdao.updateCatDate(dto);
+			
+			System.out.println("[중분류 수정 성공]");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[중분류 수정 실패]");
 		}
 
 	}
@@ -86,11 +90,11 @@ public class CatUI {
 			if (result == 0) {
 				System.out.println("등록된 자료가 아닙니다.");
 			} else {
-				System.out.println("코드가 삭제되었습니다.");
+				System.out.println("[중분류 삭제 성공]");
 			}
            
 		} catch (Exception e) {
-			System.out.println("코드 삭제가 실패했습니다");
+			System.out.println("[중분류 삭제 실패]");
 		}
 
 	}

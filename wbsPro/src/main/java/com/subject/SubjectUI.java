@@ -30,9 +30,11 @@ public class SubjectUI {
 			dto.setSub_name(br.readLine());
 
 			dao.insertSubject(dto);
+			
+			System.out.println("[대분류 등록 성공]");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[대분류 등록 실패]");
 		}
 
 	}
@@ -48,9 +50,11 @@ public class SubjectUI {
 			dto.setSub_name(br.readLine());
 
 			dao.updateSubject(dto);
+			
+			System.out.println("[대분류 수정 성공]");
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("[대분류 수정 실패]");
 		}
 
 	}
@@ -62,20 +66,20 @@ public class SubjectUI {
 
 		try {
 
-			System.out.print("삭제할 프로젝트 코드 ?");
+			System.out.print("삭제할 대분류 코드 ?");
 
 			sub_date_code = Integer.parseInt(br.readLine());
 
 			int result = dao.deleteSubject(sub_date_code);
 
 			if (result == 0) {
-				System.out.println("등록된 자료가 아닙니다.");
+				System.out.println("등록된 코드가 아닙니다.");
 			} else {
-				System.out.println("코드가 삭제되었습니다.");
+				System.out.println("[대분류 삭제 성공]");
 			}
 
 		} catch (Exception e) {
-			System.out.println("코드 삭제가 실패했습니다");
+			System.out.println("[대분류 삭제 실패]");
 		}
 
 	}

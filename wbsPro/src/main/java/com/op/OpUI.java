@@ -36,8 +36,9 @@ public class OpUI {
 
 			dao.insertOpDate(dto);
 
+			System.out.println("[소분류 등록 성공]");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[소분류 등록 실패]");
 		}
 
 	}
@@ -60,8 +61,9 @@ public class OpUI {
 
 			dao.updateOpDate(dto);
 
+			System.out.println("[소분류 수정 성공]");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[소분류 수정 실패]");
 		}
 
 	}
@@ -69,18 +71,20 @@ public class OpUI {
 	public void deleteOpDate() {
 
 		try {
-			OpDateDTO dto = new OpDateDTO();
+			
 			System.out.println("[소분류 삭제]");
 			System.out.print("삭제할 소분류 코드 ?");
 
 			int result = dao.deleteOpDate(Integer.parseInt(br.readLine()));
 
-			if (result != 0) {
-				System.out.println("코드가 삭제되었습니다.");
+			if (result == 0) {
+				System.out.println("등록된 코드가 아닙니다.");
+			} else {
+				System.out.println("[소분류 삭제 성공]");
 			}
 
 		} catch (Exception e) {
-			System.out.println("소분류 코드가 존재하지않아 삭제가 불가능합니다.");
+			System.out.println("[소분류 삭제 실패]");
 		}
 
 	}

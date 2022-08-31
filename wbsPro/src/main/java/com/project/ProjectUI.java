@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import com.plan.PlanDTO;
 
 public class ProjectUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,10 +33,10 @@ public class ProjectUI {
 
 			dao.insertProject(dto);
 
-			System.out.println("프로젝트 개설 완료!");
+			System.out.println("[프로젝트 등록 성공]");
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("[프로젝트 등록 실패]");
 		}
 
 	}
@@ -47,7 +46,8 @@ public class ProjectUI {
 		try {
 			ProjectDTO dto = new ProjectDTO();
 			System.out.println("[프로젝트 수정]");
-			System.out.print("수정할 프로젝트 코드 "); // 프로젝트 코드
+			
+			System.out.print("수정할 프로젝트 코드 ?"); // 프로젝트 코드
 			dto.setPrj_code(Integer.parseInt(br.readLine()));
 
 			System.out.print("프로젝트명? "); // 프로젝트명
@@ -60,9 +60,11 @@ public class ProjectUI {
 			dto.setPrj_plan(br.readLine());
 
 			dao.updateProject(dto);
+			
+			System.out.println("[프로젝트 수정 성공]");
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("[프로젝트 수정 실패]");
 		}
 
 	}
@@ -148,7 +150,7 @@ public class ProjectUI {
 		try {
 			
 			System.out.println("[프로젝트 삭제]");
-			System.out.print("삭제할 프로젝트 코드 ");
+			System.out.print("삭제할 프로젝트 코드 ?");
 
 			 int result = dao.deleteProject(Integer.parseInt(br.readLine()));
 
