@@ -16,7 +16,7 @@ public class opDateDAOimpl implements OpDateDAO {
 
 	@Override
 	public int insertOpDate(OpDateDTO dto) throws SQLException {
-
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 
@@ -40,7 +40,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			pstmt.setString(4, dto.getOp_plan_start());
 			pstmt.setString(5, dto.getOp_plan_end());
 
-			pstmt.executeUpdate();
+			 result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 
@@ -103,11 +103,12 @@ public class opDateDAOimpl implements OpDateDAO {
 			DBConn.close();
 		}
 
-		return 0;
+		return result;
 	}
 
 	@Override
 	public int updateOpDate(OpDateDTO dto) throws SQLException {
+		int result =0;
 		PreparedStatement pstmt = null;
 		String sql;
 
@@ -121,7 +122,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			pstmt.setString(3, dto.getOp_plan_end());
 			pstmt.setInt(4, dto.getOp_date());
 
-			pstmt.executeUpdate();
+			 result = pstmt.executeUpdate();
 			pstmt.close();
 
 		
@@ -137,7 +138,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			}
 		}
 
-		return 0;
+		return result;
 	}
 
 	@Override

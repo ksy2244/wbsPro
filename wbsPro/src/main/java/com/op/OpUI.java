@@ -34,11 +34,16 @@ public class OpUI {
 			System.out.print("소분류 일정 종료일 ?");
 			dto.setOp_plan_end(br.readLine());
 
-			dao.insertOpDate(dto);
+			int result = dao.insertOpDate(dto);
 
-			System.out.println("[소분류 등록 성공]");
+			if(result != 0) {
+				 System.out.println("[소분류 등록 성공]");
+			 } else {
+				 System.out.println("[소분류 등록 실패]");
+			 }
+			
 		} catch (Exception e) {
-			System.out.println("[소분류 등록 실패]");
+			System.out.println("[소분류 등록 오류]");
 		}
 
 	}
@@ -59,11 +64,16 @@ public class OpUI {
 			System.out.print("소분류 일정 종료일 ? ");
 			dto.setOp_plan_end(br.readLine());
 
-			dao.updateOpDate(dto);
-
-			System.out.println("[소분류 수정 성공]");
+			 int result = dao.updateOpDate(dto);
+			
+			 if(result != 0) {
+				 System.out.println("[소분류 수정 성공]");
+			 } else {
+				 System.out.println("[소분류 수정 실패]");
+			 }
+		
 		} catch (Exception e) {
-			System.out.println("[소분류 수정 실패]");
+			System.out.println("[소분류 수정 오류]");
 		}
 
 	}
@@ -77,14 +87,14 @@ public class OpUI {
 
 			int result = dao.deleteOpDate(Integer.parseInt(br.readLine()));
 
-			if (result == 0) {
-				System.out.println("등록된 코드가 아닙니다.");
-			} else {
-				System.out.println("[소분류 삭제 성공]");
-			}
+			 if(result != 0) {
+				 System.out.println("[소분류 삭제 성공]");
+			 } else {
+				 System.out.println("[소분류 삭제 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[소분류 삭제 실패]");
+			System.out.println("[소분류 삭제 오류]");
 		}
 
 	}
