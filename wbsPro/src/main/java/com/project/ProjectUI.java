@@ -144,17 +144,22 @@ public class ProjectUI {
 	}
 
 	public void deleteProject() {
-		int prj_code = 0;
+
 		try {
-			ProjectDTO dto = new ProjectDTO();
+			
 			System.out.println("[프로젝트 삭제]");
 			System.out.print("삭제할 프로젝트 코드 ");
-			dto.setPrj_code((br.read()));
 
-			dao.deleteProject(prj_code);
+			 int result = dao.deleteProject(Integer.parseInt(br.readLine()));
 
+			 if(result != 0) {
+				 System.out.println("[프로젝트 삭제 성공]");
+			 } else {
+				 System.out.println("[프로젝트 삭제 실패]");
+			 }
+			 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("[프로젝트 삭제 오류]");
 		}
 
 	}

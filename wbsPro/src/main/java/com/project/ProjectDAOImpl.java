@@ -71,24 +71,26 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public int deleteProject(int project_Code) throws SQLException {
+		int result = 0;
+		
 		try {
 
 			PreparedStatement pstmt = null;
 			String sql;
-
+			
 			sql = "DELETE FROM project WHERE prj_code = ? ";
-
+			
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, project_Code);
 
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO: handle exception
+			throw e;
 		}
 
-		return 0;
+		return result;
 	}
 
 	@Override
