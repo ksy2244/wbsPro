@@ -64,12 +64,6 @@ public class ResultUI {
 		}
 	}
 	
-	public void resultProgressPerMenu() { // 실적진척율 메뉴
-		
-		
-	}
-	
-		
 	public void resultProgDateStart() { // 실적시작일 입력
 		
 		
@@ -83,6 +77,42 @@ public class ResultUI {
 	}
 	
 	
+	public void resultProgressPerMenu() { // 실적진척율 메뉴
+		
+		while (true) {
+
+			try {
+				System.out.print("1.소분류실적진척율 입력 2.중분류실적진척율 입력 3.대분류실적진척율 입력 4.뒤로가기");
+
+				 ch = Integer.parseInt(br.readLine());
+
+
+
+				switch (ch) {
+				case 1: resultProgressPerOpDate(); break;
+				case 2: resultProgressPerCatDate(); break;
+				case 3: resultProgressPerSubDate(); break;
+				case 4: return; 
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	public void resultProgressPerOpDate() {  // 소분류실적진척율 입력
+		
+	}
+		
+	public void resultProgressPerCatDate() { // 중분류실적진척율 입력
+		
+	}
+	
+	public void resultProgressPerSubDate() { // 대분류실적진척율 입력
+		
+	}
 	
 	public void compositionOpDate() {
 		System.out.println("[소분류 업무 구성비 입력]");
