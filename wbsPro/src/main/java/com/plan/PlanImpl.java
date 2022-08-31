@@ -22,32 +22,24 @@ public class PlanImpl {
 		List<PlanDTO> list = new ArrayList<>();
 
 		try {
-			sql = " SELECT p.prj_code, p.prj_name, s.sub_date_code, s.sub_name, c.cat_date, c.cat_name, o.op_date, o.op_name "
-					+ "FROM project p " 
-					+ "LEFT OUTER JOIN subdate s ON p.prj_code = s.prj_code "
-					+ "LEFT OUTER JOIN catdate c ON s.sub_date_code = c.sub_date_code "
-					+ "LEFT OUTER JOIN opdate o ON c.cat_date = o.cat_date " 
-					+ "WHERE p.prj_code = ? "
-					+ "GROUP BY  p.prj_code, p.prj_name, s.sub_date_code, s.sub_name, c.cat_date, c.cat_name, o.op_date, o.op_name "
-					+ "ORDER BY  p.prj_code, s.sub_date_code, c.cat_date,o.op_date ";
-
+			sql = "SELECT workCode, LEVEL,  workPer, workName, workRes, workComp "
+					+ "FROM wbs "
+					+ "START WITH workCode = ? "
+					+ "CONNECT BY prior workcode = parent ";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, prj_code);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				PlanDTO dto = new PlanDTO();
-				dto.setPrj_code(rs.getInt("prj_code"));
-				dto.setPrj_name(rs.getString("prj_name"));
-
-				dto.setSub_date_code(rs.getInt("sub_date_code"));
-				dto.setSub_name(rs.getString("sub_name"));
-
-				dto.setCat_date(rs.getInt("cat_date"));
-				dto.setCat_name(rs.getString("cat_name"));
-
-				dto.setOp_date(rs.getInt("op_date"));
-				dto.setOp_name(rs.getString("op_name"));
+				int tot = rs.getRow();
+				dto.setWorkCode(rs.getInt("workCode"));
+				dto.setLevel(rs.getInt("level"));
+				dto.setWorkName(rs.getString("workName"));
+				dto.setWorkPer(rs.getInt("workPer"));
+				dto.setWrokRes(rs.getString("workRes"));
+				dto.setWorkComp(rs.getInt("workComp"));
 
 				list.add(dto);
 			}

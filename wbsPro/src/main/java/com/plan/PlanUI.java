@@ -68,9 +68,10 @@ public class PlanUI {
 
 	private void workList() throws SQLException, NumberFormatException, IOException {
 		int prj_code;
+		int n = 0;
 		System.out.println("전체 리스트 조회");
 		System.out.print("검색할 프로젝트 작업명? ");
-
+		//PlanDTO dto = new PlanDTO();
 		prj_code = Integer.parseInt(br.readLine());
 			
 		List<PlanDTO> list = plan.listAll(prj_code);
@@ -81,13 +82,18 @@ public class PlanUI {
 			return;
 		}
 		
-		System.out.println("------------------------------------------");
-		System.out.println("프로젝트 코드 \t 프로젝트 이름 \t 대분류 코드\t 대분류명 ");
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.println(" NO | WBS CODE | Dep |     작업명     |   기간   | 계획 진척율 |  업무 구성비 ");
+		System.out.println("-------------------------------------------------------------------------------");
+
 		for (PlanDTO dto : list) {
-			System.out.print(dto.getPrj_code() + "\t");
-			System.out.print(dto.getPrj_name() + "\t");
-			System.out.print(dto.getSub_date_code() + "\t");
-			System.out.println(dto.getSub_name() + "\t");
+			System.out.print(++n + " \t"); //no
+			System.out.print(dto.getWorkCode() + "\t"); //작업 코드 번호
+			System.out.print(dto.getLevel()+ "\t"); // 깊이
+			System.out.print(dto.getWorkName() + "\t\t"); //작업명
+			System.out.print(dto.getWorkPer()+ "\t"); //기간
+			System.out.print(dto.getWrokRes()+ "%" + "\t"); //진척율
+			System.out.println(dto.getWorkComp() + "\t"); // 업무 구성비
 		}
 		System.out.println();
 
