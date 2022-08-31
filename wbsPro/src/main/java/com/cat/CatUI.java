@@ -36,11 +36,17 @@ public class CatUI {
 			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일
 			dto.setCat_plan_end(br.readLine());
 
-			cdao.insertCatDate(dto);
+			 int result = cdao.insertCatDate(dto);
 
-			System.out.println("[중분류 등록 성공]");
+			 if(result != 0) {
+				 System.out.println("[중분류 등록 성공]");
+			 } else {
+				 System.out.println("[중분류 등록 실패]");
+			 }
+			 
+			 
 		} catch (Exception e) {
-			System.out.println("[중분류 등록 실패]");
+			System.out.println("[중분류 등록 오류]");
 		}
 
 	}
@@ -63,12 +69,16 @@ public class CatUI {
 			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일 수정
 			dto.setCat_plan_end(br.readLine());
 
-			cdao.updateCatDate(dto);
+			 int result = cdao.updateCatDate(dto);
 			
-			System.out.println("[중분류 수정 성공]");
+			 if(result != 0) {
+				 System.out.println("[중분류 수정 성공]");
+			 } else {
+				 System.out.println("[중분류 수정 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[중분류 수정 실패]");
+			System.out.println("[중분류 수정 오류]");
 		}
 
 	}
@@ -86,15 +96,15 @@ public class CatUI {
 			
 			int result = cdao.deleteCatDate(cat_date);
 			
-		
-			if (result == 0) {
-				System.out.println("등록된 자료가 아닙니다.");
-			} else {
-				System.out.println("[중분류 삭제 성공]");
-			}
+			 if(result != 0) {
+				 System.out.println("[중분류 삭제 성공]");
+			 } else {
+				 System.out.println("[중분류 삭제 실패]");
+			 }
+
            
 		} catch (Exception e) {
-			System.out.println("[중분류 삭제 실패]");
+			System.out.println("[중분류 삭제 오류]");
 		}
 
 	}

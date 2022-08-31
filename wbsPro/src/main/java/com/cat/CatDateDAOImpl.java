@@ -16,7 +16,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 	@Override
 	public int insertCatDate(CatDateDTO dto) throws SQLException {
-	
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 
@@ -40,7 +40,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.setString(3, dto.getCat_name()); // 중분류 일정명
 			pstmt.setString(4, dto.getCat_plan_start()); // 중분류계획시작일
 			pstmt.setString(5, dto.getCat_plan_end()); // 중분류계획종료일
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 
@@ -105,7 +105,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 			DBConn.close();
 		}
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.setString(3, dto.getCat_plan_end()); // 중분류계획종료일
 			pstmt.setInt(4, dto.getCat_date()); // 중분류 일정코드
 
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 
 			
 		} catch (SQLIntegrityConstraintViolationException e) {
