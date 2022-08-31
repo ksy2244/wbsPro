@@ -15,6 +15,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public int insertProject(ProjectDTO dto) throws SQLException {
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
@@ -25,7 +26,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 			pstmt.setString(3, dto.getPrj_ov()); // 프로젝트 개요
 			pstmt.setString(4, dto.getPrj_plan()); // 프로젝트 설명
 
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 
 		} catch (SQLIntegrityConstraintViolationException e) {
 			// 기본키 제약 위반, NOT NULL 등의 제약 위반
@@ -38,6 +39,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 			} else {
 				System.out.println(e.toString());
 			}
+	
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			
@@ -54,12 +56,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 			}
 		}
 
-		return 0;
+		return result;
 
 	}
 
 	@Override
 	public int updateProject(ProjectDTO dto) throws SQLException {
+		int result =0;
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
@@ -73,7 +76,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 			pstmt.setString(3, dto.getPrj_plan()); // 프로젝트 설명
 			pstmt.setInt(4, dto.getPrj_code()); // 프로젝트 설명
 
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -85,7 +89,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 			}
 		}
 
-		return 0;
+		return result;
 	}
 
 	@Override

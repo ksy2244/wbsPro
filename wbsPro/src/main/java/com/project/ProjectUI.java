@@ -31,12 +31,16 @@ public class ProjectUI {
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
 
-			dao.insertProject(dto);
+			 int result = dao.insertProject(dto);
 
-			System.out.println("[프로젝트 등록 성공]");
+			 if(result != 0) {
+				 System.out.println("[프로젝트 등록 성공]");
+			 } else {
+				 System.out.println("[프로젝트 등록 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[프로젝트 등록 실패]");
+			System.out.println("[프로젝트 등록 오류]");
 		}
 
 	}
@@ -59,12 +63,17 @@ public class ProjectUI {
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
 
-			dao.updateProject(dto);
 			
-			System.out.println("[프로젝트 수정 성공]");
+			 int result = dao.updateProject(dto);
+
+			if(result != 0) {
+				 System.out.println("[프로젝트 수정 성공]");
+			 } else {
+				 System.out.println("[프로젝트 수정 실패]");
+			 }
 
 		} catch (Exception e) {
-			System.out.println("[프로젝트 수정 실패]");
+			System.out.println("[프로젝트 수정 오류]");
 		}
 
 	}
