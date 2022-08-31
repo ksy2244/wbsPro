@@ -14,24 +14,87 @@ import com.util.DBConn;
 public class ResultDAOImpl implements ResultDAO {
 	private Connection conn = DBConn.getConnection();
 	
-	@Override
-	public int perforProgressInsert(int perform) throws SQLException {
-		// TODO Auto-generated method stub
+	/*
+	@Override  // 프로젝트 실적 진척율 수정(컬럼이 없음)
+	public int perforProgressProjectUpdate(int performProject) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
 		
-		return 0;
+		try {
+			
+			sql = "UPDATE PROJECT SET  = ? ";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return result;
+	}
+	*/
+
+
+
+	@Override  // 대분류 실적 진척율 수정
+	public int perforProgressSubjectUpdate(int sub_date_code, int performSubject) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			
+			sql = "UPDATE subdate SET sub_per = ? WHERE SUB_DATE_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, performSubject);
+			pstmt.setInt(2, sub_date_code);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return result;
 	}
 
-	@Override
-	public int perforProgressUpdate(int perform) throws SQLException {
+
+
+	@Override  // 중분류 실적 진척율 수정
+	public int perforProgressCatDateUpdate(int cat_date, int performCatDate) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public int perforProgressDelete(int perform) throws SQLException {
+
+
+	@Override  // 소분류 실적 진척율 수정
+	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+	@Override
+	public int resultProgressProjectStartInput(String proDateStart) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public int resultProgressProjectEndInput(String proDateEnd) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 
 	@Override // 대분류 실적시작일
 	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException {
@@ -440,5 +503,12 @@ public class ResultDAOImpl implements ResultDAO {
 		
 	}
 
+
+
+	
+
+
+
+	
 
 }

@@ -11,8 +11,35 @@ public class ResultUI {
 	
 	int ch ;
 	
-	public void menu() { // 업무구성비 메뉴
+	public void menu() { 
 		
+		while (true) {
+
+			try {
+				System.out.print("1.업무구성비 입력 2.실적시작일 입력 3.실적종료일 입력 4.실적진척율 입력 5.뒤로가기");
+
+				 ch = Integer.parseInt(br.readLine());
+
+
+				switch (ch) {
+				case 1: compositMenu(); break;
+				case 2: resultProgDateStart(); break;
+				case 3: resultProgDateEnd(); break;
+				case 4: resultProgressPerMenu(); break;
+				case 5: return; 
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
+
+		}
+	}
+		
+
+	
+	public void compositMenu() { // 업무구성비 메뉴
 		
 		while (true) {
 
@@ -21,10 +48,7 @@ public class ResultUI {
 
 				 ch = Integer.parseInt(br.readLine());
 
-				if (ch == 5) {
-					DBConn.close();
-					return;
-				}
+
 
 				switch (ch) {
 				case 1: compositionOpDate(); break;
@@ -38,6 +62,24 @@ public class ResultUI {
 			}
 
 		}
+	}
+	
+	public void resultProgressPerMenu() { // 실적진척율 메뉴
+		
+		
+	}
+	
+		
+	public void resultProgDateStart() { // 실적시작일 입력
+		
+		
+		
+	}
+		
+	public void resultProgDateEnd() { // 실적종료일 입력
+		
+		
+		
 	}
 	
 	

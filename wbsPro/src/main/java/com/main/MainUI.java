@@ -8,6 +8,7 @@ import com.emp.EmployeeDAOImpl;
 import com.emp.EmployeeDTO;
 import com.emp.EmployeeUI;
 import com.plan.PlanUI;
+import com.result.ResultUI;
 import com.util.DBConn;
 
 import com.user.Login;
@@ -17,6 +18,7 @@ public class MainUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private Login login = new Login();
 	private EmployeeDAO dao = new EmployeeDAOImpl();
+	
 
 	public void initial() {
 		while (true) {
@@ -123,6 +125,7 @@ public class MainUI {
 
 		PlanUI planUI = new PlanUI();
 		EmployeeUI employeeUI = new EmployeeUI();
+		ResultUI resultUI = new ResultUI();
 
 		while (true) {
 
@@ -134,7 +137,7 @@ public class MainUI {
 					planUI.menu();
 					break;
 				case 2:
-					employeeUI.menu(); // 실적 관리 UI로 이동 (클래스명 수정해야 함)
+					resultUI.menu(); 
 					break;
 				case 3:
 					employeeUI.menu();
