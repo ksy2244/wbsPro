@@ -10,9 +10,9 @@ public interface ResultDAO { // 실적 관리
 	
 	// 실적 진척율
 	// 하위 분류 퍼센트 다 더해서 나눈 것(평균)이 상위분류 퍼센트! 
-	// public int perforProgressProjectUpdate(int prj_code, int performProject) throws SQLException; // 프로젝트 실적 진척율 수정
-	public int perforProgressSubjectUpdate(int sub_date_code, int performSubject) throws SQLException; // 대분류 실적 진척율 수정
-	public int perforProgressCatDateUpdate(int cat_date, int performCatDate) throws SQLException; // 중분류 실적 진척율 수정
+	//public int perforProgressProjectUpdate(int prj_code) throws SQLException; // 프로젝트 실적 진척율 수정
+	public int perforProgressSubjectUpdate(int sub_date_code) throws SQLException; // 대분류 실적 진척율 수정
+	public int perforProgressCatDateUpdate(int cat_date) throws SQLException; // 중분류 실적 진척율 수정
 	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException; // 소분류 실적 진척율 수정
 	
 	

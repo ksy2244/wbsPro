@@ -104,6 +104,30 @@ public class ResultUI {
 	
 	public void resultProgressPerOpDate() {  // 소분류실적진척율 입력
 		
+		System.out.println("[소분류 실적 진척율 입력]");
+		
+		try {
+			
+			System.out.print("소분류 코드 ? ");
+			int op_date = Integer.parseInt(br.readLine());
+			
+			System.out.print("실적 진척율 ? ");
+			int performOpDate = Integer.parseInt(br.readLine());
+			
+			int result = dao.perforProgressOpDateUpdate(op_date, performOpDate);
+			
+			
+			if(result != 0) {
+				System.out.println("[소분류 실적 진척율 입력 성공]");
+			} else {
+				System.out.println("[소분류 실적 진척율 입력 실패]");
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("[소분류 실적 진척율 입력 오류]");
+		}
+		
 	}
 		
 	public void resultProgressPerCatDate() { // 중분류실적진척율 입력

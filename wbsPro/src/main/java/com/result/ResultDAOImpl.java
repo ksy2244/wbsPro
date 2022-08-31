@@ -37,50 +37,130 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 
-	@Override  // 대분류 실적 진척율 수정
-	public int perforProgressSubjectUpdate(int sub_date_code, int performSubject) throws SQLException {
+	@Override  // 대분류 실적 진척율 입력
+	public int perforProgressSubjectUpdate(int sub_date_code) throws SQLException {
+		
+		
+		return 0;
+	}
+
+
+
+	@Override  // 중분류 실적 진척율 입력
+	public int perforProgressCatDateUpdate(int cat_date) throws SQLException {
+		int result = 0;
+		int catDatePer = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+		
+		try {
+				
+			conn.setAutoCommit(false);
+			
+			sql = "SELECT AVG(OP_PER) op FROM opdate WHERE CAT_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cat_date);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				catDatePer = rs.getInt("op");
+			} 
+			
+			pstmt.close();
+			pstmt = null;
+			
+			
+			sql = " UPDATE CATDATE SET CAT_PER = ? WHERE CAT_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, catDatePer);
+			pstmt.setInt(2, cat_date);
+			result = pstmt.executeUpdate();
+			
+			conn.commit();
+		
+		} catch (SQLException e) {
+			
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				
+			}
+			
+		}  finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
+			
+			conn.setAutoCommit(true);
+		
+		}
+		
+		return result;
+		
+		
+	}
+
+
+
+	@Override  // 소분류 실적 진척율 입력
+	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
+		
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		
 		try {
 			
-			sql = "UPDATE subdate SET sub_per = ? WHERE SUB_DATE_CODE = ? ";
+			
+			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, performOpDate);
+			pstmt.setInt(2, op_date);
+			pstmt.executeUpdate();
 			
-			pstmt.setInt(1, performSubject);
-			pstmt.setInt(2, sub_date_code);
+		
+		} catch (SQLException e) {
 			
-			result = pstmt.executeUpdate();
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				
+			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		}  finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
+		
 		}
-		
-		
 		
 		return result;
 	}
 
-
-
-	@Override  // 중분류 실적 진척율 수정
-	public int perforProgressCatDateUpdate(int cat_date, int performCatDate) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-	@Override  // 소분류 실적 진척율 수정
-	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	
-	@Override
+	
+	
+	@Override  // 프로젝트 실적시작일
 	public int resultProgressProjectStartInput(String proDateStart) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
@@ -88,7 +168,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 
-	@Override
+	@Override  // 프로젝트 실적종료일
 	public int resultProgressProjectEndInput(String proDateEnd) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
