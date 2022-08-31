@@ -8,16 +8,26 @@ import com.op.OpDateDTO;
 
 public interface ResultDAO { // 실적 관리
 	
+	// 실적 진척율
+	// 하위 분류 퍼센트 다 더해서 나눈 것(평균)이 상위분류 퍼센트! 
+	// public int perforProgressProjectUpdate(int prj_code, int performProject) throws SQLException; // 프로젝트 실적 진척율 수정
+	public int perforProgressSubjectUpdate(int sub_date_code, int performSubject) throws SQLException; // 대분류 실적 진척율 수정
+	public int perforProgressCatDateUpdate(int cat_date, int performCatDate) throws SQLException; // 중분류 실적 진척율 수정
+	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException; // 소분류 실적 진척율 수정
 	
-	public int perforProgressInsert(int perform) throws SQLException; // 실적 진척율 입력
-	public int perforProgressUpdate(int perform) throws SQLException; // 실적 진척율 수정
-	public int perforProgressDelete(int perform) throws SQLException; // 실적 진척율 삭제
 	
-	
+	// 업무 구성비
 	public int workCompositionOpDate(int codeCatDate, int codeOpDate, int comp) throws SQLException; // 소분류
 	public int workCompositionCatDate(int codeSubDate, int codeCatDate, int comp) throws SQLException; // 중분류
 	public int workCompositionSubDate(int codeProject, int codeSubDate, int comp) throws SQLException; // 대분류
 	
+	
+	
+	// 프로젝트 실적 시작일 
+	public int resultProgressProjectStartInput(String proDateStart) throws SQLException;
+		
+	// 프로젝트 실적 종료일
+	public int resultProgressProjectEndInput(String proDateEnd) throws SQLException;
 	
 	// 대분류실적시작일시작
 	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException;
