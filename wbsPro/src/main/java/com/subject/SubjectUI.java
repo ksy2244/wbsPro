@@ -14,7 +14,7 @@ public class SubjectUI {
 
 	public void addSubject() {
 		System.out.println("[대분류 등록]");
-		int prj_code;
+		int prj_code, user_code;
 		try {
 			SubjectDTO dto = new SubjectDTO();
 			System.out.print("프로젝트 코드? "); // 프로젝트 코드
@@ -28,7 +28,12 @@ public class SubjectUI {
 
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
-
+			
+			
+			System.out.print("담당자 코드? "); // 대분류명
+			user_code = Integer.parseInt(br.readLine());
+			dto.setUser_code(user_code);
+			
 			int result = dao.insertSubject(dto);
 			
 			if(result != 0) {
@@ -45,6 +50,7 @@ public class SubjectUI {
 
 	public void updateSubject() {
 		try {
+			int  user_code;
 			SubjectDTO dto = new SubjectDTO();
 			System.out.println("[대분류 수정]");
 			System.out.print("수정할 대분류 코드 "); // 대분류 코드
@@ -52,7 +58,11 @@ public class SubjectUI {
 
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
-
+			
+			System.out.print("담당자 코드? "); // 대분류명
+			user_code = Integer.parseInt(br.readLine());
+			dto.setUser_code(user_code);
+			
 			int result = dao.updateSubject(dto);
 			
 			 if(result != 0) {
@@ -68,9 +78,6 @@ public class SubjectUI {
 	}
 
 	public void deleteSubject() {
-		
-
-	
 
 		try {
             System.out.println("[대분류 삭제]");

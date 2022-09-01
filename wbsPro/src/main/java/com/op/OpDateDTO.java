@@ -10,6 +10,15 @@ public class OpDateDTO {
 	private int op_plan_per; // 소분류 계획 진척율
 
 	private String user_name; // 담당자
+	private int user_code; // 사원 코드
+
+	public int getUser_code() {
+		return user_code;
+	}
+
+	public void setUser_code(int user_code) {
+		this.user_code = user_code;
+	}
 
 	private String op_start; // 소분류 실적 시작일
 	private String op_end; // 소분류 실적 종료일

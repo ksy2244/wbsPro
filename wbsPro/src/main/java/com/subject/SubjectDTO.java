@@ -9,7 +9,8 @@ public class SubjectDTO {
 	private String sub_plan_end; // 대분류 계획 종료일
 	private int sub_plan_per; // 대분류 계획 진척율
 
-	private String user_name; // 담당자
+	private String user_name; // 사원 이름
+	private int user_code; // 사원 코드
 
 	private String sub_start; // 대분류 실적 시작일
 	private String sub_end; // 대분류 실적 종류일
@@ -90,6 +91,14 @@ public class SubjectDTO {
 
 	public String getSub_per() {
 		return sub_per;
+	}
+
+	public int getUser_code() {
+		return user_code;
+	}
+
+	public void setUser_code(int user_code) {
+		this.user_code = user_code;
 	}
 
 	public void setSub_per(String sub_per) {

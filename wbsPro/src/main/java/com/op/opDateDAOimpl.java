@@ -23,24 +23,22 @@ public class opDateDAOimpl implements OpDateDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			sql = "SELECT cat_date FROM catdate WHERE cat_date = ?";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getCat_date());
-			pstmt.executeQuery();
-			pstmt.close();
-			pstmt = null;
-
 			sql = "INSERT INTO opdate(Cat_date, op_date, op_name, op_plan_start, op_plan_end) VALUES (?,?,?,?,?)";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCat_date());
 			pstmt.setInt(2, dto.getOp_date());
 			pstmt.setString(3, dto.getOp_name());
 			pstmt.setString(4, dto.getOp_plan_start());
 			pstmt.setString(5, dto.getOp_plan_end());
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
-			 result = pstmt.executeUpdate();
+			sql = "INSERT INTO opcharge(op_date, user_code) VALUES (?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getOp_date());
+			pstmt.setInt(2, dto.getUser_code());
+			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 
@@ -73,7 +71,7 @@ public class opDateDAOimpl implements OpDateDAO {
 			}
 
 			if (e2.getErrorCode() == 1840 || e2.getErrorCode() == 1861) {
-				 System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
+				System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
 			} else {
 				System.out.println(e2.toString());
 			}
@@ -100,7 +98,6 @@ public class opDateDAOimpl implements OpDateDAO {
 
 			}
 
-			DBConn.close();
 		}
 
 		return result;
@@ -108,7 +105,7 @@ public class opDateDAOimpl implements OpDateDAO {
 
 	@Override
 	public int updateOpDate(OpDateDTO dto) throws SQLException {
-		int result =0;
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 
@@ -116,20 +113,24 @@ public class opDateDAOimpl implements OpDateDAO {
 			sql = "UPDATE opdate SET op_name = ?, op_plan_start = ?, op_plan_end = ? WHERE Op_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, dto.getOp_name());
 			pstmt.setString(2, dto.getOp_plan_start());
 			pstmt.setString(3, dto.getOp_plan_end());
 			pstmt.setInt(4, dto.getOp_date());
-
-			 result = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 
-		
+			sql = "UPDATE subcharge SET user_code = ? WHERE sub_date_code = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getUser_code()); // 대분류명
+			pstmt.setInt(2, dto.getUser_code()); // 사원 코드
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -148,17 +149,24 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql;
 
 		try {
+			sql = "DELETE FROM opcharge WHERE Op_date = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Op_date);
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
 			sql = "DELETE FROM opdate WHERE Op_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setInt(1, Op_date);
-
-			result = pstmt.executeUpdate();
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();

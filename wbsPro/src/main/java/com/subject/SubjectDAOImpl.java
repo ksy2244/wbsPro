@@ -16,18 +16,12 @@ public class SubjectDAOImpl implements SubjectDAO {
 	public int insertSubject(SubjectDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
+		
 		String sql;
 		try {
 
 			conn.setAutoCommit(false); // 자동 커밋 해제
-			// 프로젝트 코드 찾는 sql
-			sql = "SELECT prj_code FROM project WHERE prj_code = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getPrj_code());
-			pstmt.executeQuery();
-			pstmt.close();
-			pstmt = null;
-
+			
 			// 대분류 추가하는 sql
 			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name)" + " VALUES(?,?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -37,7 +31,16 @@ public class SubjectDAOImpl implements SubjectDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-
+			
+			// 담당자 추가
+			sql = "INSERT INTO subcharge(sub_date_code, user_code) VALUES(?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getSub_date_code()); // 대분류 코드
+			pstmt.setInt(2, dto.getUser_code()); // 담당자 코드
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
 			conn.commit(); // 커밋
 
 		} catch (SQLIntegrityConstraintViolationException e) {
@@ -96,7 +99,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 				// TODO: handle exception
 			}
 
-			DBConn.close();
+			
 		}
 		return result;
 
@@ -110,12 +113,20 @@ public class SubjectDAOImpl implements SubjectDAO {
 		try {
 			// 대분류일정 수정 sql
 			sql = "UPDATE subdate SET sub_name = ? WHERE sub_date_code = ?";
-
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
+			sql = "UPDATE subcharge SET user_code = ? WHERE sub_date_code = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getUser_code()); // 대분류명
+			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getErrorCode() == 1) {
@@ -140,13 +151,21 @@ public class SubjectDAOImpl implements SubjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
+			
+			sql = " DELETE FROM subcharge WHERE sub_date_code = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setInt(1, sub_date_code);
-
 			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
+			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sub_date_code);
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
 		} catch (SQLException e) {
 			e.printStackTrace();

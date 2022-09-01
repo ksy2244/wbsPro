@@ -110,7 +110,7 @@ public class PlanUI {
 		while (true) {
 
 			try {
-				System.out.print("1. 프로젝트 등록 2. 대분류 등록 3. 중분류 등록 4. 소분류 등록   6. 뒤로가기 ");
+				System.out.print("1. 프로젝트 등록 2. 대분류 등록 3. 중분류 등록 4. 소분류 등록  5. 뒤로가기 ");
 
 				ch = Integer.parseInt(br.readLine());
 
@@ -132,7 +132,9 @@ public class PlanUI {
 				case 4:
 					opUI.addOpDate();
 					break;
-
+				case 5:
+					return;				
+					
 				}
 
 			} catch (Exception e) {
@@ -148,7 +150,7 @@ public class PlanUI {
 		while (true) {
 
 			try {
-				System.out.print("1. 프로젝트 수정 2. 대분류 수정 3. 중분류 수정 4. 소분류 수정   6. 뒤로가기 ");
+				System.out.print("1. 프로젝트 수정 2. 대분류 수정 3. 중분류 수정 4. 소분류 수정 5. 뒤로가기 ");
 
 				ch = Integer.parseInt(br.readLine());
 
@@ -170,7 +172,8 @@ public class PlanUI {
 				case 4:
 					opUI.updateOpDate();
 					break;
-
+				case 5:
+					return;
 				}
 
 			} catch (Exception e) {
@@ -190,7 +193,7 @@ public class PlanUI {
 		while (true) {
 
 			try {
-				System.out.print("1. 프로젝트 삭제 2. 대분류 삭제 3. 중분류 삭제 4. 소분류 삭제   6. 뒤로가기 ");
+				System.out.print("1. 프로젝트 삭제 2. 대분류 삭제 3. 중분류 삭제 4. 소분류 삭제  5. 뒤로가기 ");
 
 				ch = Integer.parseInt(br.readLine());
 
@@ -213,6 +216,8 @@ public class PlanUI {
 				case 4:
 					opUI.deleteOpDate();
 					break;
+				case 5:
+					return;
 
 				}
 
