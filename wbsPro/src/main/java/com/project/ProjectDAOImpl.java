@@ -3,6 +3,7 @@ package com.project;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -21,12 +22,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) " + "VALUES (?, ?, ?, ?)";
+			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN, OC_CODE, prj_plan_start, prj_plan_end) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
 			pstmt.setString(2, dto.getPrj_name()); // 프로젝트명
 			pstmt.setString(3, dto.getPrj_ov()); // 프로젝트 개요
 			pstmt.setString(4, dto.getPrj_plan()); // 프로젝트 설명
+			pstmt.setInt(5, dto.getOc_code());// 업체 코드
+			pstmt.setString(6, dto.getPrj_plan_start());
+			pstmt.setString(7, dto.getPrj_plan_end());
 
 			result = pstmt.executeUpdate();
 			pstmt.close();
@@ -44,6 +50,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 			conn.commit(); // 커밋
 
 		} catch (SQLIntegrityConstraintViolationException e) {
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
 			// 기본키 제약 위반, NOT NULL 등의 제약 위반
 			if (e.getErrorCode() == 1) {
 				System.out.println("코드 중복으로 등록이 불가능합니다");
@@ -51,10 +62,24 @@ public class ProjectDAOImpl implements ProjectDAO {
 			} else if (e.getErrorCode() == 1400) {
 				System.out.println("필수 입력 사항을 입력하지 않았습니다 ");
 
+			} else if (e.getErrorCode() == 2291) {// 무결성 제약조건
+				System.out.println("등록되지않은 업체 코드 혹은 담당자 코드입니다.");
+
 			} else {
 				System.out.println(e.toString());
 			}
 
+		} catch (SQLDataException e2) {
+			try {
+				conn.rollback();
+			} catch (Exception e) {
+
+			}
+
+			if (e2.getErrorCode() == 1840) {
+				System.out.println("입력된 날짜가 형식에 부적합합니다.");
+
+			}
 		} catch (SQLException e2) {
 			try {
 				conn.rollback();
@@ -67,7 +92,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 			} else if (e2.getErrorCode() == 1400) {
 				System.out.println("필수사항을 입력하지않았습니다.");
 			} else if (e2.getErrorCode() == 2291) {
-				System.out.println("대분류 코드를 잘못입력했습니다");
+				System.out.println("등록되지않은 업체 코드 혹은 담당자 코드입니다.");
 			} else {
 				System.out.println(e2.toString()); // 오류메세지 찍기
 			}
@@ -106,14 +131,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 			conn.setAutoCommit(false);
 
-			sql = "UPDATE project SET Prj_name = ?, Prj_ov = ?, Prj_plan = ? WHERE Prj_code = ?";
+			sql = "UPDATE project SET Prj_name = ?, Prj_ov = ?, Prj_plan = ?, OC_CODE = ?, prj_plan_start = ?,  prj_plan_end = ?  WHERE Prj_code = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getPrj_name()); // 프로젝트명
 			pstmt.setString(2, dto.getPrj_ov()); // 프로젝트 개요
 			pstmt.setString(3, dto.getPrj_plan()); // 프로젝트 설명
-			pstmt.setInt(4, dto.getPrj_code()); // 프로젝트 설명
+			pstmt.setInt(4, dto.getOc_code());// 업체 코드
+			pstmt.setString(5, dto.getPrj_plan_start());
+			pstmt.setString(6, dto.getPrj_plan_end());
+			pstmt.setInt(7, dto.getPrj_code());
 
 			result = pstmt.executeUpdate();
 			pstmt.close();
@@ -130,6 +158,29 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 			conn.commit(); // 커밋
 
+		} catch (SQLIntegrityConstraintViolationException e) {
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
+
+			if (e.getErrorCode() == 1400) {
+				System.out.println("필수사항을 입력하지않았습니다.");
+			} else if (e.getErrorCode() == 2291) {
+				System.out.println("등록되지않은 업체 코드 혹은 담당자 코드입니다.");
+			}
+		} catch (SQLDataException e) {
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
+
+			if (e.getErrorCode() == 1840) {
+				System.out.println("입력된 날짜가 형식에 부적합합니다.");
+
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
@@ -137,6 +188,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 				conn.rollback();
 			} catch (Exception e2) {
 				// TODO: handle exception
+			}
+			
+			if (e.getErrorCode() == 1400) {
+				System.out.println("필수사항을 입력하지않았습니다.");
+			} else if (e.getErrorCode() == 2291) {
+				System.out.println("등록되지않은 업체 코드 혹은 담당자 코드입니다.");
 			}
 
 		} finally {
@@ -164,8 +221,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 		try {
 			conn.setAutoCommit(false);
-			
-	       sql = "DELETE FROM PROCHARGE WHERE prj_code = ? ";
+
+			sql = "DELETE FROM PROCHARGE WHERE prj_code = ? ";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -174,10 +231,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
-			
-			
-			
+
 			sql = "DELETE FROM project WHERE prj_code = ? ";
 
 			pstmt = conn.prepareStatement(sql);
@@ -187,8 +241,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-
-		
 
 			conn.commit();
 

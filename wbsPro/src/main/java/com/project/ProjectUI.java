@@ -21,6 +21,9 @@ public class ProjectUI {
 			System.out.print("프로젝트 코드? "); // 프로젝트 코드
 			int n = Integer.parseInt(br.readLine());
 			dto.setPrj_code(n);
+			
+			System.out.print("발주업체 코드? "); 
+			dto.setOc_code(Integer.parseInt(br.readLine()));
 
 			System.out.print("프로젝트명? "); // 프로젝트명
 			dto.setPrj_name(br.readLine());
@@ -31,12 +34,19 @@ public class ProjectUI {
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
 			
+			System.out.print("프로젝트 시작일? "); // 프로젝트 설명
+			dto.setPrj_plan_start(br.readLine());
+			
+			System.out.print("프로젝트 종료일? "); // 프로젝트 설명
+			dto.setPrj_plan_end(br.readLine());
+			
+			
 			System.out.print("담당자 코드? "); // 프로젝트 담당자 코드
 			dto.setUser_code(Integer.parseInt(br.readLine()));
 
 			 int result = dao.insertProject(dto);
 
-			 if(result != 0) {
+			 if(result == 2) {
 				 System.out.println("[프로젝트 등록 성공]");
 			 } else {
 				 System.out.println("[프로젝트 등록 실패]");
@@ -59,6 +69,9 @@ public class ProjectUI {
 
 			System.out.print("프로젝트명? "); // 프로젝트명
 			dto.setPrj_name(br.readLine());
+			
+			System.out.print("발주업체 코드? "); 
+			dto.setOc_code(Integer.parseInt(br.readLine()));
 
 			System.out.print("프로젝트 개요? "); // 프로젝트 개요
 			dto.setPrj_ov(br.readLine());
@@ -66,13 +79,19 @@ public class ProjectUI {
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
 			
+			System.out.print("프로젝트 시작일? "); // 프로젝트 설명
+			dto.setPrj_plan_start(br.readLine());
+			
+			System.out.print("프로젝트 종료일? "); // 프로젝트 설명
+			dto.setPrj_plan_end(br.readLine());
+			
 			
 			System.out.print("담당자 코드? "); // 담당자 코드 수정
 			dto.setUser_code(Integer.parseInt(br.readLine()));
 			
 			 int result = dao.updateProject(dto);
 
-			if(result != 0) {
+			if(result == 2) {
 				 System.out.println("[프로젝트 수정 성공]");
 			 } else {
 				 System.out.println("[프로젝트 수정 실패]");
@@ -169,7 +188,7 @@ public class ProjectUI {
 
 			 int result = dao.deleteProject(Integer.parseInt(br.readLine()));
 
-			 if(result != 0) {
+			 if(result == 2) {
 				 System.out.println("[프로젝트 삭제 성공]");
 			 } else {
 				 System.out.println("[프로젝트 삭제 실패]");

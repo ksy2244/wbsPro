@@ -1,6 +1,8 @@
 package com.project;
 
 public class ProjectDTO {
+	private int oc_code; // 발주업체 코드 
+	
 	private int prj_code; // 프로젝트 코드
 	private String prj_name; // 프로젝트명
 	private String prj_ov; // 프로젝트 개요
@@ -17,7 +19,12 @@ public class ProjectDTO {
 	private String prj_end; // 프로젝트 실적 종류일
 	private String prj_per; // 프로젝트 실적 진척율
 	private int prj_comp; // 프로젝트 업무 구성비
-	
+	public int getOc_code() {
+		return oc_code;
+	}
+	public void setOc_code(int oc_code) {
+		this.oc_code = oc_code;
+	}
 	public int getPrj_code() {
 		return prj_code;
 	}
@@ -96,5 +103,11 @@ public class ProjectDTO {
 	public void setPrj_comp(int prj_comp) {
 		this.prj_comp = prj_comp;
 	}
+	
+	
+	
+	
+	
+	
 
 }
