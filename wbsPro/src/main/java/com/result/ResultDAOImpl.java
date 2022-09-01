@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.cat.CatDateDTO;
 import com.op.OpDateDTO;
+import com.project.ProjectDTO;
 import com.subject.SubjectDTO;
 
 import com.util.DBConn;
@@ -92,17 +93,53 @@ public class ResultDAOImpl implements ResultDAO {
 	
 	
 	@Override  // 프로젝트 실적시작일
-	public int resultProgressProjectStartInput(String proDateStart) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int resultProgressProjectStartInput(ProjectDTO dto) throws SQLException {
+		int result = 0; 
+		PreparedStatement pstmt = null;
+		String sql;
+		try{
+			// 프로젝트일정 수정 sql
+			sql = "UPDATE prjdate SET prj_start = ? WHERE prj_code = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getPrj_start()); // 프로젝트실적시작일
+			pstmt.setInt(2, dto.getPrj_code());// 프로젝트코드
+			pstmt.executeUpdate();
+
+			System.out.println("프로젝트실적시작일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 
 
 	@Override  // 프로젝트 실적종료일
-	public int resultProgressProjectEndInput(String proDateEnd) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int resultProgressProjectEndInput(ProjectDTO dto) throws SQLException {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			// 프로젝트일정 수정 sql
+			sql = "UPDATE prjdate SET prj_end = ? WHERE prj_code = ? AND prj_start is not null";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getPrj_end()); // 프로젝트실적시작일
+			pstmt.setInt(2, dto.getPrj_code());// 프로젝트코드
+			pstmt.executeUpdate();
+
+			System.out.println("프로젝트실적종료일 추가");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	

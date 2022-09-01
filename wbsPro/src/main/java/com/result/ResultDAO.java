@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import com.subject.SubjectDTO;
 import com.cat.CatDateDTO;
 import com.op.OpDateDTO;
+import com.project.ProjectDTO;
 
 public interface ResultDAO { // 실적 관리
 	
@@ -24,10 +25,10 @@ public interface ResultDAO { // 실적 관리
 	
 	
 	// 프로젝트 실적 시작일 
-	public int resultProgressProjectStartInput(String proDateStart) throws SQLException;
+	public int resultProgressProjectStartInput(ProjectDTO dto) throws SQLException;
 		
 	// 프로젝트 실적 종료일
-	public int resultProgressProjectEndInput(String proDateEnd) throws SQLException;
+	public int resultProgressProjectEndInput(ProjectDTO dto) throws SQLException;
 	
 	// 대분류실적시작일시작
 	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException;

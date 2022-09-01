@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 
 import com.cat.CatDateDTO;
 import com.op.OpDateDTO;
+import com.project.ProjectDTO;
 import com.subject.SubjectDTO;
+
 import com.util.DBConn;
 
 public class ResultUI {
@@ -78,7 +80,7 @@ public class ResultUI {
 
 
 				switch (ch) {
-				// case 1: resultProgressProjectDateStartInput();break; 아직 없음
+				case 1: resultProgressProjectStartInput();break;
 				case 2: resultProgressSubDateStartInput();break;
 				case 3: resultProgressCatDateStartInput();break;
 				case 4: resultProgressOpDateStartInput();break;
@@ -93,11 +95,21 @@ public class ResultUI {
 		
 	}
 	
-	public void resultProgressProjectDateStartInput() {// 실적시작일 입력(프로젝트)
+	public void resultProgressProjectStartInput() {// 실적시작일 입력(프로젝트)
 		System.out.println("프로젝트 실적 시작일 입력");
 		
 		try {
+			ProjectDTO dto = new ProjectDTO();
 			
+			System.out.print("프로젝트 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setPrj_code(n);	
+			
+			System.out.print("프로젝트 실적 시작일을 입력하세요.");
+			dto.setPrj_start(br.readLine());	
+			
+			
+			dao.resultProgressProjectStartInput(dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,7 +194,7 @@ public class ResultUI {
 
 
 				switch (ch) {
-				case 1: resultProgressProjectDateEndInput();break;
+				case 1: resultProgressProjectEndInput();break;
 				case 2: resultProgressSubDateEndInput();break;
 				case 3: resultProgressCatDateEndInput();break;
 				case 4: resultProgressOpDateEndInput();break;
@@ -197,11 +209,21 @@ public class ResultUI {
 		
 	}
 		
-	public void resultProgressProjectDateEndInput() {// 실적종료일 입력(프로젝트)
+	public void resultProgressProjectEndInput() {// 실적종료일 입력(프로젝트)
 		System.out.println("프로젝트 실적 종료일 입력");
 		
 		try {
+			ProjectDTO dto = new ProjectDTO();
 			
+			System.out.print("대분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setPrj_code(n);	
+			
+			System.out.print("대분류 실적 종료일을 입력하세요.");
+			dto.setPrj_end(br.readLine());	
+			
+			
+			dao.resultProgressProjectEndInput(dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
