@@ -19,6 +19,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
+			conn.setAutoCommit(false);
+
 			sql = "INSERT INTO project(PRJ_CODE, PRJ_NAME, PRJ_OV, PRJ_PLAN) " + "VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
@@ -27,6 +29,19 @@ public class ProjectDAOImpl implements ProjectDAO {
 			pstmt.setString(4, dto.getPrj_plan()); // 프로젝트 설명
 
 			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			sql = "INSERT INTO PROCHARGE(PRJ_CODE, user_code) VALUES (?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
+			pstmt.setInt(2, dto.getUser_code());// 사원코드
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			conn.commit(); // 커밋
 
 		} catch (SQLIntegrityConstraintViolationException e) {
 			// 기본키 제약 위반, NOT NULL 등의 제약 위반
@@ -39,14 +54,28 @@ public class ProjectDAOImpl implements ProjectDAO {
 			} else {
 				System.out.println(e.toString());
 			}
-	
+
 		} catch (SQLException e2) {
-			e2.printStackTrace();
-			
+			try {
+				conn.rollback();
+			} catch (Exception e) {
+
+			}
+
+			if (e2.getErrorCode() == 1) {
+				System.out.println("코드 중복으로 등록이 불가능합니다");
+			} else if (e2.getErrorCode() == 1400) {
+				System.out.println("필수사항을 입력하지않았습니다.");
+			} else if (e2.getErrorCode() == 2291) {
+				System.out.println("대분류 코드를 잘못입력했습니다");
+			} else {
+				System.out.println(e2.toString()); // 오류메세지 찍기
+			}
+			throw e2;
+
 		} catch (Exception e2) {
-			e2.printStackTrace();	
-			
-			
+			e2.printStackTrace();
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -54,6 +83,14 @@ public class ProjectDAOImpl implements ProjectDAO {
 				} catch (Exception e) {
 				}
 			}
+
+			try {
+				// 다시 커밋되도록 설정
+				conn.setAutoCommit(true);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
 		}
 
 		return result;
@@ -62,10 +99,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public int updateProject(ProjectDTO dto) throws SQLException {
-		int result =0;
+		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
+
+			conn.setAutoCommit(false);
 
 			sql = "UPDATE project SET Prj_name = ?, Prj_ov = ?, Prj_plan = ? WHERE Prj_code = ?";
 
@@ -77,9 +116,29 @@ public class ProjectDAOImpl implements ProjectDAO {
 			pstmt.setInt(4, dto.getPrj_code()); // 프로젝트 설명
 
 			result = pstmt.executeUpdate();
-			
+			pstmt.close();
+			pstmt = null;
+
+			sql = "UPDATE PROCHARGE set   user_code = ? WHERE Prj_code = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getUser_code());// 사원코드
+			pstmt.setInt(2, dto.getPrj_code()); // 프로젝트 코드
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			conn.commit(); // 커밋
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -87,6 +146,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 				} catch (Exception e) {
 				}
 			}
+		}
+		try {
+			conn.setAutoCommit(true);
+		} catch (Exception e) {
+
 		}
 
 		return result;
@@ -99,17 +163,43 @@ public class ProjectDAOImpl implements ProjectDAO {
 		String sql;
 
 		try {
-
-			sql = "DELETE FROM project WHERE prj_code = ? ";
+			conn.setAutoCommit(false);
+			
+	       sql = "DELETE FROM PROCHARGE WHERE prj_code = ? ";
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, project_Code);
 
 			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
+			
+			
+			
+			sql = "DELETE FROM project WHERE prj_code = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, project_Code);
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+		
+
+			conn.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
+
 			throw e;
 		} finally {
 			if (pstmt != null) {
@@ -117,6 +207,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 					pstmt.close();
 				} catch (Exception e) {
 				}
+			}
+
+			try {
+				conn.setAutoCommit(true);
+			} catch (Exception e2) {
+
 			}
 		}
 

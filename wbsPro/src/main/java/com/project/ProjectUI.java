@@ -30,6 +30,9 @@ public class ProjectUI {
 
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
+			
+			System.out.print("담당자 코드? "); // 프로젝트 담당자 코드
+			dto.setUser_code(Integer.parseInt(br.readLine()));
 
 			 int result = dao.insertProject(dto);
 
@@ -62,7 +65,10 @@ public class ProjectUI {
 
 			System.out.print("프로젝트 설명? "); // 프로젝트 설명
 			dto.setPrj_plan(br.readLine());
-
+			
+			
+			System.out.print("담당자 코드? "); // 담당자 코드 수정
+			dto.setUser_code(Integer.parseInt(br.readLine()));
 			
 			 int result = dao.updateProject(dto);
 
