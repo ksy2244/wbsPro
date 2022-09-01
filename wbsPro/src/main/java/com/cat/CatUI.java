@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.subject.SubjectDAO;
 import com.subject.SubjectDAOImpl;
+import com.subject.SubjectDTO;
 
 public class CatUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,18 +16,16 @@ public class CatUI {
 	public void insertCatDate() {
 		System.out.println("[중분류 등록]");
 		
-		int sub_date_code;
+		int subCode;
 		try {
 			CatDateDTO dto = new CatDateDTO();
 			System.out.print("대분류 코드 ? "); // 대분류 일정코드
-			sub_date_code = Integer.parseInt(br.readLine());
+			subCode = Integer.parseInt(br.readLine());
+			dto.setSub_date_code(subCode);
 
-			dto.setSub_date_code(sub_date_code);
 
-			System.out.print("중분류 코드?"); // 중분류 일정코드
-			int n = Integer.parseInt(br.readLine());
-			dto.setCat_date(n);
-
+			dto.setCat_date(findCat(subCode)); // 중분류 코드 자동부여 
+			
 			System.out.print("중분류명 ?"); // 중분류일정명
 			dto.setCat_name(br.readLine());
 
@@ -41,7 +40,7 @@ public class CatUI {
 
 			 int result = cdao.insertCatDate(dto);
 
-			 if(result != 0) {
+			 if(result == 2) {
 				 System.out.println("[중분류 등록 성공]");
 			 } else {
 				 System.out.println("[중분류 등록 실패]");
@@ -77,7 +76,7 @@ public class CatUI {
 			
 			 int result = cdao.updateCatDate(dto);
 			
-			 if(result != 0) {
+			 if(result == 2) {
 				 System.out.println("[중분류 수정 성공]");
 			 } else {
 				 System.out.println("[중분류 수정 실패]");
@@ -102,7 +101,7 @@ public class CatUI {
 			
 			int result = cdao.deleteCatDate(cat_date);
 			
-			 if(result != 0) {
+			 if(result == 2) {
 				 System.out.println("[중분류 삭제 성공]");
 			 } else {
 				 System.out.println("[중분류 삭제 실패]");
@@ -192,6 +191,29 @@ public class CatUI {
 
 	public void workCompUpdateCatDate() {
 
+	}
+	public int findCat(int prjCode) {
+		int catCode = 0;
+		try {
+			CatDateDTO dto = cdao.findCat(prjCode);
+
+			if (dto == null) {
+				System.out.println("등록된 자료가 없습니다");
+				return 0;
+			}
+
+			catCode = dto.getCat_date();
+			if (catCode == 0) {
+				catCode = prjCode * 100 + 1;
+			} else {
+				catCode = catCode + 1;
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catCode;
 	}
 
 }

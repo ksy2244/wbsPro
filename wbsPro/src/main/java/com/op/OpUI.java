@@ -39,7 +39,7 @@ public class OpUI {
 
 			int result = dao.insertOpDate(dto);
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[소분류 등록 성공]");
 			} else {
 				System.out.println("[소분류 등록 실패]");
@@ -72,7 +72,7 @@ public class OpUI {
 
 			int result = dao.updateOpDate(dto);
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[소분류 수정 성공]");
 			} else {
 				System.out.println("[소분류 수정 실패]");
@@ -93,7 +93,7 @@ public class OpUI {
 
 			int result = dao.deleteOpDate(Integer.parseInt(br.readLine()));
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[소분류 삭제 성공]");
 			} else {
 				System.out.println("[소분류 삭제 실패]");

@@ -35,7 +35,7 @@ public class SubjectUI {
 
 			int result = dao.insertSubject(dto);
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[대분류 등록 성공]");
 			} else {
 				System.out.println("[대분류 등록 실패]");
@@ -66,7 +66,7 @@ public class SubjectUI {
 
 			int result = dao.updateSubject(dto);
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[대분류 수정 성공]");
 			} else {
 				System.out.println("[대분류 수정 실패]");
@@ -86,7 +86,7 @@ public class SubjectUI {
 
 			int result = dao.deleteSubject(Integer.parseInt(br.readLine()));
 
-			if (result != 0) {
+			if (result == 2) {
 				System.out.println("[대분류 삭제 성공]");
 			} else {
 				System.out.println("[대분류 삭제 실패]");

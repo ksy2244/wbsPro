@@ -39,4 +39,7 @@ public interface CatDateDAO {
 	// 업무 구성비 수정
 	public int workCompUpdateCatDate(int input) throws SQLException;
 
+	// 중분류 코드부여
+	public CatDateDTO findCat(int prjCode);
+
 }

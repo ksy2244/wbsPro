@@ -122,7 +122,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getUser_code()); // 대분류명
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
-			result = pstmt.executeUpdate();
+			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 
@@ -161,7 +161,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sub_date_code);
-			result = pstmt.executeUpdate();
+			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 

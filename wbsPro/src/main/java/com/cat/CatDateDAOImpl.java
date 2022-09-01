@@ -9,6 +9,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.subject.SubjectDTO;
 import com.util.DBConn;
 
 public class CatDateDAOImpl implements CatDateDAO {
@@ -42,7 +43,6 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCat_date()); // 대분류 일정코드
 			pstmt.setInt(2, dto.getUser_code()); // 중분류 일정코드
-
 			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
@@ -187,25 +187,18 @@ public class CatDateDAOImpl implements CatDateDAO {
 			sql = " DELETE FROM CATCHARGE WHERE cat_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setInt(1, cat_date);
-
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
-		
+
 			sql = " DELETE FROM catdate WHERE cat_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setInt(1, cat_date);
-
 			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-
-			
 
 			conn.commit();
 
@@ -417,6 +410,48 @@ public class CatDateDAOImpl implements CatDateDAO {
 	public int workCompUpdateCatDate(int input) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public CatDateDTO findCat(int subCode) {
+		// 입력한 프로젝트에 해당하는 가장 큰 중분류 값 찾기
+		CatDateDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql =  "SELECT MAX(cat_date) nextCat FROM catdate WHERE sub_date_code =  ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, subCode);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new CatDateDTO();
+				dto.setSub_date_code(rs.getInt("nextCat"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return dto;
 	}
 
 }
