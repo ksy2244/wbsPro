@@ -38,97 +38,26 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 
-	@Override  // 중분류 실적 진척율 입력
-	public int perforProgressAllUpdate(int cat_date, int op_date, int op_date_per) throws SQLException {
+	@Override  // 소분류 실적 진척율 입력
+	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
+		
 		int result = 0;
-		int datePer = 0;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String sql;
 		
 		try {
-				
-			conn.setAutoCommit(false);
 			
 			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, op_date_per);
+			pstmt.setInt(1, performOpDate);
 			pstmt.setInt(2, op_date);
 			result = pstmt.executeUpdate();
 			
 			pstmt.close();
 			pstmt = null;
 			
-			sql = " SELECT AVG(OP_PER) per FROM opdate WHERE CAT_DATE = ? ";
 			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cat_date);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				datePer = rs.getInt("per");
-			}
-			
-			rs.close();
-			rs = null;
-			pstmt.close();
-			pstmt = null;
-			
-			sql = " UPDATE CATDATE SET CAT_PER = ? WHERE CAT_DATE = ? ";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, datePer);
-			pstmt.setInt(2, cat_date);
-			result = pstmt.executeUpdate();
-			
-			pstmt.close();
-			pstmt = null;
-			
-			sql = "SELECT AVG(CAT_PER) per FROM CATDATE WHERE SUB_DATE_CODE = ? ";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cat_date);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				datePer = rs.getInt("per");
-			}
-			
-			rs.close();
-			rs = null;
-			pstmt.close();
-			pstmt = null;
-			
-			
-			sql = " UPDATE SUBDATE SET SUB_PER = ? WHERE SUB_DATE_CODE = ? ";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, op_date_per);
-			pstmt.setInt(2, cat_date);
-			result = pstmt.executeUpdate();
-			
-			pstmt.close();
-			pstmt = null;
-			
-			sql = "SELECT AVG(SUB_PER) per FROM SUBDATE WHERE PRJ_CODE = ? ";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cat_date);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				datePer = rs.getInt("per");
-			}
-			
-			rs.close();
-			rs = null;
-			pstmt.close();
-			pstmt = null;
-			
-			
-			
-			conn.commit();
 		
 		} catch (SQLException e) {
 			
@@ -139,13 +68,8 @@ public class ResultDAOImpl implements ResultDAO {
 			}
 			
 		}  finally {
-			if(rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					
-				}
-			}
+			
+			
 			
 			if(pstmt != null) {
 				try {
@@ -155,7 +79,6 @@ public class ResultDAOImpl implements ResultDAO {
 				}
 			}
 			
-			conn.setAutoCommit(true);
 		
 		}
 		

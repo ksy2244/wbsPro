@@ -288,8 +288,8 @@ public class ResultUI {
 
 				switch (ch) {
 				case 1: resultProgressPerOpDate(); break;
-				case 2: resultProgressPerCatDate(); break;
-				case 3: resultProgressPerSubDate(); break;
+				case 2: // resultProgressPerCatDate(); break;
+				case 3: // resultProgressPerSubDate(); break;
 				case 4: return; 
 				}
 
