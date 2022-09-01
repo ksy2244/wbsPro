@@ -35,6 +35,9 @@ public class CatUI {
 
 			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일
 			dto.setCat_plan_end(br.readLine());
+			
+			System.out.print("담당자 코드?"); //중분류 담당자 코드
+			dto.setUser_code(Integer.parseInt(br.readLine()));
 
 			 int result = cdao.insertCatDate(dto);
 
@@ -68,7 +71,10 @@ public class CatUI {
 
 			System.out.print("중분류 계획 종료일 ?"); // 중분류 계획 종료일 수정
 			dto.setCat_plan_end(br.readLine());
-
+			
+			System.out.print("담당자 코드?"); //중분류 담당자 코드 수정
+			dto.setUser_code(Integer.parseInt(br.readLine()));
+			
 			 int result = cdao.updateCatDate(dto);
 			
 			 if(result != 0) {

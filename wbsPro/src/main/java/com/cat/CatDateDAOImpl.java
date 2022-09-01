@@ -23,13 +23,6 @@ public class CatDateDAOImpl implements CatDateDAO {
 		try {
 
 			conn.setAutoCommit(false);
-			// 대분류일정코드 찾는 sql
-			sql = "SELECT sub_date_code FROM subdate WHERE sub_date_code = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getSub_date_code());
-			pstmt.executeQuery();
-			pstmt.close();
-			pstmt = null;
 
 			// catdate 추가 sql
 			sql = " INSERT INTO catdate(sub_date_code, cat_date, cat_name, cat_plan_start, cat_plan_end) VALUES(?,?,?,?,?)";
@@ -44,8 +37,17 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.close();
 			pstmt = null;
 
+			sql = " INSERT INTO catcharge(cat_date, user_code) VALUES(?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getCat_date()); // 대분류 일정코드
+			pstmt.setInt(2, dto.getUser_code()); // 중분류 일정코드
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
 			conn.commit(); // 커밋
-		
 
 		} catch (SQLIntegrityConstraintViolationException e) {
 
@@ -74,7 +76,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 			}
 
 			if (e2.getErrorCode() == 1840 || e2.getErrorCode() == 1861) {
-                System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
+				System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
 			} else {
 				System.out.println(e2.toString());
 			}
@@ -103,7 +105,6 @@ public class CatDateDAOImpl implements CatDateDAO {
 				// TODO: handle exception
 			}
 
-			DBConn.close();
 		}
 		return result;
 	}
@@ -115,6 +116,9 @@ public class CatDateDAOImpl implements CatDateDAO {
 		String sql;
 		try {
 			// 중분류일정 수정 sql
+
+			conn.setAutoCommit(false);
+
 			sql = "UPDATE catdate SET cat_name = ? , cat_plan_start = ? , cat_plan_end = ? WHERE cat_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
@@ -125,15 +129,37 @@ public class CatDateDAOImpl implements CatDateDAO {
 			pstmt.setInt(4, dto.getCat_date()); // 중분류 일정코드
 
 			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
 
-			
+			sql = "UPDATE catcharge SET user_code  = ? WHERE cat_date = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, dto.getUser_code()); // 중분류 일정코드
+			pstmt.setInt(2, dto.getCat_date()); // 중분류 일정코드
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			conn.commit(); // 커밋
+
 		} catch (SQLIntegrityConstraintViolationException e) {
+
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
+
 			if (e.getErrorCode() == 1) {
 				System.out.println("중분류일정 코드 중복입니다.");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+			conn.rollback();
+
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -141,29 +167,55 @@ public class CatDateDAOImpl implements CatDateDAO {
 				}
 			}
 		}
+		try {
+			conn.setAutoCommit(true);
+		} catch (Exception e) {
+
+		}
 		return result;
 	}
 
-	@Override  
+	@Override
 	public int deleteCatDate(int cat_date) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 
 		try {
+			conn.setAutoCommit(false);
 
-        
-		
-			sql = " DELETE FROM catdate WHERE cat_date = ?";
-			
+			sql = " DELETE FROM CATCHARGE WHERE cat_date = ?";
+
 			pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, cat_date);
+			pstmt.setInt(1, cat_date);
 
-            result = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+			
+		
+			sql = " DELETE FROM catdate WHERE cat_date = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, cat_date);
+
+			result += pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = null;
+
+			
+
+			conn.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+
+			}
 
 			throw e;
 		} finally {
@@ -173,6 +225,12 @@ public class CatDateDAOImpl implements CatDateDAO {
 				} catch (Exception e) {
 				}
 			}
+			try {
+				conn.setAutoCommit(true);
+			} catch (Exception e2) {
+
+			}
+
 		}
 		return result;
 	}
@@ -187,8 +245,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 		try {
 			sql = "SELECT sub_date_code FROM SUBDATE"
 					+ "SELECT cat_date, cat_name, cat_plan_start, cat_plan_end, cat_plan_per, cat_start, cat_end, cat_per, cat_comp, User_name"
-					+ " FROM catdate" 
-					+ " WHERE cat_name = ?";
+					+ " FROM catdate" + " WHERE cat_name = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, cat_date);
