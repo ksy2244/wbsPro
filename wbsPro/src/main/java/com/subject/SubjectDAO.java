@@ -30,4 +30,6 @@ public interface SubjectDAO {
 
 	public int workCompUpdateSubject(int input) throws SQLException; // 업무 구성비 수정
 
+	public SubjectDTO findSub(int prjCode); // 가장 큰 대분류 찾기
+
 }

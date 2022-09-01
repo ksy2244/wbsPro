@@ -16,6 +16,15 @@ public class SubjectDTO {
 	private String sub_end; // 대분류 실적 종류일
 	private String sub_per; // 대분류 실적 진척율
 	private int sub_comp; // 업무 구성비
+	private int nextSub;
+
+	public int getNextSub() {
+		return nextSub;
+	}
+
+	public void setNextSub(int nextSub) {
+		this.nextSub = nextSub;
+	}
 
 	public int getPrj_code() {
 		return prj_code;

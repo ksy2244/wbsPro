@@ -15,16 +15,14 @@ import com.util.DBConn;
 public class PlanUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	int ch;
-	ProjectUI projectUI= new ProjectUI();
-	OpUI opUI= new OpUI();
-	SubjectUI subjectUI= new SubjectUI();
-	CatUI catUI= new CatUI();
+	ProjectUI projectUI = new ProjectUI();
+	OpUI opUI = new OpUI();
+	SubjectUI subjectUI = new SubjectUI();
+	CatUI catUI = new CatUI();
 	private PlanImpl plan = new PlanImpl();
 
-	
 	public void menu() throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
-		
 
 		while (true) {
 
@@ -51,11 +49,10 @@ public class PlanUI {
 				case 4:
 					projectUI.searchWork();
 					break;
-					
+
 				case 5:
 					workList();
 					break;
-					
 
 				}
 
@@ -71,28 +68,28 @@ public class PlanUI {
 		int n = 0;
 		System.out.println("전체 리스트 조회");
 		System.out.print("검색할 프로젝트 작업명? ");
-		//PlanDTO dto = new PlanDTO();
+		// PlanDTO dto = new PlanDTO();
 		prj_code = Integer.parseInt(br.readLine());
-			
+
 		List<PlanDTO> list = plan.listAll(prj_code);
-		
+
 		System.out.println(list.size());
 		if (list.size() == 0) {
 			System.out.println("등록된 자료가 없습니다");
 			return;
 		}
-		
+
 		System.out.println("------------------------------------------------------------------------------");
 		System.out.println(" NO | WBS CODE | Dep |     작업명     |   기간   | 계획 진척율 |  업무 구성비 ");
 		System.out.println("-------------------------------------------------------------------------------");
 
 		for (PlanDTO dto : list) {
-			System.out.print(++n + " \t"); //no
-			System.out.print(dto.getWorkCode() + "\t"); //작업 코드 번호
-			System.out.print(dto.getLevel()+ "\t"); // 깊이
-			System.out.print(dto.getWorkName() + "\t\t"); //작업명
-			System.out.print(dto.getWorkPer()+ "\t"); //기간
-			System.out.print(dto.getWrokRes()+ "%" + "\t"); //진척율
+			System.out.print(++n + " \t"); // no
+			System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
+			System.out.print(dto.getLevel() + "\t"); // 깊이
+			System.out.print(dto.getWorkName() + "\t\t"); // 작업명
+			System.out.print(dto.getWorkPer() + "\t"); // 기간
+			System.out.print(dto.getWrokRes() + "%" + "\t"); // 진척율
 			System.out.println(dto.getWorkComp() + "\t"); // 업무 구성비
 		}
 		System.out.println();
@@ -101,11 +98,10 @@ public class PlanUI {
 
 	private void insert() {
 		System.out.println("[작업 등록]");
-		ProjectUI projectUI = new ProjectUI(); //프로젝
-		SubjectUI subjectUI = new SubjectUI(); // 대분류 
+		ProjectUI projectUI = new ProjectUI(); // 프로젝
+		SubjectUI subjectUI = new SubjectUI(); // 대분류
 		CatUI catUI = new CatUI(); // 중분류
 		OpUI opUI = new OpUI();
-		
 
 		while (true) {
 
@@ -133,8 +129,8 @@ public class PlanUI {
 					opUI.addOpDate();
 					break;
 				case 5:
-					return;				
-					
+					return;
+
 				}
 
 			} catch (Exception e) {
@@ -142,7 +138,6 @@ public class PlanUI {
 		}
 
 	}
-
 
 	private void update() {
 		System.out.println("[작업 수정]");
@@ -182,13 +177,7 @@ public class PlanUI {
 
 	}
 
-
-
-
-
-
 	private void delete() {
-
 
 		while (true) {
 
@@ -211,7 +200,7 @@ public class PlanUI {
 					break;
 				case 3:
 					catUI.deleteCatDate();
-					
+
 					break;
 				case 4:
 					opUI.deleteOpDate();
@@ -222,14 +211,10 @@ public class PlanUI {
 				}
 
 			} catch (Exception e) {
-				
+
 			}
 		}
-		
+
 	}
 
-	
-	
-	
-	
 }

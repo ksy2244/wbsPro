@@ -2,6 +2,7 @@ package com.subject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -16,12 +17,11 @@ public class SubjectDAOImpl implements SubjectDAO {
 	public int insertSubject(SubjectDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
 		String sql;
 		try {
 
 			conn.setAutoCommit(false); // 자동 커밋 해제
-			
 			// 대분류 추가하는 sql
 			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name)" + " VALUES(?,?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -31,7 +31,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
+
 			// 담당자 추가
 			sql = "INSERT INTO subcharge(sub_date_code, user_code) VALUES(?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -40,11 +40,10 @@ public class SubjectDAOImpl implements SubjectDAO {
 			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
+
 			conn.commit(); // 커밋
 
 		} catch (SQLIntegrityConstraintViolationException e) {
-
 			// 롤백
 			try {
 
@@ -70,7 +69,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			}
 
 			if (e2.getErrorCode() == 1840 || e2.getErrorCode() == 1861) {
-				 System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
+				System.out.println("입력된 값이 날짜 형식에 맞지않거나 타입이 다릅니다.");
 			} else {
 				System.out.println(e2.toString());
 			}
@@ -99,7 +98,6 @@ public class SubjectDAOImpl implements SubjectDAO {
 				// TODO: handle exception
 			}
 
-			
 		}
 		return result;
 
@@ -119,7 +117,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
+
 			sql = "UPDATE subcharge SET user_code = ? WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getUser_code()); // 대분류명
@@ -151,7 +149,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			
+
 			sql = " DELETE FROM subcharge WHERE sub_date_code = ?";
 
 			pstmt = conn.prepareStatement(sql);
@@ -159,7 +157,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
-			
+
 			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sub_date_code);
@@ -225,4 +223,44 @@ public class SubjectDAOImpl implements SubjectDAO {
 		return 0;
 	}
 
+	public SubjectDTO findSub(int prj) {
+		// 입력한 프로젝트에 해당하는 가장 큰 대분류 값 찾기
+		SubjectDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql = "SELECT MAX(sub_date_code) nextSub FROM subdate  WHERE prj_code = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, prj);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new SubjectDTO();
+				dto.setSub_date_code(rs.getInt("nextSub"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return dto;
+	}
 }
