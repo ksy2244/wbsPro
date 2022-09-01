@@ -3,6 +3,8 @@ package com.op;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.cat.CatDateDTO;
+
 public interface OpDateDAO {
 
 	// ① 작업 등록 메뉴
@@ -38,5 +40,8 @@ public interface OpDateDAO {
 
 	// 업무 구성비 수정
 	public int workCompUpdateOpDate(int input) throws SQLException;
+
+	// 소분류 자동 코드 부여
+	public OpDateDTO findOp(int opCode);
 
 }

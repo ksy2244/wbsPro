@@ -9,6 +9,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cat.CatDateDTO;
 import com.util.DBConn;
 
 public class opDateDAOimpl implements OpDateDAO {
@@ -287,5 +288,48 @@ public class opDateDAOimpl implements OpDateDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public OpDateDTO findOp(int opCode) {
+		// 가장 큰 소분류 찾기
+		OpDateDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql =  "SELECT MAX(op_date) nextOp FROM opdate WHERE op_date =  ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, opCode);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new OpDateDTO();
+				dto.setOp_date(rs.getInt("nextOp"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return dto;
+	}
+
 
 }

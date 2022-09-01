@@ -192,10 +192,10 @@ public class CatUI {
 	public void workCompUpdateCatDate() {
 
 	}
-	public int findCat(int prjCode) {
+	public int findCat(int subCode) {
 		int catCode = 0;
 		try {
-			CatDateDTO dto = cdao.findCat(prjCode);
+			CatDateDTO dto = cdao.findCat(subCode);
 
 			if (dto == null) {
 				System.out.println("등록된 자료가 없습니다");
@@ -204,7 +204,7 @@ public class CatUI {
 
 			catCode = dto.getCat_date();
 			if (catCode == 0) {
-				catCode = prjCode * 100 + 1;
+				catCode = subCode * 10 + 1;
 			} else {
 				catCode = catCode + 1;
 

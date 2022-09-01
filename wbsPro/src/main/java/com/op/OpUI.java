@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 
 import com.cat.CatDateDAO;
 import com.cat.CatDateDAOImpl;
+import com.cat.CatDateDTO;
 
 public class OpUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,16 +14,15 @@ public class OpUI {
 
 	public void addOpDate() {
 		System.out.println("[소분류 등록]");
-		int cat_date, user_code;
+		int catCode, user_code;
 
 		try {
 			OpDateDTO dto = new OpDateDTO();
 			System.out.print("중분류 코드 ?");
-			cat_date = Integer.parseInt(br.readLine());
-			dto.setCat_date(cat_date);
+			catCode = Integer.parseInt(br.readLine());
+			dto.setCat_date(catCode);
 
-			System.out.print("소분류 코드 ?");
-			dto.setOp_date(Integer.parseInt(br.readLine()));
+			dto.setOp_date(findOp(catCode)); //소분류 자동 코드 부여
 
 			System.out.print("소분류 일정 이름 ?");
 			dto.setOp_name(br.readLine());
@@ -104,5 +104,30 @@ public class OpUI {
 		}
 
 	}
+	
+	public int findOp(int catCode) {
+		int opCode = 0;
+		try {
+			OpDateDTO dto = dao.findOp(catCode);
+
+			if (dto == null) {
+				System.out.println("등록된 자료가 없습니다");
+				return 0;
+			}
+
+			opCode = dto.getOp_date();
+			if (opCode == 0) {
+				opCode = catCode * 10 + 1;
+			} else {
+				opCode = opCode + 1;
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return opCode;
+	}
+
 
 }

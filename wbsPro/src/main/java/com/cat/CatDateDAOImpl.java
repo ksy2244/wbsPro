@@ -429,7 +429,7 @@ public class CatDateDAOImpl implements CatDateDAO {
 
 			if (rs.next()) {
 				dto = new CatDateDTO();
-				dto.setSub_date_code(rs.getInt("nextCat"));
+				dto.setCat_date(rs.getInt("nextCat"));
 			}
 
 		} catch (Exception e) {
