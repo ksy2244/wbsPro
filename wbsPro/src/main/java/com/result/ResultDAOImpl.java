@@ -37,19 +37,11 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 
-	@Override  // 대분류 실적 진척율 입력
-	public int perforProgressSubjectUpdate(int sub_date_code) throws SQLException {
-		
-		
-		return 0;
-	}
-
-
 
 	@Override  // 중분류 실적 진척율 입력
-	public int perforProgressCatDateUpdate(int cat_date) throws SQLException {
+	public int perforProgressAllUpdate(int cat_date, int op_date, int op_date_per) throws SQLException {
 		int result = 0;
-		int catDatePer = 0;
+		int datePer = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql;
@@ -58,26 +50,83 @@ public class ResultDAOImpl implements ResultDAO {
 				
 			conn.setAutoCommit(false);
 			
-			sql = "SELECT AVG(OP_PER) op FROM opdate WHERE CAT_DATE = ? ";
+			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, op_date_per);
+			pstmt.setInt(2, op_date);
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			pstmt = null;
+			
+			sql = " SELECT AVG(OP_PER) per FROM opdate WHERE CAT_DATE = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cat_date);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				catDatePer = rs.getInt("op");
-			} 
+				datePer = rs.getInt("per");
+			}
 			
+			rs.close();
+			rs = null;
 			pstmt.close();
 			pstmt = null;
-			
 			
 			sql = " UPDATE CATDATE SET CAT_PER = ? WHERE CAT_DATE = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, catDatePer);
+			pstmt.setInt(1, datePer);
 			pstmt.setInt(2, cat_date);
 			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			pstmt = null;
+			
+			sql = "SELECT AVG(CAT_PER) per FROM CATDATE WHERE SUB_DATE_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cat_date);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				datePer = rs.getInt("per");
+			}
+			
+			rs.close();
+			rs = null;
+			pstmt.close();
+			pstmt = null;
+			
+			
+			sql = " UPDATE SUBDATE SET SUB_PER = ? WHERE SUB_DATE_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, op_date_per);
+			pstmt.setInt(2, cat_date);
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			pstmt = null;
+			
+			sql = "SELECT AVG(SUB_PER) per FROM SUBDATE WHERE PRJ_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cat_date);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				datePer = rs.getInt("per");
+			}
+			
+			rs.close();
+			rs = null;
+			pstmt.close();
+			pstmt = null;
+			
+			
 			
 			conn.commit();
 		
@@ -117,47 +166,6 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 
-	@Override  // 소분류 실적 진척율 입력
-	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
-		
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql;
-		
-		try {
-			
-			
-			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, performOpDate);
-			pstmt.setInt(2, op_date);
-			pstmt.executeUpdate();
-			
-		
-		} catch (SQLException e) {
-			
-			try {
-				conn.rollback();
-			} catch (Exception e2) {
-				
-			}
-			
-		}  finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					
-				}
-			}
-		
-		}
-		
-		return result;
-	}
-
-	
 	
 	
 	@Override  // 프로젝트 실적시작일
