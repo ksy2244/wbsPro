@@ -3,6 +3,9 @@ package com.result;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import com.cat.CatDateDTO;
+import com.op.OpDateDTO;
+import com.subject.SubjectDTO;
 import com.util.DBConn;
 
 public class ResultUI {
@@ -65,14 +68,209 @@ public class ResultUI {
 	}
 	
 	public void resultProgDateStart() { // 실적시작일 입력
+		while (true) {
+
+			try {
+				System.out.print("1.프로젝트실적시작일 입력 2.대분류실적시작일 입력 3.중분류실적시작일 입력 4.소분류실적시작일 입력  5.뒤로가기");
+
+				 ch = Integer.parseInt(br.readLine());
+
+
+
+				switch (ch) {
+				// case 1: resultProgressProjectDateStartInput();break; 아직 없음
+				case 2: resultProgressSubDateStartInput();break;
+				case 3: resultProgressCatDateStartInput();break;
+				case 4: resultProgressOpDateStartInput();break;
+				case 5: return; 
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
+		
+	}
+	
+	public void resultProgressProjectDateStartInput() {// 실적시작일 입력(프로젝트)
+		System.out.println("프로젝트 실적 시작일 입력");
+		
+		try {
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+		
+	public void resultProgressSubDateStartInput() {// 실적시작일 입력(대분류)
+		System.out.println("대분류 실적 시작일 입력");
+		
+		try {
+			SubjectDTO dto = new SubjectDTO();
+			
+			System.out.print("대분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setSub_date_code(n);	
+			
+			System.out.print("대분류 실적 시작일을 입력하세요.");
+			dto.setSub_start(br.readLine());	
+			
+			
+			dao.resultProgressSubDateStartInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void resultProgressCatDateStartInput() {// 실적시작일 입력(중분류)
+		System.out.println("중분류 실적 시작일 입력");
+		
+		try {
+			CatDateDTO dto = new CatDateDTO();
+			
+			System.out.print("중분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setCat_date(n);
+			
+			System.out.print("중분류 실적 시작일을 입력하세요.");
+			dto.setCat_start(br.readLine());	
+			
+
+			dao.resultProgressCatDateStartInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void resultProgressOpDateStartInput() {// 실적시작일 입력(소분류)
+		System.out.println("소분류 실적 시작일 입력");
+		
+		try {
+			OpDateDTO dto = new OpDateDTO();
+			
+			System.out.print("소분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setOp_date(n);
+			
+			System.out.print("소분류 실적 시작일을 입력하세요.");
+			dto.setOp_start(br.readLine());	
+			
+			dao.resultProgressOpDateStartInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void resultProgDateEnd() { // 실적종료일 입력
+		while (true) {
+
+			try {
+				System.out.print("1.프로젝트실적종료일 입력 2.대분류실적종료일 입력 3.중분류실적종료일 입력 4.소분류실적종료일 입력  5.뒤로가기");
+
+				 ch = Integer.parseInt(br.readLine());
+
+
+
+				switch (ch) {
+				case 1: resultProgressProjectDateEndInput();break;
+				case 2: resultProgressSubDateEndInput();break;
+				case 3: resultProgressCatDateEndInput();break;
+				case 4: resultProgressOpDateEndInput();break;
+				case 5: return; 
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		
 	}
 		
-	public void resultProgDateEnd() { // 실적종료일 입력
+	public void resultProgressProjectDateEndInput() {// 실적종료일 입력(프로젝트)
+		System.out.println("프로젝트 실적 종료일 입력");
 		
+		try {
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	public void resultProgressSubDateEndInput() {// 실적종료일 입력(대분류)
+		System.out.println("대분류 실적 종료일 입력");
+		
+		try {
+			SubjectDTO dto = new SubjectDTO();
+			
+			System.out.print("대분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setSub_date_code(n);	
+			
+			System.out.print("대분류 실적 종료일을 입력하세요.");
+			dto.setSub_end(br.readLine());	
+			
+			
+			dao.resultProgressSubDateEndInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void resultProgressCatDateEndInput() {// 실적종료일 입력(중분류)
+		System.out.println("중분류 실적 종료일 입력");
+		
+		try {
+			CatDateDTO dto = new CatDateDTO();
+			
+			System.out.print("중분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setCat_date(n);	
+			
+			System.out.print("중분류 실적 종료일을 입력하세요.");
+			dto.setCat_end(br.readLine());	
+			
+
+			dao.resultProgressCatDateEndInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void resultProgressOpDateEndInput() {// 실적종료일 입력(소분류)
+		System.out.println("소분류 실적 종료일 입력");
+		
+		try {
+			OpDateDTO dto = new OpDateDTO();
+			
+			System.out.print("소분류 코드 ? ");
+			int n = Integer.parseInt(br.readLine());
+			dto.setOp_date(n);	
+			
+			System.out.print("소분류 실적 종료일을 입력하세요.");
+			dto.setOp_end(br.readLine());	
+			
+			dao.resultProgressOpDateEndInput(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
