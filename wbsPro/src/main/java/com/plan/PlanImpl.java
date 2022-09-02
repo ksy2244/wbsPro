@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class PlanImpl {
 
 			while (rs.next()) {
 				PlanDTO dto = new PlanDTO();
-				int tot = rs.getRow();
 				dto.setWorkCode(rs.getInt("workCode"));
 				dto.setLevel(rs.getInt("level"));
 				dto.setWorkName(rs.getString("workName"));
@@ -70,7 +68,41 @@ public class PlanImpl {
 
 			while (rs.next()) {
 				PlanDTO dto = new PlanDTO();
-				int tot = rs.getRow();
+				dto.setWorkCode(rs.getInt("workCode"));
+				dto.setWorkName(rs.getString("workName"));
+				dto.setWorkPer(rs.getInt("workPer"));
+				dto.setWrokRes(rs.getString("workRes"));
+				dto.setWorkComp(rs.getInt("workComp"));
+				dto.setWorkUserName(rs.getString("workUserName"));
+
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public List<PlanDTO> listWorkCode(int workCode) throws SQLException {
+		// 담당자 코드로 작업 조회
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<PlanDTO> list = new ArrayList<>();
+
+		try {
+			sql =  "SELECT workCode, workName, workPer, workRes, workComp, workUserName "
+					+ "FROM wbs "
+					+ " WHERE workCode = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, workCode);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				PlanDTO dto = new PlanDTO();
 				dto.setWorkCode(rs.getInt("workCode"));
 				dto.setWorkName(rs.getString("workName"));
 				dto.setWorkPer(rs.getInt("workPer"));
