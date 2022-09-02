@@ -22,7 +22,7 @@ public class PlanImpl {
 		List<PlanDTO> list = new ArrayList<>();
 
 		try {
-			sql = "SELECT workCode, LEVEL,  workPer, workName, workRes, workComp, workUser "
+			sql = "SELECT workCode, LEVEL,  workPer, workName, workRes, workComp, workUserName "
 					+ "FROM wbs "
 					+ "START WITH workCode = ? "
 					+ "CONNECT BY prior workcode = parent ";
@@ -40,7 +40,43 @@ public class PlanImpl {
 				dto.setWorkPer(rs.getInt("workPer"));
 				dto.setWrokRes(rs.getString("workRes"));
 				dto.setWorkComp(rs.getInt("workComp"));
-				dto.setWorkUser(rs.getString("workUser"));
+				dto.setWorkUserName(rs.getString("workUserName"));
+
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<PlanDTO> listWorkUser(int userCode) throws SQLException {
+		// 담당자 코드로 작업 조회
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<PlanDTO> list = new ArrayList<>();
+
+		try {
+			sql =  "SELECT workCode, workName, workPer, workRes, workComp, workUserName "
+					+ "FROM wbs "
+					+ " WHERE workUserCode = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userCode);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				PlanDTO dto = new PlanDTO();
+				int tot = rs.getRow();
+				dto.setWorkCode(rs.getInt("workCode"));
+				dto.setWorkName(rs.getString("workName"));
+				dto.setWorkPer(rs.getInt("workPer"));
+				dto.setWrokRes(rs.getString("workRes"));
+				dto.setWorkComp(rs.getInt("workComp"));
+				dto.setWorkUserName(rs.getString("workUserName"));
 
 				list.add(dto);
 			}

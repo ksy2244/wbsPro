@@ -27,11 +27,11 @@ public class PlanUI {
 		while (true) {
 
 			try {
-				System.out.print("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 5. 전체 작업 목록 6.업무 구성비 7. 종료 ");
+				System.out.print("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 5. 전체 작업 목록 6.업무 구성비 7.사원코드로 작업 조회 8. 종료");
 
 				ch = Integer.parseInt(br.readLine());
 
-				if (ch == 7) {
+				if (ch == 8) {
 					DBConn.close();
 					return;
 				}
@@ -53,6 +53,11 @@ public class PlanUI {
 				case 5:
 					workList();
 					break;
+					
+				case 7:
+					findByUserCode();
+					break;
+
 
 				}
 
@@ -61,6 +66,39 @@ public class PlanUI {
 
 		}
 
+	}
+
+	private void findByUserCode() throws SQLException, NumberFormatException, IOException {
+		int userCode;
+		System.out.println("전체 리스트 조회");
+		System.out.print("검색할 사원 코드 번호? ");
+		// PlanDTO dto = new PlanDTO();
+		userCode = Integer.parseInt(br.readLine());
+
+		List<PlanDTO> list = plan.listWorkUser(userCode);
+
+		System.out.println(list.size());
+		if (list.size() == 0) {
+			System.out.println("등록된 자료가 없습니다");
+			return;
+		}
+
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.println(" WBS CODE |    작업명    |   기간   | 계획 진척율 |  업무 구성비  |  담당자  ");
+		System.out.println("-------------------------------------------------------------------------------");
+
+		for (PlanDTO dto : list) {
+			System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
+			System.out.print(dto.getWorkName() + "\t\t"); // 작업명
+			System.out.print(dto.getWorkPer() + "\t"); // 기간
+			System.out.print(dto.getWrokRes() + "%" + "\t"); // 진척율
+			System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
+			System.out.println(dto.getWorkUserName() + "\t"); // 업무 구성비
+
+		}
+		System.out.println();
+
+		
 	}
 
 	private void workList() throws SQLException, NumberFormatException, IOException {
@@ -91,7 +129,7 @@ public class PlanUI {
 			System.out.print(dto.getWorkPer() + "\t"); // 기간
 			System.out.print(dto.getWrokRes() + "%" + "\t"); // 진척율
 			System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
-			System.out.println(dto.getWorkUser() + "\t"); // 업무 구성비
+			System.out.println(dto.getWorkUserName() + "\t"); // 업무 구성비
 
 		}
 		System.out.println();

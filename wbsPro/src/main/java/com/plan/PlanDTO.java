@@ -7,7 +7,8 @@ public class PlanDTO {
 	private int workPer;// 중분류일정코드
 	private int workComp; // 소분류 코드
 	private int level; // 소분류 코드
-	private String workUser; // 담당자
+	private String workUserName; // 담당자명
+	private int workUserCode; // 담당자 코드
 
 	public int getWorkCode() {
 		return workCode;
@@ -57,12 +58,22 @@ public class PlanDTO {
 		this.level = level;
 	}
 
-	public String getWorkUser() {
-		return workUser;
+	public String getWorkUserName() {
+		return workUserName;
 	}
 
-	public void setWorkUser(String workUser) {
-		this.workUser = workUser;
+	public void setWorkUserName(String workUserName) {
+		this.workUserName = workUserName;
 	}
+
+	public int getWorkUserCode() {
+		return workUserCode;
+	}
+
+	public void setWorkUserCode(int workUserCode) {
+		this.workUserCode = workUserCode;
+	}
+
+
 
 }
