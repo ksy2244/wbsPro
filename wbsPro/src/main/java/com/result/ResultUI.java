@@ -313,11 +313,11 @@ public class ResultUI {
 		try {
 			ProjectDTO dto = new ProjectDTO();
 			
-			System.out.print("대분류 코드 ? ");
+			System.out.print("프로젝트 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
 			dto.setPrj_code(n);	
 			
-			System.out.print("대분류 실적 종료일을 입력하세요.");
+			System.out.print("프로젝트 실적 종료일을 입력하세요.");
 			dto.setPrj_end(br.readLine());	
 			
 			

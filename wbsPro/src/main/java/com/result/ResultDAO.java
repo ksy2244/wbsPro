@@ -20,9 +20,9 @@ public interface ResultDAO { // 실적 관리
 	public ProjectDTO projectbetweenDate(int prj_code) throws SQLException; // 해당 프로젝트 시작날짜와 종료날짜 반환
 	
 	// 분류 시작일 가져오기
-	public String ProgressStartSubDate(int subDateCode);
-	public String ProgressStartCatDate(int catDateCode);
-	public String ProgressStartOpDate(int opDateCode);
+	public String ProgressStartSubDate(int subDateCode) throws SQLException;
+	public String ProgressStartCatDate(int catDateCode) throws SQLException;
+	public String ProgressStartOpDate(int opDateCode)   throws SQLException;
 	
 	
 	// 업무 구성비

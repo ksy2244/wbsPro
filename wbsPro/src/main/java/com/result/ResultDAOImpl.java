@@ -85,12 +85,12 @@ public class ResultDAOImpl implements ResultDAO {
 	
 	
 	@Override
-	public String ProgressStartSubDate(int subDateCode) {
+	public String ProgressStartSubDate(int subDateCode) throws SQLException{
 		
 		PreparedStatement pstmt = null;
 		String sql;
 		ResultSet rs = null;
-		String start = "";
+		String subStart = "";
 		
 		try {
 			
@@ -103,7 +103,7 @@ public class ResultDAOImpl implements ResultDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				start = rs.getString("SUB_START");
+				subStart = rs.getString("SUB_START");
 			} 
 			
 			
@@ -127,7 +127,7 @@ public class ResultDAOImpl implements ResultDAO {
 			}
 		}
 		
-		return start;
+		return subStart;
 	}
 
 
@@ -135,9 +135,48 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 	@Override
-	public String ProgressStartCatDate(int catDateStart) {
-		// TODO Auto-generated method stub
-		return null;
+	public String ProgressStartCatDate(int catDateCode) throws SQLException {
+		PreparedStatement pstmt = null;
+		String sql;
+		ResultSet rs = null;
+		String catStart = "";
+		
+		try {
+			
+			sql = " SELECT TO_CHAR(CAT_START, 'YYYY-MM-DD') CAT_START FROM CATDATE WHERE CAT_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, catDateCode);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				catStart = rs.getString("CAT_START");
+			} 
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+		}
+		
+		return catStart;
 	}
 
 
@@ -145,9 +184,48 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 	@Override
-	public String ProgressStartOpDate(int opDateStart) {
-		// TODO Auto-generated method stub
-		return null;
+	public String ProgressStartOpDate(int opDateCode) throws SQLException {
+		PreparedStatement pstmt = null;
+		String sql;
+		ResultSet rs = null;
+		String opStart = "";
+		
+		try {
+			
+			sql = " SELECT TO_CHAR(OP_START, 'YYYY-MM-DD') OP_START FROM OPDATE WHERE OP_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, opDateCode);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				opStart = rs.getString("OP_START");
+			} 
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+		}
+		
+		return opStart;
 	}
 
 
