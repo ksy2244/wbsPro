@@ -37,6 +37,118 @@ public class ResultDAOImpl implements ResultDAO {
 	}
 	*/
 
+	@Override
+	public ProjectDTO projectbetweenDate(int prj_code) {  // 해당 프로젝트코드에 맞는 실적 시작일과 종료일 반환
+		ProjectDTO dto = new ProjectDTO();
+		PreparedStatement pstmt = null;
+		String sql;
+		ResultSet rs = null;
+		
+		try {
+			
+			sql = "SELECT TO_CHAR(PRJ_START, 'YYYY-MM-DD') PRJ_START, TO_CHAR(PRJ_END, 'YYYY-MM-DD') PRJ_END FROM project WHERE prj_code = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, prj_code);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setPrj_start(rs.getString("PRJ_START"));
+				dto.setPrj_end(rs.getString("PRJ_END"));
+			} 
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+		}
+		
+		return dto;
+	}
+	
+	
+	@Override
+	public String ProgressStartSubDate(int subDateCode) {
+		
+		PreparedStatement pstmt = null;
+		String sql;
+		ResultSet rs = null;
+		String start = "";
+		
+		try {
+			
+			sql = " SELECT TO_CHAR(SUB_START, 'YYYY-MM-DD') SUB_START FROM SUBDATE WHERE SUB_DATE_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, subDateCode);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				start = rs.getString("SUB_START");
+			} 
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+		}
+		
+		return start;
+	}
+
+
+
+
+
+	@Override
+	public String ProgressStartCatDate(int catDateStart) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public String ProgressStartOpDate(int opDateStart) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 
@@ -150,51 +262,7 @@ public class ResultDAOImpl implements ResultDAO {
 	}
 
 	
-	@Override
-	public ProjectDTO projectbetweenDate(int prj_code) {  // 해당 프로젝트코드에 맞는 실적 시작일과 종료일 반환
-		ProjectDTO dto = new ProjectDTO();
-		PreparedStatement pstmt = null;
-		String sql;
-		ResultSet rs = null;
-		
-		try {
-			
-			sql = "SELECT TO_CHAR(PRJ_START, 'YYYY-MM-DD') PRJ_START, TO_CHAR(PRJ_END, 'YYYY-MM-DD') PRJ_END FROM project WHERE prj_code = ?";
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, prj_code);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				dto.setPrj_start(rs.getString("PRJ_START"));
-				dto.setPrj_end(rs.getString("PRJ_END"));
-			} 
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e2) {
-					
-				}
-			}
-			
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e2) {
-					
-				}
-			}
-		}
-		
-		return dto;
-	}
+	
 
 	
 
@@ -215,6 +283,8 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt.setInt(2, dto.getSub_date_code());
 			result = pstmt.executeUpdate();
 
+			
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -279,6 +349,7 @@ public class ResultDAOImpl implements ResultDAO {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
+		
 		try {
 			// 중분류일정 수정 sql
 			sql = "UPDATE catdate SET cat_end = ? WHERE cat_date = ? AND cat_start is not null";
@@ -298,7 +369,7 @@ public class ResultDAOImpl implements ResultDAO {
 		return result;
 	}
 	
-	@Override // 소분류 실적시작일
+	@Override // 소분류실적시작일 
 	public int resultProgressOpDateStartInput(OpDateDTO dto) throws SQLException {
 		PreparedStatement pstmt = null;
 		String sql;
@@ -323,7 +394,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 	
-	@Override // 소분류실적종료일시작
+	@Override // 소분류실적종료일
 	public int resultProgressOpDateEndInput(OpDateDTO dto) throws SQLException{
 		PreparedStatement pstmt = null;
 		String sql;
@@ -605,17 +676,5 @@ public class ResultDAOImpl implements ResultDAO {
 		
 	}
 
-
-
-
-
-	
-
-
-	
-
-
-
-	
 
 }
