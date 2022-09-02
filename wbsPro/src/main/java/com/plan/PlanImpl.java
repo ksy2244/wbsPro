@@ -22,7 +22,7 @@ public class PlanImpl {
 		List<PlanDTO> list = new ArrayList<>();
 
 		try {
-			sql = "SELECT workCode, LEVEL,  workPer, workName, workRes, workComp "
+			sql = "SELECT workCode, LEVEL,  workPer, workName, workRes, workComp, workUser "
 					+ "FROM wbs "
 					+ "START WITH workCode = ? "
 					+ "CONNECT BY prior workcode = parent ";
@@ -40,6 +40,7 @@ public class PlanImpl {
 				dto.setWorkPer(rs.getInt("workPer"));
 				dto.setWrokRes(rs.getString("workRes"));
 				dto.setWorkComp(rs.getInt("workComp"));
+				dto.setWorkUser(rs.getString("workUser"));
 
 				list.add(dto);
 			}

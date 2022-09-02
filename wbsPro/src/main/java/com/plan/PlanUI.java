@@ -80,7 +80,7 @@ public class PlanUI {
 		}
 
 		System.out.println("------------------------------------------------------------------------------");
-		System.out.println(" NO | WBS CODE | Dep |     작업명     |   기간   | 계획 진척율 |  업무 구성비 ");
+		System.out.println(" NO | WBS CODE | Dep |     작업명     |   기간   | 계획 진척율 |  업무 구성비  |  담당자  ");
 		System.out.println("-------------------------------------------------------------------------------");
 
 		for (PlanDTO dto : list) {
@@ -90,7 +90,9 @@ public class PlanUI {
 			System.out.print(dto.getWorkName() + "\t\t"); // 작업명
 			System.out.print(dto.getWorkPer() + "\t"); // 기간
 			System.out.print(dto.getWrokRes() + "%" + "\t"); // 진척율
-			System.out.println(dto.getWorkComp() + "\t"); // 업무 구성비
+			System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
+			System.out.println(dto.getWorkUser() + "\t"); // 업무 구성비
+
 		}
 		System.out.println();
 
