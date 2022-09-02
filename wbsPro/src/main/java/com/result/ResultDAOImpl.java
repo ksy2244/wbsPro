@@ -1,6 +1,7 @@
 package com.result;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -97,15 +98,18 @@ public class ResultDAOImpl implements ResultDAO {
 		int result = 0; 
 		PreparedStatement pstmt = null;
 		String sql;
+		
+		
 		try{
 			// 프로젝트일정 수정 sql
-			sql = "UPDATE prjdate SET prj_start = ? WHERE prj_code = ?";
+			sql = "UPDATE project SET prj_start = ? WHERE prj_code = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getPrj_start()); // 프로젝트실적시작일
 			pstmt.setInt(2, dto.getPrj_code());// 프로젝트코드
-			pstmt.executeUpdate();
+			
+			result = pstmt.executeUpdate();
 
 			System.out.println("프로젝트실적시작일 추가");
 
@@ -120,18 +124,21 @@ public class ResultDAOImpl implements ResultDAO {
 
 	@Override  // 프로젝트 실적종료일
 	public int resultProgressProjectEndInput(ProjectDTO dto) throws SQLException {
-		int result = 0;
+		int result = 0; 
 		PreparedStatement pstmt = null;
 		String sql;
-		try {
+		
+		
+		try{
 			// 프로젝트일정 수정 sql
-			sql = "UPDATE prjdate SET prj_end = ? WHERE prj_code = ? AND prj_start is not null";
+			sql = "UPDATE project SET prj_end = ? WHERE prj_code = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, dto.getPrj_end()); // 프로젝트실적시작일
+			pstmt.setString(1, dto.getPrj_end()); // 프로젝트실적종료일
 			pstmt.setInt(2, dto.getPrj_code());// 프로젝트코드
-			pstmt.executeUpdate();
+			
+			result = pstmt.executeUpdate();
 
 			System.out.println("프로젝트실적종료일 추가");
 
@@ -143,29 +150,76 @@ public class ResultDAOImpl implements ResultDAO {
 	}
 
 	
+	@Override
+	public ProjectDTO projectbetweenDate(int prj_code) {  // 해당 프로젝트코드에 맞는 실적 시작일과 종료일 반환
+		ProjectDTO dto = new ProjectDTO();
+		PreparedStatement pstmt = null;
+		String sql;
+		ResultSet rs = null;
+		
+		try {
+			
+			sql = "SELECT TO_CHAR(PRJ_START, 'YYYY-MM-DD') PRJ_START, TO_CHAR(PRJ_END, 'YYYY-MM-DD') PRJ_END FROM project WHERE prj_code = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, prj_code);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setPrj_start(rs.getString("PRJ_START"));
+				dto.setPrj_end(rs.getString("PRJ_END"));
+			} 
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					
+				}
+			}
+		}
+		
+		return dto;
+	}
+
+	
 
 	@Override // 대분류 실적시작일
 	public int resultProgressSubDateStartInput(SubjectDTO dto) throws SQLException {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
+		
 		try {
-			// 대분류일정 수정 sql
-			sql = "UPDATE subdate SET sub_start = ? WHERE sub_date_code = ?";
+	
+			sql = "UPDATE SUBDATE SET SUB_START = ? "
+				+ "WHERE SUB_DATE_CODE = ? ";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, dto.getSub_start()); // 대분류실적시작일
-			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
-			pstmt.executeUpdate();
-			
-			System.out.println("대분류실적시작일 추가");
+			pstmt.setString(1, dto.getSub_start()); 
+			pstmt.setInt(2, dto.getSub_date_code());
+			result = pstmt.executeUpdate();
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 		return result;
 	}
 
@@ -551,6 +605,11 @@ public class ResultDAOImpl implements ResultDAO {
 		
 	}
 
+
+
+
+
+	
 
 
 	

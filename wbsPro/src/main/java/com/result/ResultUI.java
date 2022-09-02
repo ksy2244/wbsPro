@@ -2,6 +2,9 @@ package com.result;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.cat.CatDateDTO;
 import com.op.OpDateDTO;
@@ -30,7 +33,7 @@ public class ResultUI {
 				case 1: compositMenu(); break;
 				case 2: resultProgDateStart(); break;
 				case 3: resultProgDateEnd(); break;
-				case 4: resultProgressPerMenu(); break;
+				case 4: resultProgressPerOpDate(); break; // 소분류 실적진척율 입력
 				case 5: return; 
 				}
 
@@ -81,7 +84,7 @@ public class ResultUI {
 
 				switch (ch) {
 				case 1: resultProgressProjectStartInput();break;
-				case 2: resultProgressSubDateStartInput();break;
+				case 2: resultProgressSubDateStart();break;
 				case 3: resultProgressCatDateStartInput();break;
 				case 4: resultProgressOpDateStartInput();break;
 				case 5: return; 
@@ -109,20 +112,34 @@ public class ResultUI {
 			dto.setPrj_start(br.readLine());	
 			
 			
-			dao.resultProgressProjectStartInput(dto);
+			int result = dao.resultProgressProjectStartInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[프로젝트 실적시작일 입력 성공]");
+			 } else {
+				 System.out.println("[프로젝트 실적시작일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[프로젝트 실적시작일 입력 오류]");
 		}
 		
 	}
 	
 		
-	public void resultProgressSubDateStartInput() {// 실적시작일 입력(대분류)
+	public void resultProgressSubDateStart() {// 실적시작일 입력(대분류)
 		System.out.println("대분류 실적 시작일 입력");
+		int result = 0;
 		
 		try {
 			SubjectDTO dto = new SubjectDTO();
+			
+			
+			System.out.print("프로젝트 코드 ? ");
+			int prjCode = Integer.parseInt(br.readLine());
+			
+			ProjectDTO pdto = dao.projectbetweenDate(prjCode);
+			
 			
 			System.out.print("대분류 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
@@ -132,9 +149,32 @@ public class ResultUI {
 			dto.setSub_start(br.readLine());	
 			
 			
-			dao.resultProgressSubDateStartInput(dto);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date1 = sdf.parse(pdto.getPrj_start());
+			Date date2 = sdf.parse(pdto.getPrj_end());
+			
+			Date datePro = sdf.parse(dto.getSub_start());
+			
+			
+			
+			if(datePro.compareTo(date1) >= 0 && // 입력 날짜 >= 시작일
+			   datePro.compareTo(date2) <= 0) { // 입력 날짜 <= 종료일
+				result = dao.resultProgressSubDateStartInput(dto);
+			}
+			
+			
+			
+			
+			
+			if(result != 0) {
+				 System.out.println("[대분류 실적시작일 입력 성공]");
+			 } else {
+				 System.out.println("[대분류 실적시작일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
+			System.out.println("[대분류 실적시작일 입력 오류]");
 			e.printStackTrace();
 		}
 		
@@ -154,10 +194,16 @@ public class ResultUI {
 			dto.setCat_start(br.readLine());	
 			
 
-			dao.resultProgressCatDateStartInput(dto);
+			int result = dao.resultProgressCatDateStartInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[중분류 실적시작일 입력 성공]");
+			 } else {
+				 System.out.println("[중분류 실적시작일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[중분류 실적시작일 입력 오류]");
 		}
 		
 	}
@@ -175,10 +221,16 @@ public class ResultUI {
 			System.out.print("소분류 실적 시작일을 입력하세요.");
 			dto.setOp_start(br.readLine());	
 			
-			dao.resultProgressOpDateStartInput(dto);
+			int result = dao.resultProgressOpDateStartInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[소분류 실적시작일 입력 성공]");
+			 } else {
+				 System.out.println("[소분류 실적시작일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[소분류 실적시작일 입력 오류]");
 		}
 		
 	}
@@ -223,10 +275,16 @@ public class ResultUI {
 			dto.setPrj_end(br.readLine());	
 			
 			
-			dao.resultProgressProjectEndInput(dto);
+			int result = dao.resultProgressProjectEndInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[프로젝트 실적종료일 입력 성공]");
+			 } else {
+				 System.out.println("[프로젝트 실적종료일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[프로젝트 실적종료일 입력 오류]");
 		}
 		
 	}
@@ -245,10 +303,16 @@ public class ResultUI {
 			dto.setSub_end(br.readLine());	
 			
 			
-			dao.resultProgressSubDateEndInput(dto);
+			int result = dao.resultProgressSubDateEndInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[대분류 실적종료일 입력 성공]");
+			 } else {
+				 System.out.println("[대분류 실적종료일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[대분류 실적종료일 입력 오류]");
 		}
 		
 	}
@@ -267,10 +331,16 @@ public class ResultUI {
 			dto.setCat_end(br.readLine());	
 			
 
-			dao.resultProgressCatDateEndInput(dto);
+			int result = dao.resultProgressCatDateEndInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[중분류 실적종료일 입력 성공]");
+			 } else {
+				 System.out.println("[중분류 실적종료일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[중분류 실적종료일 입력 오류]");
 		}
 		
 	}
@@ -288,15 +358,21 @@ public class ResultUI {
 			System.out.print("소분류 실적 종료일을 입력하세요.");
 			dto.setOp_end(br.readLine());	
 			
-			dao.resultProgressOpDateEndInput(dto);
+			int result = dao.resultProgressOpDateEndInput(dto);
+			
+			if(result != 0) {
+				 System.out.println("[소분류 실적종료일 입력 성공]");
+			 } else {
+				 System.out.println("[소분류 실적종료일 입력 실패]");
+			 }
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("[소분류 실적종료일 입력 오류]");
 		}
 		
 	}
 	
-	
+	/*
 	public void resultProgressPerMenu() { // 실적진척율 메뉴
 		
 		while (true) {
@@ -321,6 +397,7 @@ public class ResultUI {
 
 		}
 	}
+	*/
 	
 	public void resultProgressPerOpDate() {  // 소분류실적진척율 입력
 		
@@ -331,21 +408,21 @@ public class ResultUI {
 			System.out.print("소분류 코드 ? ");
 			int op_date = Integer.parseInt(br.readLine());
 			
-			System.out.print("실적 진척율 ? ");
+			System.out.print("소분류 실적진척율 ? ");
 			int performOpDate = Integer.parseInt(br.readLine());
 			
 			int result = dao.perforProgressOpDateUpdate(op_date, performOpDate);
 			
 			
 			if(result != 0) {
-				System.out.println("[소분류 실적 진척율 입력 성공]");
+				System.out.println("[소분류 실적진척율 입력 성공]");
 			} else {
-				System.out.println("[소분류 실적 진척율 입력 실패]");
+				System.out.println("[소분류 실적진척율 입력 실패]");
 			}
 			
 			
 		} catch (Exception e) {
-			System.out.println("[소분류 실적 진척율 입력 오류]");
+			System.out.println("[소분류 실적진척율 입력 오류]");
 		}
 		
 	}
