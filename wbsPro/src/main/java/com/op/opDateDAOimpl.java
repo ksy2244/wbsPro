@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cat.CatDateDTO;
 import com.util.DBConn;
 
 public class opDateDAOimpl implements OpDateDAO {
@@ -173,104 +169,6 @@ public class opDateDAOimpl implements OpDateDAO {
 	}
 
 	@Override
-	public OpDateDTO searchOpDateCode(int Op_date) {
-		OpDateDTO dto = new OpDateDTO();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql;
-
-		try {
-			sql = "SELECT op_date, op_name, op_plan_start, op_plan_end FROM opdate where op_date = ?";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Op_date);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				dto = new OpDateDTO();
-				dto.setOp_date(rs.getInt("Op_date"));
-				dto.setOp_name(rs.getString("Op_name"));
-				dto.setOp_plan_start(rs.getString("getOp_plan_start"));
-				dto.setOp_plan_end(rs.getString("Op_plan_end"));
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
-				}
-			}
-
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
-				}
-			}
-		}
-
-		return dto;
-	}
-
-	@Override
-	public List<OpDateDTO> searchOpDateName(String op_name) {
-		List<OpDateDTO> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		String sql;
-		ResultSet rs = null;
-
-		try {
-
-			sql = " SELECT op_date, op_name, op_plan_start, op_plan_end FROM opdate where op_name = ? ";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, op_name);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				OpDateDTO dto = new OpDateDTO();
-				dto.setOp_date(rs.getInt("Op_date"));
-				dto.setOp_name(rs.getString("Op_name"));
-				dto.setOp_plan_start(rs.getString("getOp_plan_start"));
-				dto.setOp_plan_end(rs.getString("Op_plan_end"));
-				list.add(dto);
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	@Override
-	public List<OpDateDTO> searchOpDateManager(String OpDate_manager) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<OpDateDTO> searchOpDateDate(String OpDate_date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<OpDateDTO> searchOpDateAll(String OpDate_date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int workCompInsertOpDate(int input) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
@@ -281,7 +179,7 @@ public class opDateDAOimpl implements OpDateDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	@Override
 	public OpDateDTO findOp(int opCode) {
 		// 가장 큰 소분류 찾기
@@ -291,7 +189,7 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql;
 
 		try {
-			sql =  "SELECT MAX(op_date) nextOp FROM opdate WHERE op_date =  ? ";
+			sql = "SELECT MAX(op_date) nextOp FROM opdate WHERE op_date =  ? ";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, opCode);
@@ -323,6 +221,5 @@ public class opDateDAOimpl implements OpDateDAO {
 		}
 		return dto;
 	}
-
 
 }

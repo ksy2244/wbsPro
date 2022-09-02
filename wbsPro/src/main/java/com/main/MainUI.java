@@ -7,6 +7,7 @@ import com.emp.EmployeeDAO;
 import com.emp.EmployeeDAOImpl;
 import com.emp.EmployeeDTO;
 import com.emp.EmployeeUI;
+import com.oc.OcUI;
 import com.plan.PlanUI;
 import com.result.ResultUI;
 import com.util.DBConn;
@@ -126,11 +127,13 @@ public class MainUI {
 		PlanUI planUI = new PlanUI();
 		EmployeeUI employeeUI = new EmployeeUI();
 		ResultUI resultUI = new ResultUI();
+		OcUI ocUI = new OcUI();
+		
 
 		while (true) {
 
 			try {
-				System.out.print("1. 계획 일정 관리 2. 실적 관리 3. 사원 관리 ");
+				System.out.print("1. 계획 일정 관리 2. 실적 관리 3. 사원 관리 4. 발주 업체 관리 ");
 				int ch = Integer.parseInt(br.readLine());
 				switch (ch) {
 				case 1:
@@ -141,6 +144,9 @@ public class MainUI {
 					break;
 				case 3:
 					employeeUI.menu();
+					break;
+				case 4:
+					ocUI.menu();
 					break;
 
 				}
