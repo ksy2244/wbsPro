@@ -184,19 +184,11 @@ public class CatDateDAOImpl implements CatDateDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			sql = " DELETE FROM CATCHARGE WHERE cat_date = ?";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cat_date);
-			result = pstmt.executeUpdate();
-			pstmt.close();
-			pstmt = null;
-
 			sql = " DELETE FROM catdate WHERE cat_date = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cat_date);
-			result += pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 

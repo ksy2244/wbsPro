@@ -149,15 +149,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-
-			sql = " DELETE FROM subcharge WHERE sub_date_code = ?";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sub_date_code);
-			result = pstmt.executeUpdate();
-			pstmt.close();
-			pstmt = null;
-
+			
 			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sub_date_code);

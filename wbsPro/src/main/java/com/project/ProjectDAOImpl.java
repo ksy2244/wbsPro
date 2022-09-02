@@ -222,23 +222,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			sql = "DELETE FROM PROCHARGE WHERE prj_code = ? ";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, project_Code);
-
-			result = pstmt.executeUpdate();
-			pstmt.close();
-			pstmt = null;
-
 			sql = "DELETE FROM project WHERE prj_code = ? ";
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, project_Code);
 
-			result += pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
 

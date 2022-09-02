@@ -108,7 +108,7 @@ public class ProjectUI {
 
 			int result = dao.deleteProject(Integer.parseInt(br.readLine()));
 
-			if (result == 2) {
+			if (result == 1) {
 				System.out.println("[프로젝트 삭제 성공]");
 			} else {
 				System.out.println("[프로젝트 삭제 실패]");

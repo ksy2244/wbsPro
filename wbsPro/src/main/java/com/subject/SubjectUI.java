@@ -86,7 +86,7 @@ public class SubjectUI {
 
 			int result = dao.deleteSubject(Integer.parseInt(br.readLine()));
 
-			if (result == 2) {
+			if (result == 1) {
 				System.out.println("[대분류 삭제 성공]");
 			} else {
 				System.out.println("[대분류 삭제 실패]");

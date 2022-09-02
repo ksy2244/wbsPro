@@ -150,13 +150,6 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql;
 
 		try {
-			sql = "DELETE FROM opcharge WHERE Op_date = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Op_date);
-			result = pstmt.executeUpdate();
-			pstmt.close();
-			pstmt = null;
-			
 			sql = "DELETE FROM opdate WHERE Op_date = ?";
 
 			pstmt = conn.prepareStatement(sql);

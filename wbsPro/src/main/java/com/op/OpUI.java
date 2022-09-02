@@ -93,7 +93,7 @@ public class OpUI {
 
 			int result = dao.deleteOpDate(Integer.parseInt(br.readLine()));
 
-			if (result == 2) {
+			if (result == 1) {
 				System.out.println("[소분류 삭제 성공]");
 			} else {
 				System.out.println("[소분류 삭제 실패]");

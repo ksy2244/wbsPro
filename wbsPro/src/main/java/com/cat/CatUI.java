@@ -101,7 +101,7 @@ public class CatUI {
 			
 			int result = cdao.deleteCatDate(cat_date);
 			
-			 if(result == 2) {
+			 if(result == 1) {
 				 System.out.println("[중분류 삭제 성공]");
 			 } else {
 				 System.out.println("[중분류 삭제 실패]");
