@@ -16,23 +16,6 @@ public interface OpDateDAO {
 	// ③ 작업 삭제 메뉴
 	public int deleteOpDate(int Op_date) throws SQLException; // 소분류 삭제
 
-	// ④ 작업 검색 메뉴
-
-	// 코드명 검색
-	public OpDateDTO searchOpDateCode(int Op_date);
-
-	// 작업명 검색
-	public List<OpDateDTO> searchOpDateName(String op_name);
-
-	// 담당자명 검색
-	public List<OpDateDTO> searchOpDateManager(String OpDate_manager);
-
-	// 날짜 검색
-	public List<OpDateDTO> searchOpDateDate(String OpDate_date);
-
-	// 전체 작업 목록
-	public List<OpDateDTO> searchOpDateAll(String OpDate_date);
-
 	// ⑤ 업무 구성비 관리
 
 	// 업무 구성비 등록

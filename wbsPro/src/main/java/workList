@@ -1,19 +1,31 @@
 CREATE OR REPLACE VIEW wbsList
 AS 
-    SELECT p.prj_code prj, p.prj_name prjName, ep.user_name prjUserNmae, ep.user_code prjUserCode, p.prjP prjP, p.prjComp prjComp,
-    TRUNC(ABS((o.op_plan_start - SYSDATE) / (o.op_plan_end-o.op_plan_start))*100) ||'%' prjRes, -- 임의로 넣어놓음 (프로젝트 계획 진척율)
-    s.sub_plan_end -  s.sub_plan_start prjPer, 
+    SELECT p.prjP prjP, p.prj_code prj, p.prj_name prjName, ep.user_name prjUserNmae, ep.user_code prjUserCode,
+    TO_CHAR(p.prj_plan_start,'YYYY-MM-DD') pps,  TO_CHAR(p.prj_plan_end, 'YYYY-MM-DD') ppe,
+    TRUNC(ABS((p.prj_plan_start - TRUNC(SYSDATE)) / (p.prj_plan_end-p.prj_plan_start))*100) prjPlanPer, 
+    TRUNC(p.prj_plan_end -  p.prj_plan_start) prjTerm,(SELECT AVG(sub_per) FROM subdate) prjPer,
+    TO_CHAR(p.prj_start,'YYYY-MM-DD') ps,  TO_CHAR(p.prj_end, 'YYYY-MM-DD') pe, TRUNC(p.prj_plan_end - sysdate) pRemain,
+    p.prjComp prjComp,
+    
     s.prj_code subP, s.sub_date_code sub, s.sub_name subName, es.user_name subUserNmae, es.user_code subUserCode,
-    TRUNC(ABS((s.sub_plan_start - SYSDATE) / (s.sub_plan_end-s.sub_plan_start))*100) ||'%' subRes,
-    s.sub_plan_end - s.sub_plan_start subPer,
+    TRUNC(ABS((s.sub_plan_start - TRUNC(SYSDATE)) / (s.sub_plan_end-s.sub_plan_start))*100) subPlanPer,
+    TO_CHAR(s.sub_plan_start,'YYYY-MM-DD') sps, TO_CHAR(s.sub_plan_end, 'YYYY-MM-DD') spe, 
+    TRUNC(s.sub_plan_end - s.sub_plan_start) subTerm, (SELECT AVG(cat_per) FROM catdate) subPer,
+    TO_CHAR(s.sub_start,'YYYY-MM-DD') ss, TO_CHAR(s.sub_end, 'YYYY-MM-DD') se, TRUNC(s.sub_plan_end - sysdate) sRemain,
     sub_comp subComp,
+    
     c.sub_date_code catP, c.cat_date cat, c.cat_name catName, ec.user_name catUserNmae, ec.user_code catUserCode,
-    TRUNC(ABS((c.cat_plan_start - SYSDATE) / (c.cat_plan_end-c.cat_plan_start))*100) ||'%' catRes,
-    c.cat_plan_end -c.cat_plan_start catPer,
+    TRUNC(ABS((c.cat_plan_start - TRUNC(SYSDATE)) / (c.cat_plan_end-c.cat_plan_start))*100) catPlanPer,
+    TO_CHAR(c.cat_plan_start,'YYYY-MM-DD')  cps, TO_CHAR(c.cat_plan_end, 'YYYY-MM-DD') cpe, 
+    TRUNC(c.cat_plan_end -c.cat_plan_start) catTerm, (SELECT AVG(op_per) FROM opdate) catPer, -- c.cat_per catPer,
+    TO_CHAR(c.cat_start,'YYYY-MM-DD')  cs, TO_CHAR(c.cat_end, 'YYYY-MM-DD') ce,  TRUNC(c.cat_plan_end- sysdate) cRemain,
     c.cat_comp catComp,
+    
     o.cat_date opP, o.op_date op, o.op_name opName, eo.user_name opUserNmae, eo.user_code opUserCode,
-    TRUNC(ABS((o.op_plan_start - SYSDATE) / (o.op_plan_end-o.op_plan_start))*100) ||'%' opRes,
-    o.op_plan_end -  o.op_plan_start opPer,
+    TRUNC(ABS((o.op_plan_start - TRUNC(SYSDATE)) / (o.op_plan_end-o.op_plan_start))*100) opPlanPer,
+    TO_CHAR(o.op_plan_start, 'YYYY-MM-DD')ops, TO_CHAR(o.op_plan_end, 'YYYY-MM-DD')  ope,
+    TRUNC(o.op_plan_end - o.op_plan_start) opTerm, o.op_per opPer,
+    TO_CHAR(o.op_start, 'YYYY-MM-DD')os, TO_CHAR(o.op_end, 'YYYY-MM-DD') oe, o.op_plan_end- sysdate oRemain,
     o.work_comp opComp
 FROM project p
 LEFT OUTER JOIN procharge pc ON p.prj_code  = pc.prj_code
@@ -33,22 +45,18 @@ commit;
 
 CREATE OR REPLACE VIEW wbs 
 AS
-SELECT prj workCode, prjName workName, prjRes workRes , prjPer workPer, prjComp workComp, prjP PARENT, prjUserNmae workUserName, prjUserCode workUserCode
+SELECT prjP PARENT, prj workCode, prjName workName, prjTerm workTerm, pps workPlanStart, ppe workPlanEnd, prjUserNmae workUserName,
+prjUserCode workUserCode, prjPlanPer workPlanPer, ps workStart, pe workEnd, prjPer workPer, prjComp workComp, prjPlanPer * prjComp/100 WorkPRatio, 
+prjPer * prjComp/100  Ratio, pRemain remain
 FROM wbsList
 UNION 
-SELECT sub , subName , subRes , subPer , subComp, subP, subUserNmae, subUserCode -- 대분류
+SELECT subP, sub , subName, subTerm ,sps, spe, subUserNmae, subUserCode, subPlanPer, ss,se, subPer, subComp, subPlanPer * subComp/100, subPer * subComp/100, sRemain -- 대분류
 FROM wbsList 
 UNION
-SELECT cat, catName , catRes, catPer , catComp, catP, catUserNmae, catUserCode -- 중분류
+SELECT catP, cat, catName, catTerm, cps,cpe,catUserNmae, catUserCode, catPlanPer, cs, ce, catPer, catComp, catPlanPer *catComp/100, catPer *catComp/ 100, cRemain  -- 중분류
 FROM wbsList
 UNION 
-SELECT op, opName , opRes, opPer , opComp, opP, opUserNmae, opUserCode-- 소분류
+SELECT opP, op, opName, opTerm, ops, ope, opUserNmae, opUserCode, opPlanPer, os, oe, opPer, opComp,  opPlanPer * opComp/100, opPer * opComp/100, oRemain-- 소분류
 FROM wbsList;
-commit;
 
 commit;
-
-SELECT workCode, LEVEL,  workPer, workName, workRes, workComp , workUser, parent
-FROM wbs 
-START WITH workCode = 1 
-CONNECT BY prior workcode = parent;

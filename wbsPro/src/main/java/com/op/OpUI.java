@@ -22,7 +22,7 @@ public class OpUI {
 			catCode = Integer.parseInt(br.readLine());
 			dto.setCat_date(catCode);
 
-			dto.setOp_date(findOp(catCode)); //소분류 자동 코드 부여
+			dto.setOp_date(findOp(catCode)); // 소분류 자동 코드 부여
 
 			System.out.print("소분류 일정 이름 ?");
 			dto.setOp_name(br.readLine());
@@ -104,7 +104,7 @@ public class OpUI {
 		}
 
 	}
-	
+
 	public int findOp(int catCode) {
 		int opCode = 0;
 		try {
@@ -128,6 +128,5 @@ public class OpUI {
 		}
 		return opCode;
 	}
-
 
 }
