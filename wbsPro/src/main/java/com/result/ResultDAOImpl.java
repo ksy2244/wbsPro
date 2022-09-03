@@ -319,7 +319,18 @@ public class ResultDAOImpl implements ResultDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
+		
 		return result;
 	}
 
@@ -348,6 +359,16 @@ public class ResultDAOImpl implements ResultDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
 		return result;
 	}
@@ -380,6 +401,15 @@ public class ResultDAOImpl implements ResultDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
 		return result;
 	}
@@ -406,6 +436,15 @@ public class ResultDAOImpl implements ResultDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
 		return result;
 	}
@@ -423,13 +462,22 @@ public class ResultDAOImpl implements ResultDAO {
 
 			pstmt.setString(1, dto.getCat_start()); // 중분류실적시작일
 			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 			System.out.println("중분류실적시작일 추가");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
 		return result;
 	}
@@ -449,13 +497,22 @@ public class ResultDAOImpl implements ResultDAO {
 
 			pstmt.setString(1, dto.getCat_end()); // 중분류실적종료일
 			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 			System.out.println("중분류실적종료일 추가");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					
+				}
+			}
 		}
 		return result;
 	}
