@@ -168,20 +168,9 @@ public class opDateDAOimpl implements OpDateDAO {
 		return result;
 	}
 
-	@Override
-	public int workCompInsertOpDate(int input) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
-	public int workCompUpdateOpDate(int input) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public OpDateDTO findOp(int opCode) {
+	public OpDateDTO findOp(int catCode) {
 		// 가장 큰 소분류 찾기
 		OpDateDTO dto = null;
 		PreparedStatement pstmt = null;
@@ -189,10 +178,10 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql;
 
 		try {
-			sql = "SELECT MAX(op_date) nextOp FROM opdate WHERE op_date =  ? ";
+			sql = "SELECT MAX(cat_date) nextOp FROM opdate WHERE cat_date =  ? ";
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, opCode);
+			pstmt.setInt(1, catCode);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

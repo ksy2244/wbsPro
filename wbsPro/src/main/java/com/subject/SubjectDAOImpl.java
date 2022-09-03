@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
 
 import com.util.DBConn;
 
@@ -149,7 +148,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		PreparedStatement pstmt = null;
 		String sql;
 		try {
-			
+
 			sql = " DELETE FROM subdate WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sub_date_code);
@@ -171,48 +170,6 @@ public class SubjectDAOImpl implements SubjectDAO {
 		}
 
 		return result;
-	}
-
-	@Override
-	public SubjectDTO searchSubjectCode(SubjectDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SubjectDTO> searchSubjectName(String Subject_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SubjectDTO> searchSubjectManager(String Subject_manager) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SubjectDTO> searchSubjectDate(String Subject_date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SubjectDTO> searchSubjectAll(String Subject_date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int workCompInsertSubject(int input) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int workCompUpdateSubject(int input) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	public SubjectDTO findSub(int prj) {
