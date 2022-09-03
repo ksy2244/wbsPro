@@ -14,7 +14,7 @@ public interface ResultDAO { // 실적 관리
 	// public int perforProgressProjectUpdate(int prj_code) throws SQLException; // 프로젝트 실적 진척율 수정
 	// public int perforProgressSubjectUpdate(int sub_date_code) throws SQLException; // 대분류 실적 진척율 수정
 	// public int perforProgressAllUpdate(int cat_date, int op_date, int op_date_per) throws SQLException; // 중분류 실적 진척율 수정
-	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException; // 소분류 실적 진척율 수정
+	public int perforProgressOpDateUpdate(int cat_date, int op_date, int performOpDate) throws SQLException; // 소분류 실적 진척율 수정
 	
 	// project 날짜 불러오기
 	public ProjectDTO projectbetweenDate(int prj_code) throws SQLException; // 해당 프로젝트 시작날짜와 종료날짜 반환

@@ -1,7 +1,6 @@
 package com.result;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,26 +15,7 @@ import com.util.DBConn;
 public class ResultDAOImpl implements ResultDAO {
 	private Connection conn = DBConn.getConnection();
 	
-	/*
-	@Override  // 프로젝트 실적 진척율 수정(컬럼이 없음)
-	public int perforProgressProjectUpdate(int performProject) throws SQLException {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql;
-		
-		try {
-			
-			sql = "UPDATE PROJECT SET  = ? ";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		return result;
-	}
-	*/
+	
 
 	@Override
 	public ProjectDTO projectbetweenDate(int prj_code) {  // 해당 프로젝트코드에 맞는 실적 시작일과 종료일 반환
@@ -231,10 +211,11 @@ public class ResultDAOImpl implements ResultDAO {
 
 
 	@Override  // 소분류 실적 진척율 입력
-	public int perforProgressOpDateUpdate(int op_date, int performOpDate) throws SQLException {
+	public int perforProgressOpDateUpdate(int cat_date, int op_date, int performOpDate) throws SQLException {
 		
-		int result = 0;
+		int result = 0, output= 0;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		String sql;
 		
 		try {
@@ -244,10 +225,33 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, performOpDate);
 			pstmt.setInt(2, op_date);
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			
 			pstmt.close();
 			pstmt = null;
+			
+			
+			// 합 100 초과했는지 확인
+			
+			sql = " SELECT SUM(OP_PER) OP_PER FROM OPDATE WHERE CAT_DATE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cat_date);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				output = rs.getInt("OP_PER");
+			}
+			
+			if(output != 100) {
+				conn.rollback();
+			} else {
+				result = 1;
+				conn.commit();
+				conn.setAutoCommit(true);
+
+			}
 			
 			
 		
@@ -258,10 +262,15 @@ public class ResultDAOImpl implements ResultDAO {
 			} catch (Exception e2) {
 				
 			}
-			
 		}  finally {
 			
-			
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					
+				}
+			}
 			
 			if(pstmt != null) {
 				try {
@@ -271,11 +280,15 @@ public class ResultDAOImpl implements ResultDAO {
 				}
 			}
 			
-		
+			try {
+				// conn.setAutoCommit(true);
+			} catch (Exception e) {
+				
+			}
+			
 		}
 		
 		return result;
-		
 		
 	}
 
@@ -531,6 +544,7 @@ public class ResultDAOImpl implements ResultDAO {
 			if(rs.next()) {
 				output = rs.getInt("WORK_COMP");
 			}
+		
 			
 			if(output != 100) {
 				conn.rollback();
@@ -575,7 +589,7 @@ public class ResultDAOImpl implements ResultDAO {
 				
 			}
 			
-			DBConn.close();
+			
 			
 		}
 		
@@ -658,8 +672,6 @@ public class ResultDAOImpl implements ResultDAO {
 			} catch (Exception e) {
 				
 			}
-			
-			DBConn.close();
 			
 		}
 		
@@ -745,8 +757,6 @@ public class ResultDAOImpl implements ResultDAO {
 			} catch (Exception e) {
 				
 			}
-			
-			DBConn.close();
 			
 		}
 		

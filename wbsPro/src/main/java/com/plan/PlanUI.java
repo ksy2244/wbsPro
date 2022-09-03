@@ -11,6 +11,7 @@ import java.util.Locale;
 import com.cat.CatUI;
 import com.op.OpUI;
 import com.project.ProjectUI;
+import com.result.ResultUI;
 import com.subject.SubjectUI;
 import com.util.DBConn;
 
@@ -29,13 +30,13 @@ public class PlanUI {
 		while (true) {
 
 			try {
-				System.out.print("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 5. 전체 작업 목록 6.업무 구성비 7. 종료");
+				System.out.print("1.작업 등록 2. 작업 수정 3.작업 삭제 4. 작업 검색 5. 전체 작업 목록 6.업무 구성비 7.뒤로가기 8.종료 => ");
 
 				ch = Integer.parseInt(br.readLine());
 
-				if (ch == 7) {
+				if (ch == 8) {
 					DBConn.close();
-					return;
+					System.exit(0);
 				}
 
 				switch (ch) {
@@ -51,11 +52,15 @@ public class PlanUI {
 				case 4:
 					searchWork();
 					break;
-
 				case 5:
 					workList();
 					break;
-
+				case 6:
+					ResultUI ru = new ResultUI(); 
+					ru.compositMenu();
+					break;
+				case 7:
+					return;
 				}
 
 			} catch (Exception e) {

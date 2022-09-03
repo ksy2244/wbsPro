@@ -39,6 +39,7 @@ public class MainUI {
 				int ch = Integer.parseInt(br.readLine());
 
 				if (ch == 3) {
+					DBConn.close();
 					System.exit(0);
 					return;
 				}
