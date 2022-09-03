@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import com.util.DBConn;
 
-public class opDateDAOimpl implements OpDateDAO {
+public class OpDateDAOimpl implements OpDateDAO {
 	private Connection conn = DBConn.getConnection();
 
 	@Override

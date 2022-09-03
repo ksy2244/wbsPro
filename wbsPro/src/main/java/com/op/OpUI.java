@@ -9,7 +9,7 @@ import com.cat.CatDateDTO;
 
 public class OpUI {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	OpDateDAO dao = new opDateDAOimpl();
+	OpDateDAO dao = new OpDateDAOimpl();
 	CatDateDAO cdao = new CatDateDAOImpl();
 
 	public void addOpDate() {
