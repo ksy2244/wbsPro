@@ -22,11 +22,13 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			conn.setAutoCommit(false); // 자동 커밋 해제
 			// 대분류 추가하는 sql
-			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name)" + " VALUES(?,?,?)";
+			sql = "INSERT INTO subdate(prj_code, sub_date_code, sub_name, sub_plan_start, sub_plan_end)" + " VALUES(?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getPrj_code()); // 대분류 코드
+			pstmt.setInt(1, dto.getPrj_code()); // 프로젝트 코드
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			pstmt.setString(3, dto.getSub_name()); // 대분류명
+			pstmt.setString(4, dto.getSub_plan_start()); // 대분류 시작일
+			pstmt.setString(5, dto.getSub_plan_end()); // 대분류 종료일
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
@@ -109,10 +111,12 @@ public class SubjectDAOImpl implements SubjectDAO {
 		String sql;
 		try {
 			// 대분류일정 수정 sql
-			sql = "UPDATE subdate SET sub_name = ? WHERE sub_date_code = ?";
+			sql = "UPDATE subdate SET sub_name = ? sub_plan_start =? , sub_plan_end =? WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
-			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
+			pstmt.setString(2, dto.getSub_plan_start()); // 대분류 계획 시작일
+			pstmt.setString(3, dto.getSub_plan_end()); // 대분류 계획 종료일
+			pstmt.setInt(4, dto.getSub_date_code()); // 대분류 코드
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;

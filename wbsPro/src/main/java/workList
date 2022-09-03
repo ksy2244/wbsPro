@@ -6,26 +6,23 @@ AS
     TRUNC(p.prj_plan_end -  p.prj_plan_start) prjTerm,(SELECT AVG(sub_per) FROM subdate) prjPer,
     TO_CHAR(p.prj_start,'YYYY-MM-DD') ps,  TO_CHAR(p.prj_end, 'YYYY-MM-DD') pe, TRUNC(p.prj_plan_end - sysdate) pRemain,
     p.prjComp prjComp,
-    
     s.prj_code subP, s.sub_date_code sub, s.sub_name subName, es.user_name subUserNmae, es.user_code subUserCode,
     TRUNC(ABS((s.sub_plan_start - TRUNC(SYSDATE)) / (s.sub_plan_end-s.sub_plan_start))*100) subPlanPer,
     TO_CHAR(s.sub_plan_start,'YYYY-MM-DD') sps, TO_CHAR(s.sub_plan_end, 'YYYY-MM-DD') spe, 
     TRUNC(s.sub_plan_end - s.sub_plan_start) subTerm, (SELECT AVG(cat_per) FROM catdate) subPer,
     TO_CHAR(s.sub_start,'YYYY-MM-DD') ss, TO_CHAR(s.sub_end, 'YYYY-MM-DD') se, TRUNC(s.sub_plan_end - sysdate) sRemain,
     sub_comp subComp,
-    
     c.sub_date_code catP, c.cat_date cat, c.cat_name catName, ec.user_name catUserNmae, ec.user_code catUserCode,
     TRUNC(ABS((c.cat_plan_start - TRUNC(SYSDATE)) / (c.cat_plan_end-c.cat_plan_start))*100) catPlanPer,
     TO_CHAR(c.cat_plan_start,'YYYY-MM-DD')  cps, TO_CHAR(c.cat_plan_end, 'YYYY-MM-DD') cpe, 
     TRUNC(c.cat_plan_end -c.cat_plan_start) catTerm, (SELECT AVG(op_per) FROM opdate) catPer, -- c.cat_per catPer,
     TO_CHAR(c.cat_start,'YYYY-MM-DD')  cs, TO_CHAR(c.cat_end, 'YYYY-MM-DD') ce,  TRUNC(c.cat_plan_end- sysdate) cRemain,
     c.cat_comp catComp,
-    
     o.cat_date opP, o.op_date op, o.op_name opName, eo.user_name opUserNmae, eo.user_code opUserCode,
     TRUNC(ABS((o.op_plan_start - TRUNC(SYSDATE)) / (o.op_plan_end-o.op_plan_start))*100) opPlanPer,
     TO_CHAR(o.op_plan_start, 'YYYY-MM-DD')ops, TO_CHAR(o.op_plan_end, 'YYYY-MM-DD')  ope,
     TRUNC(o.op_plan_end - o.op_plan_start) opTerm, o.op_per opPer,
-    TO_CHAR(o.op_start, 'YYYY-MM-DD')os, TO_CHAR(o.op_end, 'YYYY-MM-DD') oe, o.op_plan_end- sysdate oRemain,
+    TO_CHAR(o.op_start, 'YYYY-MM-DD')os, TO_CHAR(o.op_end, 'YYYY-MM-DD') oe, TRUNC(o.op_plan_end- sysdate) oRemain,
     o.work_comp opComp
 FROM project p
 LEFT OUTER JOIN procharge pc ON p.prj_code  = pc.prj_code
