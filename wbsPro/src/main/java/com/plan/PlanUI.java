@@ -3,13 +3,16 @@ package com.plan;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import com.cat.CatUI;
 import com.op.OpUI;
+import com.project.ProjectDTO;
 import com.project.ProjectUI;
 import com.result.ResultUI;
 import com.subject.SubjectUI;
@@ -56,7 +59,7 @@ public class PlanUI {
 					workList();
 					break;
 				case 6:
-					ResultUI ru = new ResultUI(); 
+					ResultUI ru = new ResultUI();
 					ru.compositMenu();
 					break;
 				case 7:
@@ -73,10 +76,10 @@ public class PlanUI {
 	private void searchWork() throws NumberFormatException, SQLException, IOException {
 
 		System.out.println("[작업 검색]");
-		System.out.println("1. 사원 코드로 조회  2. 작업 코드로 조회 3. 뒤로가기");
+		System.out.println("1. 사원 코드로 조회  2. 작업 코드로 조회 3. 작업 날짜로 조회 4.뒤로가기");
 		ch = Integer.parseInt(br.readLine());
 
-		if (ch == 3) {
+		if (ch == 4) {
 			return;
 		}
 
@@ -86,6 +89,9 @@ public class PlanUI {
 			break;
 		case 2:
 			findByWokrCode();
+			break;
+		case 3:
+			findBydateCode();
 			break;
 
 		}
@@ -108,7 +114,8 @@ public class PlanUI {
 
 		System.out.println(
 				"----------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
+		System.out.println(
+				"      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(
@@ -118,7 +125,7 @@ public class PlanUI {
 
 		for (PlanDTO dto : list) {
 			int n = 0;
-			System.out.print("  " + (++n ) + "   "); // no
+			System.out.print("  " + (++n) + "   "); // no
 			System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
 			System.out.print(dto.getWorkName() + "\t"); // 작업명
 			System.out.print(dto.getWorkTerm() + "\t"); // 기간
@@ -139,6 +146,73 @@ public class PlanUI {
 
 	}
 
+	private void findBydateCode() throws SQLException, SQLDataException, IOException {
+		String startdate;
+		String enddate;
+		int code;
+
+		System.out.println("작업날짜 조회]");
+		try {
+			System.out.print("검색할 프로젝트 코드 ?");
+
+			code = Integer.parseInt(br.readLine());
+
+			System.out.print("검색할 시작날짜 [yyyy-MM-dd]?");
+
+			startdate = br.readLine();
+
+			System.out.print("검색할 종료날짜 [yyyy-MM-dd]?");
+
+			enddate = br.readLine();
+
+			PlanImpl dao = new PlanImpl();
+
+			ProjectDTO pdto = dao.projectbetweenDate(code);
+
+			List<PlanDTO> list = plan.listdate(startdate, enddate);
+
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(
+					"      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
+			System.out.println(
+					"-----------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(
+					" NO | CODE |   작업명   | 기간 |  계획 시작일 |  계획 종료일 |  담당자 | 진척율 |   시작일   |    종료일   | 진척율 | 업무 구성비 | 계획 | 실적 | 잔여일 ");
+			System.out.println(
+					"-----------------------------------------------------------------------------------------------------------------------------------");
+
+			for (PlanDTO dto : list) {
+				int n = 0;
+				System.out.print("  " + (n++) + "   "); // no
+				System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
+				System.out.print(dto.getWorkName() + "\t"); // 작업명
+				System.out.print(dto.getWorkTerm() + "\t"); // 기간
+				System.out.print(dto.getWorkPlanStart() + "\t"); // 계획 시작일
+				System.out.print(dto.getWorkPlanEnd() + "\t"); // 계획 종료일
+				System.out.print(dto.getWorkUserName() + "\t"); // 담당자
+				System.out.print(dto.getWorkPlanPer() + "%" + "\t"); // 계획 진척율
+				System.out.print(dto.getWorkStart() + "\t"); // 시작일
+				System.out.print(dto.getWorkEnd() + "\t"); // 종료일
+				System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 진척율
+				System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
+				System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 계획 구성 진행 비율
+				System.out.print(dto.getRatio() + "%" + "\t"); // 실적 구성 진행 비율
+				System.out.println(dto.getRemain() + "\t"); // 잔여일
+
+			}
+			System.out.println();
+
+			// }
+
+			// }
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	private void findByWokrCode() throws SQLException, NumberFormatException, IOException {
 		int workCode;
 		System.out.println("[작업 코드로 작업 조회]");
@@ -156,7 +230,8 @@ public class PlanUI {
 
 		System.out.println(
 				"----------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
+		System.out.println(
+				"      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(
@@ -205,7 +280,8 @@ public class PlanUI {
 
 		System.out.println(
 				"----------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
+		System.out.println(
+				"      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(

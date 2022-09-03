@@ -37,7 +37,7 @@ LEFT OUTER JOIN catdate c ON s.sub_date_code = c.sub_date_code
 LEFT OUTER JOIN catcharge cc ON c.cat_date = cc.cat_date 
 LEFT OUTER JOIN employee ec ON cc.user_code  = ec.user_code
 LEFT OUTER JOIN opdate o ON c.cat_date = o.cat_date
-LEFT OUTER JOIN opcharge oc ON o.op_date = o.op_date
+LEFT OUTER JOIN opcharge oc ON o.op_date = oc.op_date
 LEFT OUTER JOIN employee eo ON oc.user_code = eo.user_code;
 
 commit;
