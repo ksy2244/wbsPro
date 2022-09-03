@@ -178,7 +178,7 @@ public class opDateDAOimpl implements OpDateDAO {
 		String sql;
 
 		try {
-			sql = "SELECT MAX(cat_date) nextOp FROM opdate WHERE cat_date =  ? ";
+			sql = "SELECT MAX(op_date) nextOp FROM opdate WHERE cat_date =  ? ";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, catCode);
