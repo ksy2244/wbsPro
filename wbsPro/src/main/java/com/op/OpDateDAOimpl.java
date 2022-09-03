@@ -117,10 +117,10 @@ public class OpDateDAOimpl implements OpDateDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 
-			sql = "UPDATE subcharge SET user_code = ? WHERE sub_date_code = ?";
+			sql = "UPDATE subcharge SET user_code = ? WHERE Op_date = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getUser_code()); // 대분류명
-			pstmt.setInt(2, dto.getUser_code()); // 사원 코드
+			pstmt.setInt(1, dto.getUser_code()); // 사원 코드
+			pstmt.setInt(2, dto.getOp_date()); // 소분류 코드 
 			result += pstmt.executeUpdate();
 			pstmt.close();
 			pstmt = null;
