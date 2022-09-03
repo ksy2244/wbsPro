@@ -413,7 +413,7 @@ public class ResultUI {
 			
 			System.out.print("중분류 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
-			dto.setSub_date_code(n);	
+			dto.setCat_date(n);	
 			
 			System.out.print("중분류 실적 종료일을 입력하세요.");
 			dto.setCat_end(br.readLine());	
