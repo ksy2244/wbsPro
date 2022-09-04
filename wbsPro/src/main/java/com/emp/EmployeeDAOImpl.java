@@ -22,8 +22,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		try {
 
 			sql = " INSERT INTO EMPLOYEE(USER_CODE, USER_NAME, USER_TEL, "
-					+ " USER_ADDRESS, DATE_ENTRY, DUTY, RESIGN_DATE, PWD) "
-					+ " VALUES(?, ?, ?, ?, ?, ?, NVL(?,null), NVL(?,1234))";
+					+ " USER_ADDRESS, DATE_ENTRY, DUTY, RESIGN_DATE, PWD, USER_RRN) "
+					+ " VALUES(?, ?, ?, ?, ?, ?, NVL(?,null), NVL(?,1234), ? )";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -35,6 +35,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			pstmt.setString(6, dto.getDuty());
 			pstmt.setString(7, dto.getResigndate());
 			pstmt.setString(8, dto.getPwd());
+			pstmt.setString(9, dto.getRrn());
 
 			result = pstmt.executeUpdate(); // executeUpdate() : 실행할 때마다 1씩 증가
 
