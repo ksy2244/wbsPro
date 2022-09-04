@@ -23,7 +23,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 			sql = " INSERT INTO EMPLOYEE(USER_CODE, USER_NAME, USER_TEL, "
 					+ " USER_ADDRESS, DATE_ENTRY, DUTY, RESIGN_DATE, PWD) "
-					+ " VALUES(?, ?, ?, ?, ?, ?, ?, NVL(?,null), NVL(?,1234))";
+					+ " VALUES(?, ?, ?, ?, ?, ?, NVL(?,null), NVL(?,1234))";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -44,6 +44,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				System.out.println("사원번호 중복입니다.");
 			} else if (e.getErrorCode() == 1400) {
 				// NOT NULL 제약 위반
+				e.printStackTrace();
 				System.out.println("필수 사항을 입력하지 않았습니다.");
 			} else {
 				System.out.println(e.toString());
