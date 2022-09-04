@@ -263,16 +263,16 @@ public class ResultUI {
 			}
 
 			if (result != 0) {
-				 System.out.println("[소분류 실적시작일 입력 성공]");
-			 } else {
-				 System.out.println("[소분류 실적시작일 입력 실패]");
-			 }
-			
+				System.out.println("[소분류 실적시작일 입력 성공]");
+			} else {
+				System.out.println("[소분류 실적시작일 입력 실패]");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("[소분류 실적시작일 입력 오류]");
 		}
-		
+
 	}
 
 	public void resultProgDateEnd() { // 실적종료일 입력
@@ -281,348 +281,322 @@ public class ResultUI {
 			try {
 				System.out.print("1.프로젝트실적종료일 입력 2.대분류실적종료일 입력 3.중분류실적종료일 입력 4.소분류실적종료일 입력  5.뒤로가기");
 
-				 ch = Integer.parseInt(br.readLine());
-
-
+				ch = Integer.parseInt(br.readLine());
 
 				switch (ch) {
-				case 1: resultProgressProjectEndInput();break;
-				case 2: resultProgressSubDateEndInput();break;
-				case 3: resultProgressCatDateEndInput();break;
-				case 4: resultProgressOpDateEndInput();break;
-				case 5: return; 
+				case 1:
+					resultProgressProjectEndInput();
+					break;
+				case 2:
+					resultProgressSubDateEndInput();
+					break;
+				case 3:
+					resultProgressCatDateEndInput();
+					break;
+				case 4:
+					resultProgressOpDateEndInput();
+					break;
+				case 5:
+					return;
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
-		
+
 	public void resultProgressProjectEndInput() {// 실적종료일 입력(프로젝트)
 		System.out.println("프로젝트 실적 종료일 입력");
-		
+
 		try {
 			ProjectDTO dto = new ProjectDTO();
-			
+
 			System.out.print("프로젝트 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
-			dto.setPrj_code(n);	
-			
+			dto.setPrj_code(n);
+
 			System.out.print("프로젝트 실적 종료일을 입력하세요.");
-			dto.setPrj_end(br.readLine());	
-			
-			
+			dto.setPrj_end(br.readLine());
+
 			int result = dao.resultProgressProjectEndInput(dto);
-			
-			if(result != 0) {
-				 System.out.println("[프로젝트 실적종료일 입력 성공]");
-			 } else {
-				 System.out.println("[프로젝트 실적종료일 입력 실패]");
-			 }
-			
+
+			if (result != 0) {
+				System.out.println("[프로젝트 실적종료일 입력 성공]");
+			} else {
+				System.out.println("[프로젝트 실적종료일 입력 실패]");
+			}
+
 		} catch (Exception e) {
 			System.out.println("[프로젝트 실적종료일 입력 오류]");
 		}
-		
+
 	}
-	
+
 	public void resultProgressSubDateEndInput() {// 실적종료일 입력(대분류)
 		System.out.println("대분류 실적 종료일 입력");
-		
+
 		int result = 0;
-		
+
 		try {
 			SubjectDTO dto = new SubjectDTO();
-			
-			
+
 			System.out.print("프로젝트 코드 ? ");
 			int prjCode = Integer.parseInt(br.readLine());
-			
+
 			ProjectDTO pdto = dao.projectbetweenDate(prjCode);
-			
-			
+
 			System.out.print("대분류 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
-			dto.setSub_date_code(n);	
-			
+			dto.setSub_date_code(n);
+
 			System.out.print("대분류 실적 종료일을 입력하세요.");
-			dto.setSub_end(br.readLine());	
-			
+			dto.setSub_end(br.readLine());
+
 			String subStart = dao.ProgressStartSubDate(n);
-			
-			
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
-			
+
 			Date endDate = sdf.parse(dto.getSub_end()); // 실적 종료일
-			
+
 			Date startDate = sdf.parse(subStart); // DB내에 있는 실적 시작일
-			
-			
-			if(endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
-			   endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
-				if(endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
-					
+
+			if (endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
+					endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
+				if (endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
+
 					result = dao.resultProgressSubDateEndInput(dto);
-					
+
 				}
 			}
-			
-			
-			if(result != 0) {
-				 System.out.println("[대분류 실적종료일 입력 성공]");
-			 } else {
-				 System.out.println("[대분류 실적종료일 입력 실패]");
-			 }
-			
+
+			if (result != 0) {
+				System.out.println("[대분류 실적종료일 입력 성공]");
+			} else {
+				System.out.println("[대분류 실적종료일 입력 실패]");
+			}
+
 		} catch (Exception e) {
 			System.out.println("[대분류 실적종료일 입력 오류]");
 		}
-		
+
 	}
-	
-	
-
-
 
 	public void resultProgressCatDateEndInput() {// 실적종료일 입력(중분류)
 		System.out.println("중분류 실적 종료일 입력");
-		
+
 		int result = 0;
-		
+
 		try {
 			CatDateDTO dto = new CatDateDTO();
-			
-			
+
 			System.out.print("프로젝트 코드 ? ");
 			int prjCode = Integer.parseInt(br.readLine());
-			
+
 			ProjectDTO pdto = dao.projectbetweenDate(prjCode);
-			
-			
+
 			System.out.print("중분류 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
-			dto.setCat_date(n);	
-			
+			dto.setCat_date(n);
+
 			System.out.print("중분류 실적 종료일을 입력하세요.");
-			dto.setCat_end(br.readLine());	
-			
+			dto.setCat_end(br.readLine());
+
 			String catStart = dao.ProgressStartCatDate(n);
-			
-			
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
-			
+
 			Date endDate = sdf.parse(dto.getCat_end()); // 실적 종료일
-			
+
 			Date startDate = sdf.parse(catStart); // DB내에 있는 실적 시작일
-			
-			
-			if(endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
-			   endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
-				if(endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
-					
+
+			if (endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
+					endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
+				if (endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
+
 					result = dao.resultProgressCatDateEndInput(dto);
-					
+
 				}
 			}
-			
-			if(result != 0) {
-				 System.out.println("[중분류 실적종료일 입력 성공]");
-			 } else {
-				 System.out.println("[중분류 실적종료일 입력 실패]");
-			 }
-			
+
+			if (result != 0) {
+				System.out.println("[중분류 실적종료일 입력 성공]");
+			} else {
+				System.out.println("[중분류 실적종료일 입력 실패]");
+			}
+
 		} catch (Exception e) {
 			System.out.println("[중분류 실적종료일 입력 오류]");
 		}
-		
+
 	}
-	
+
 	public void resultProgressOpDateEndInput() {// 실적종료일 입력(소분류)
 		System.out.println("소분류 실적 종료일 입력");
-		
+
 		int result = 0;
-		
+
 		try {
 			OpDateDTO dto = new OpDateDTO();
-			
-			
+
 			System.out.print("프로젝트 코드 ? ");
 			int prjCode = Integer.parseInt(br.readLine());
-			
+
 			ProjectDTO pdto = dao.projectbetweenDate(prjCode);
-			
-			
+
 			System.out.print("소분류 코드 ? ");
 			int n = Integer.parseInt(br.readLine());
-			dto.setCat_date(n);	
-			
+			dto.setOp_date(n);
+
 			System.out.print("소분류 실적 종료일을 입력하세요.");
 			dto.setOp_end(br.readLine());
-			
-			String opStart = dao.ProgressStartCatDate(n);
-			
-			
-			
+
+			String opStart = dao.ProgressStartOpDate(n);
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
-			
+
 			Date endDate = sdf.parse(dto.getOp_end()); // 실적 종료일
-			
+
 			Date startDate = sdf.parse(opStart); // DB내에 있는 실적 시작일
-			
-			
-			if(endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
-			   endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
-				if(endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
-					
+
+			if (endDate.compareTo(prj_start) >= 0 && // 입력 날짜 >= 시작일
+					endDate.compareTo(prj_end) <= 0) { // 입력 날짜 <= 종료일
+				if (endDate.compareTo(startDate) >= 0) { // 종료일 >= 시작일
+
 					result = dao.resultProgressOpDateEndInput(dto);
-					
+
 				}
 			}
-			
-			if(result != 0) {
-				 System.out.println("[소분류 실적종료일 입력 성공]");
-			 } else {
-				 System.out.println("[소분류 실적종료일 입력 실패]");
-			 }
-			
+
+			if (result != 0) {
+				System.out.println("[소분류 실적종료일 입력 성공]");
+			} else {
+				System.out.println("[소분류 실적종료일 입력 실패]");
+			}
+
 		} catch (Exception e) {
 			System.out.println("[소분류 실적종료일 입력 오류]");
 		}
-		
+
 	}
-	
-	
-	
-	public void resultProgressPerOpDate() {  // 소분류실적진척율 입력
-		
+
+	public void resultProgressPerOpDate() { // 소분류실적진척율 입력
+
 		System.out.println("[소분류 실적 진척율 입력]");
-		
+
 		try {
-			
+
 			System.out.print("중분류 코드 ? ");
 			int cat_date = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("소분류 코드 ? ");
 			int op_date = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("소분류 실적진척율 ? ");
 			int performOpDate = Integer.parseInt(br.readLine());
-			
+
 			int result = dao.perforProgressOpDateUpdate(cat_date, op_date, performOpDate);
-			
-			
-			if(result != 0) {
+
+			if (result != 0) {
 				System.out.println("[소분류 실적진척율 입력 성공]");
 			} else {
 				System.out.println("[소분류 실적진척율 입력 실패]");
 			}
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("[소분류 실적진척율 입력 오류]");
 		}
-		
+
 	}
-		
-	
+
 	public void compositionOpDate() {
 		System.out.println("[소분류 업무 구성비 입력]");
-		
+
 		try {
 			System.out.print("중분류 코드 ? ");
 			int c = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("소분류 코드 ? ");
 			int a = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("업무 구성비 ? ");
 			int b = Integer.parseInt(br.readLine());
-			
+
 			int output = dao.workCompositionOpDate(c, a, b);
-			
-			
-			if(output != 100) {
+
+			if (output != 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");
 			}
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("[업무 구성비 입력 실패]");
 		}
-		
+
 	}
-	
+
 	public void compositionCatDate() {
 		System.out.println("[중분류 업무 구성비 입력]");
-		
+
 		try {
 			System.out.print("대분류 코드 ? ");
 			int c = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("중분류 코드 ? ");
 			int a = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("업무 구성비 ? ");
 			int b = Integer.parseInt(br.readLine());
-			
+
 			int output = dao.workCompositionCatDate(c, a, b);
-			
-			
-			if(output != 100) {
+
+			if (output != 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");
 			}
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("[업무 구성비 입력 실패]");
 		}
-		
+
 	}
 
 	public void compositionSubDate() {
 		System.out.println("[대분류 업무 구성비 입력]");
-		
+
 		try {
 			System.out.print("프로젝트 코드 ? ");
 			int c = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("대분류 코드 ? ");
 			int a = Integer.parseInt(br.readLine());
-			
+
 			System.out.print("업무 구성비 ? ");
 			int b = Integer.parseInt(br.readLine());
-			
+
 			int output = dao.workCompositionSubDate(c, a, b);
-			
-			
-			if(output != 100) {
+
+			if (output != 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");
 			}
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("[업무 구성비 입력 실패]");
 		}
-		
+
 	}
 }

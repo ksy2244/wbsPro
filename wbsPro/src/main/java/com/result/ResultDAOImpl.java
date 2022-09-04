@@ -503,6 +503,7 @@ public class ResultDAOImpl implements ResultDAO {
 	public int resultProgressOpDateEndInput(OpDateDTO dto) throws SQLException {
 		PreparedStatement pstmt = null;
 		String sql;
+		int result = 0;
 
 		try {
 			// 소분류일정 수정 sql
@@ -512,7 +513,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 			pstmt.setString(1, dto.getOp_end()); // 소분류실적종료일
 			pstmt.setInt(2, dto.getOp_date()); // 소분류 코드
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			pstmt.close();
 
 			System.out.println("소분류실적종료일 추가");
@@ -520,7 +521,7 @@ public class ResultDAOImpl implements ResultDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return result;
 	}
 
 	@Override
