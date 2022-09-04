@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import com.main.MainUI;
 import com.plan.PlanUI;
+import com.user.Login;
 import com.util.DBConn;
 
 public class EmployeeUI { // EmployeeUI로 이름 수정
@@ -478,7 +480,7 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 		while (true) {
 
 			try {
-				System.out.print("1. 사원 입력 2. 사원 정보 수정 3.사원 삭제 4.사원 조회 5.뒤로가기 6. 로그아웃 7. 종료 ");
+				System.out.print("1. 사원 입력 2. 사원 정보 수정 3. 사원 삭제 4. 사원 조회 5. 뒤로가기 6. 로그아웃 7. 종료 ");
 
 				ch = Integer.parseInt(br.readLine());
 				if (ch == 7) {
@@ -500,9 +502,10 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 					findByEmployee(); // 사원 조회 서브 메뉴
 					break;
 				case 5:
-					menu();
-					break;
+					return;
 				case 6: // 로그아웃
+					Login login = new Login(); login.logout();
+					MainUI mainUi = new MainUI(); mainUi.menu();
 					break;
 
 				}
@@ -606,11 +609,14 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 			System.out.print("사원 번호 ? ");
 			dto.setUser_code(Integer.parseInt(br.readLine()));
 
-			System.out.print("사원 비밀번호 ? (입력 안할 시 초기번호 1234");
+			System.out.print("사원 비밀번호 ? (사원 등록 비밀번호)");
 			dto.setPwd(br.readLine());
 
 			System.out.print("사원 이름 ? ");
 			dto.setName(br.readLine());
+			
+			System.out.print("주민등록번호 ? ");
+			dto.setRrn(br.readLine());
 
 			System.out.print("사원 전화번호 ? ");
 			dto.setTel(br.readLine());
