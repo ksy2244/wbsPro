@@ -196,7 +196,7 @@ public class ResultDAOImpl implements ResultDAO {
 	@Override // 소분류 실적 진척율 입력
 	public int perforProgressOpDateUpdate(int cat_date, int op_date, int performOpDate) throws SQLException {
 
-		int result = 0, output = 0;
+		int output = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql;
@@ -204,8 +204,10 @@ public class ResultDAOImpl implements ResultDAO {
 		try {
 
 			if(performOpDate < 1) {
-				return 0;
+				return 200;
 			}
+			
+			conn.setAutoCommit(false);
 			
 			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
 
@@ -233,7 +235,7 @@ public class ResultDAOImpl implements ResultDAO {
 			if (output > 100) {
 				conn.rollback();
 			} else {
-				result = 1;
+
 				conn.commit();
 				conn.setAutoCommit(true);
 
@@ -272,7 +274,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 		}
 
-		return result;
+		return output;
 
 	}
 
@@ -713,7 +715,7 @@ public class ResultDAOImpl implements ResultDAO {
 		try {
 			
 			if(comp < 1) {
-				return 200;
+				return 100;
 			}
 			
 			conn.setAutoCommit(false);

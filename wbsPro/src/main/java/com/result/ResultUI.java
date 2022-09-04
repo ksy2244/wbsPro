@@ -515,9 +515,9 @@ public class ResultUI {
 			System.out.print("소분류 실적진척율 ? ");
 			int performOpDate = Integer.parseInt(br.readLine());
 
-			int result = dao.perforProgressOpDateUpdate(cat_date, op_date, performOpDate);
+			int output = dao.perforProgressOpDateUpdate(cat_date, op_date, performOpDate);
 
-			if (result != 0) {
+			if (output <= 100) {
 				System.out.println("[소분류 실적진척율 입력 성공]");
 			} else {
 				System.out.println("실적진척율의 최솟값은 1이상이며 총합은 100이어야 합니다");
