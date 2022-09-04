@@ -66,15 +66,16 @@ public class SubjectUI {
 			System.out.print("대분류명? "); // 대분류명
 			dto.setSub_name(br.readLine());
 
-			System.out.print("담당자 코드? "); // 대분류명
-			user_code = Integer.parseInt(br.readLine());
-			dto.setUser_code(user_code);
-			
 			System.out.print("대분류 시작일? "); // 대분류 계획 시작일
 			dto.setSub_plan_start(br.readLine());
 
 			System.out.print("대분류 종료일? "); // 대분류 계획 종료일
 			dto.setSub_plan_end(br.readLine());
+			
+			System.out.print("담당자 코드? "); // 담당자 코드
+			user_code = Integer.parseInt(br.readLine());
+			dto.setUser_code(user_code);
+			
 
 			int result = dao.updateSubject(dto);
 

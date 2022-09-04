@@ -111,7 +111,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		String sql;
 		try {
 			// 대분류일정 수정 sql
-			sql = "UPDATE subdate SET sub_name = ? sub_plan_start =? , sub_plan_end =? WHERE sub_date_code = ?";
+			sql = "UPDATE subdate SET sub_name = ?, sub_plan_start =?, sub_plan_end =? WHERE sub_date_code = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getSub_name()); // 대분류명
 			pstmt.setString(2, dto.getSub_plan_start()); // 대분류 계획 시작일
