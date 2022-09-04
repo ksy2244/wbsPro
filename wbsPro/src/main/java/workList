@@ -4,7 +4,7 @@ AS
     TO_CHAR(p.prj_plan_start,'YYYY-MM-DD') pps,  TO_CHAR(p.prj_plan_end, 'YYYY-MM-DD') ppe,
      CASE WHEN TRUNC(ABS((p.prj_plan_start - TRUNC(SYSDATE)) / (p.prj_plan_end-p.prj_plan_start))*100)  > 100 THEN 100
      else TRUNC(ABS((p.prj_plan_start - TRUNC(SYSDATE)) / (p.prj_plan_end-p.prj_plan_start))*100)end prjPlanPer,  
-        TRUNC(p.prj_plan_end -  p.prj_plan_start) prjTerm,(SELECT AVG(sub_per) FROM subdate) prjPer,
+        TRUNC(p.prj_plan_end -  p.prj_plan_start) prjTerm, (SELECT AVG(s.sub_per) FROM subdate s WHERE s.prj_code = p.prj_code)prjPer,  
     TO_CHAR(p.prj_start,'YYYY-MM-DD') ps,  TO_CHAR(p.prj_end, 'YYYY-MM-DD') pe, TRUNC(p.prj_plan_end - sysdate) pRemain,
     p.prjComp prjComp,
     
@@ -12,7 +12,7 @@ AS
     CASE WHEN TRUNC(ABS((s.sub_plan_start - TRUNC(SYSDATE)) / (s.sub_plan_end-s.sub_plan_start))*100) > 100 THEN 100
     else TRUNC(ABS((s.sub_plan_start - TRUNC(SYSDATE)) / (s.sub_plan_end-s.sub_plan_start))*100) end subPlanPer,
     TO_CHAR(s.sub_plan_start,'YYYY-MM-DD') sps, TO_CHAR(s.sub_plan_end, 'YYYY-MM-DD') spe, 
-    TRUNC(s.sub_plan_end - s.sub_plan_start) subTerm, (SELECT AVG(cat_per) FROM catdate) subPer,
+    TRUNC(s.sub_plan_end - s.sub_plan_start) subTerm, (SELECT AVG(c.cat_per) FROM catdate c WHERE c.sub_date_code = s.sub_date_code) subPer,
     TO_CHAR(s.sub_start,'YYYY-MM-DD') ss, TO_CHAR(s.sub_end, 'YYYY-MM-DD') se, TRUNC(s.sub_plan_end - sysdate) sRemain,
     s.sub_comp subComp,
     
@@ -20,7 +20,7 @@ AS
     CASE WHEN TRUNC(ABS((c.cat_plan_start - TRUNC(SYSDATE)) / (c.cat_plan_end-c.cat_plan_start))*100)  > 100 THEN 100
     else TRUNC(ABS((c.cat_plan_start - TRUNC(SYSDATE)) / (c.cat_plan_end-c.cat_plan_start))*100) end catPlanPer,
     TO_CHAR(c.cat_plan_start,'YYYY-MM-DD')  cps, TO_CHAR(c.cat_plan_end, 'YYYY-MM-DD') cpe, 
-    TRUNC(c.cat_plan_end -c.cat_plan_start) catTerm, (SELECT AVG(op_per) FROM opdate) catPer, 
+    TRUNC(c.cat_plan_end -c.cat_plan_start) catTerm, (SELECT AVG(o.op_per) FROM opdate o WHERE o.cat_date = c.cat_date) catPer, 
     TO_CHAR(c.cat_start,'YYYY-MM-DD')  cs, TO_CHAR(c.cat_end, 'YYYY-MM-DD') ce,  TRUNC(c.cat_plan_end- sysdate) cRemain,
     c.cat_comp catComp,
     
@@ -44,24 +44,27 @@ LEFT OUTER JOIN opdate o ON c.cat_date = o.cat_date
 LEFT OUTER JOIN opcharge oc ON o.op_date = oc.op_date
 LEFT OUTER JOIN employee eo ON oc.user_code = eo.user_code;
 
+
+
 CREATE OR REPLACE VIEW wbs
 AS
 SELECT prjP PARENT, prj workCode, prjName workName, prjTerm workTerm, pps workPlanStart, ppe workPlanEnd, prjUserNmae workUserName,
-prjUserCode workUserCode, prjPlanPer workPlanPer, ps workStart, pe workEnd, prjPer workPer, prjComp workComp, prjPlanPer * prjComp/100 WorkPRatio, 
+prjUserCode workUserCode, prjPlanPer workPlanPer, ps workStart, pe workEnd, prjPer workPer, TRUNC(prjComp) workComp, prjPlanPer * prjComp/100 WorkPRatio, 
 prjPer * prjComp/100  Ratio, CASE WHEN pRemain < 0 THEN 0 else pRemain end remain
 FROM wbsList
 UNION 
-SELECT subP, sub , subName, subTerm ,sps, spe, subUserNmae, subUserCode, subPlanPer, ss,se, subPer, subComp, subPlanPer * subComp/100, subPer * subComp/100,
+SELECT subP, sub , subName, subTerm ,sps, spe, subUserNmae, subUserCode, subPlanPer, ss,se, TRUNC(subPer), subComp, subPlanPer * subComp/100, subPer * subComp/100,
 CASE WHEN sRemain < 0 THEN 0 else sRemain end remain -- 대분류
 FROM wbsList 
 UNION
-SELECT catP, cat, catName, catTerm, cps,cpe,catUserNmae, catUserCode, catPlanPer, cs, ce, catPer, catComp, catPlanPer *catComp/100, catPer *catComp/ 100, 
+SELECT catP, cat, catName, catTerm, cps,cpe,catUserNmae, catUserCode, catPlanPer, cs, ce, TRUNC(catPer), catComp, catPlanPer *catComp/100, catPer *catComp/ 100, 
 CASE WHEN cRemain < 0 THEN 0 else cRemain end remain  -- 중분류
 FROM wbsList
 UNION 
-SELECT opP, op, opName, opTerm, ops, ope, opUserNmae, opUserCode, opPlanPer , os, oe, opPer, opComp,  opPlanPer * opComp/100, opPer * opComp/100, 
+SELECT opP, op, opName, opTerm, ops, ope, opUserNmae, opUserCode, opPlanPer , os, oe,TRUNC(opPer), opComp,  opPlanPer * opComp/100, opPer * opComp/100, 
 CASE WHEN oRemain < 0 THEN 0 else oRemain end remain -- 소분류
 FROM wbsList;
+
 
 commit;
 

@@ -127,7 +127,7 @@ public class PlanUI {
 			int n = 0;
 			System.out.print("  " + (++n) + "   "); // no
 			System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
-			System.out.print(dto.getWorkName() + "\t"); // 작업명
+			System.out.print(dto.getWorkName() + "\t\t\t"); // 작업명
 			System.out.print(dto.getWorkTerm() + "\t"); // 기간
 			System.out.print(dto.getWorkPlanStart() + "\t"); // 계획 시작일
 			System.out.print(dto.getWorkPlanEnd() + "\t"); // 계획 종료일
