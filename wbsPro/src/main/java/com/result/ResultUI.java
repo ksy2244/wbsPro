@@ -180,7 +180,6 @@ public class ResultUI {
 
 		} catch (Exception e) {
 			System.out.println("[대분류 실적시작일 입력 오류]");
-			e.printStackTrace();
 		}
 
 	}
@@ -225,7 +224,7 @@ public class ResultUI {
 
 		} catch (Exception e) {
 			System.out.println("[중분류 실적시작일 입력 오류]");
-			e.printStackTrace();
+			
 		}
 
 	}
@@ -269,7 +268,7 @@ public class ResultUI {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			System.out.println("[소분류 실적시작일 입력 오류]");
 		}
 
@@ -353,14 +352,18 @@ public class ResultUI {
 
 			System.out.print("대분류 실적 종료일을 입력하세요.");
 			dto.setSub_end(br.readLine());
+			
+			String match = dto.getSub_end().replaceAll("[^0-9]", "");
 
 			String subStart = dao.ProgressStartSubDate(n);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat msdf = new SimpleDateFormat("yyyyMMdd");
+			
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
 
-			Date endDate = sdf.parse(dto.getSub_end()); // 실적 종료일
+			Date endDate = msdf.parse(match); // 실적 종료일
 
 			Date startDate = sdf.parse(subStart); // DB내에 있는 실적 시작일
 
@@ -405,13 +408,17 @@ public class ResultUI {
 			System.out.print("중분류 실적 종료일을 입력하세요.");
 			dto.setCat_end(br.readLine());
 
+			String match = dto.getCat_end().replaceAll("[^0-9]", "");
+			
 			String catStart = dao.ProgressStartCatDate(n);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat msdf = new SimpleDateFormat("yyyyMMdd");
+			
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
 
-			Date endDate = sdf.parse(dto.getCat_end()); // 실적 종료일
+			Date endDate = msdf.parse(match); // 실적 종료일
 
 			Date startDate = sdf.parse(catStart); // DB내에 있는 실적 시작일
 
@@ -455,14 +462,19 @@ public class ResultUI {
 
 			System.out.print("소분류 실적 종료일을 입력하세요.");
 			dto.setOp_end(br.readLine());
+			
+			String match = dto.getOp_end().replaceAll("[^0-9]", "");
 
 			String opStart = dao.ProgressStartOpDate(n);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat msdf = new SimpleDateFormat("yyyyMMdd");
+			
+			
 			Date prj_start = sdf.parse(pdto.getPrj_start());
 			Date prj_end = sdf.parse(pdto.getPrj_end());
 
-			Date endDate = sdf.parse(dto.getOp_end()); // 실적 종료일
+			Date endDate = msdf.parse(match); // 실적 종료일
 
 			Date startDate = sdf.parse(opStart); // DB내에 있는 실적 시작일
 
@@ -483,11 +495,12 @@ public class ResultUI {
 
 		} catch (Exception e) {
 			System.out.println("[소분류 실적종료일 입력 오류]");
+			
 		}
 
 	}
 
-	public void resultProgressPerOpDate() { // 소분류실적진척율 입력
+	public void resultProgressPerOpDate() { // 소분류실적 입력
 
 		System.out.println("[소분류 실적 진척율 입력]");
 
@@ -507,7 +520,8 @@ public class ResultUI {
 			if (result != 0) {
 				System.out.println("[소분류 실적진척율 입력 성공]");
 			} else {
-				System.out.println("[소분류 실적진척율 입력 실패]");
+				System.out.println("실적진척율의 최솟값은 1이상이며 총합은 100이어야 합니다");
+				System.out.println("다시 입력해주세요!");
 			}
 
 		} catch (Exception e) {
@@ -532,7 +546,7 @@ public class ResultUI {
 			int output = dao.workCompositionOpDate(c, a, b);
 
 			if (output > 100) {
-				System.out.println("업무구성비의 총합은 100이어야 합니다");
+				System.out.println("업무구성비의 최솟값은 1이상이며 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");
@@ -560,7 +574,7 @@ public class ResultUI {
 			int output = dao.workCompositionCatDate(c, a, b);
 
 			if (output > 100) {
-				System.out.println("업무구성비의 총합은 100이어야 합니다");
+				System.out.println("업무구성비의 최솟값은 1이상이며 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");
@@ -588,7 +602,7 @@ public class ResultUI {
 			int output = dao.workCompositionSubDate(c, a, b);
 
 			if (output > 100) {
-				System.out.println("업무구성비의 총합은 100이어야 합니다");
+				System.out.println("업무구성비의 최솟값은 1이상이며 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
 				System.out.println("[업무 구성비 입력 성공]");

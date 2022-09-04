@@ -203,6 +203,10 @@ public class ResultDAOImpl implements ResultDAO {
 
 		try {
 
+			if(performOpDate < 1) {
+				return 0;
+			}
+			
 			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
 
 			pstmt = conn.prepareStatement(sql);
@@ -226,7 +230,7 @@ public class ResultDAOImpl implements ResultDAO {
 				output = rs.getInt("OP_PER");
 			}
 
-			if (output != 100) {
+			if (output > 100) {
 				conn.rollback();
 			} else {
 				result = 1;
@@ -289,7 +293,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 			result = pstmt.executeUpdate();
 
-			System.out.println("프로젝트실적시작일 추가");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -325,7 +329,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 			result = pstmt.executeUpdate();
 
-			System.out.println("프로젝트실적종료일 추가");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -390,7 +394,7 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt.setInt(2, dto.getSub_date_code()); // 대분류 코드
 			result = pstmt.executeUpdate();
 
-			System.out.println("대분류실적종료일 추가");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -423,7 +427,7 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
 			result = pstmt.executeUpdate();
 
-			System.out.println("중분류실적시작일 추가");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -457,7 +461,7 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt.setInt(2, dto.getCat_date()); // 중분류 코드
 			result = pstmt.executeUpdate();
 
-			System.out.println("중분류실적종료일 추가");
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -491,7 +495,7 @@ public class ResultDAOImpl implements ResultDAO {
 			pstmt.setInt(2, dto.getOp_date()); // 소분류 코드
 			result = pstmt.executeUpdate();
 
-			System.out.println("소분류실적시작일 추가");
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -516,7 +520,7 @@ public class ResultDAOImpl implements ResultDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 
-			System.out.println("소분류실적종료일 추가");
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -524,7 +528,7 @@ public class ResultDAOImpl implements ResultDAO {
 		return result;
 	}
 
-	@Override
+	@Override // 소분류 업무 구성비 입력
 	public int workCompositionOpDate(int codeCatDate, int codeOpDate, int comp) throws SQLException {
 
 		int output = 0;
@@ -533,6 +537,11 @@ public class ResultDAOImpl implements ResultDAO {
 		ResultSet rs = null;
 
 		try {
+			
+			if(comp < 1) {
+				return 200;
+			}
+			
 			conn.setAutoCommit(false);
 
 			sql = " UPDATE OPDATE SET WORK_COMP = ? WHERE OP_DATE = ? ";
@@ -606,7 +615,7 @@ public class ResultDAOImpl implements ResultDAO {
 		return output;
 	}
 
-	@Override
+	@Override  // 중분류 업무 구성비 입력
 	public int workCompositionCatDate(int codeSubDate, int codeCatDate, int comp) throws SQLException {
 
 		int output = 0;
@@ -615,6 +624,12 @@ public class ResultDAOImpl implements ResultDAO {
 		ResultSet rs = null;
 
 		try {
+			
+			if(comp < 1) {
+				return 200;
+			}
+			
+			
 			conn.setAutoCommit(false);
 
 			sql = " UPDATE CATDATE SET CAT_COMP = ?  WHERE CAT_DATE = ? ";
@@ -687,7 +702,7 @@ public class ResultDAOImpl implements ResultDAO {
 
 	}
 
-	@Override
+	@Override  // 대분류 업무 구성비 입력
 	public int workCompositionSubDate(int codeProject, int codeSubDate, int comp) throws SQLException {
 
 		int output = 0;
@@ -696,6 +711,11 @@ public class ResultDAOImpl implements ResultDAO {
 		ResultSet rs = null;
 
 		try {
+			
+			if(comp < 1) {
+				return 200;
+			}
+			
 			conn.setAutoCommit(false);
 
 			sql = " UPDATE SUBDATE SET SUB_COMP = ? WHERE SUB_DATE_CODE = ? ";
