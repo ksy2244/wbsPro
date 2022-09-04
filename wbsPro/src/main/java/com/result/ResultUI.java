@@ -531,7 +531,7 @@ public class ResultUI {
 
 			int output = dao.workCompositionOpDate(c, a, b);
 
-			if (output != 100) {
+			if (output > 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
@@ -539,7 +539,7 @@ public class ResultUI {
 			}
 
 		} catch (Exception e) {
-			System.out.println("[업무 구성비 입력 실패]");
+			System.out.println("[업무 구성비 입력 오류]");
 		}
 
 	}
@@ -559,7 +559,7 @@ public class ResultUI {
 
 			int output = dao.workCompositionCatDate(c, a, b);
 
-			if (output != 100) {
+			if (output > 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
@@ -567,7 +567,7 @@ public class ResultUI {
 			}
 
 		} catch (Exception e) {
-			System.out.println("[업무 구성비 입력 실패]");
+			System.out.println("[업무 구성비 입력 오류]");
 		}
 
 	}
@@ -587,7 +587,7 @@ public class ResultUI {
 
 			int output = dao.workCompositionSubDate(c, a, b);
 
-			if (output != 100) {
+			if (output > 100) {
 				System.out.println("업무구성비의 총합은 100이어야 합니다");
 				System.out.println("다시 입력해주세요!");
 			} else {
@@ -595,7 +595,7 @@ public class ResultUI {
 			}
 
 		} catch (Exception e) {
-			System.out.println("[업무 구성비 입력 실패]");
+			System.out.println("[업무 구성비 입력 오류]");
 		}
 
 	}

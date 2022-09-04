@@ -559,9 +559,9 @@ public class ResultDAOImpl implements ResultDAO {
 				output = rs.getInt("WORK_COMP");
 			}
 
-			if (output != 100) {
+			if (output > 100) {
 				conn.rollback();
-				return output;
+				
 			} else {
 				conn.commit();
 				conn.setAutoCommit(true);
@@ -572,10 +572,11 @@ public class ResultDAOImpl implements ResultDAO {
 
 			try {
 				conn.rollback();
+				throw e;
 			} catch (Exception e2) {
 
 			}
-			System.out.println("업무구성비 입력 실패");
+		
 		} finally {
 
 			if (rs != null) {
@@ -639,9 +640,9 @@ public class ResultDAOImpl implements ResultDAO {
 				output = rs.getInt("CAT_COMP");
 			}
 
-			if (output != 100) {
+			if (output > 100) {
 				conn.rollback();
-				return output;
+				
 			} else {
 				conn.commit();
 				conn.setAutoCommit(true);
@@ -655,7 +656,7 @@ public class ResultDAOImpl implements ResultDAO {
 			} catch (Exception e2) {
 
 			}
-			System.out.println("업무구성비 입력 실패");
+			
 		} finally {
 
 			if (rs != null) {
@@ -720,9 +721,9 @@ public class ResultDAOImpl implements ResultDAO {
 				output = rs.getInt("SUB_COMP");
 			}
 
-			if (output != 100) {
+			if (output > 100) {
 				conn.rollback();
-				return output;
+				
 			} else {
 				conn.commit();
 				conn.setAutoCommit(true);
@@ -733,10 +734,11 @@ public class ResultDAOImpl implements ResultDAO {
 
 			try {
 				conn.rollback();
+				throw e;
 			} catch (Exception e2) {
 
 			}
-			System.out.println("업무구성비 입력 실패");
+			
 		} finally {
 
 			if (rs != null) {
