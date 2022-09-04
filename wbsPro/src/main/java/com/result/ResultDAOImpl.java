@@ -196,50 +196,25 @@ public class ResultDAOImpl implements ResultDAO {
 	@Override // 소분류 실적 진척율 입력
 	public int perforProgressOpDateUpdate(int cat_date, int op_date, int performOpDate) throws SQLException {
 
-		int output = 0;
+		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql;
 
 		try {
 
-			if(performOpDate < 1) {
-				return 200;
+			if(performOpDate < 1 || performOpDate > 100) {
+				return 0;
 			}
-			
-			conn.setAutoCommit(false);
 			
 			sql = " UPDATE OPDATE SET OP_PER = ? WHERE OP_DATE = ? ";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, performOpDate);
 			pstmt.setInt(2, op_date);
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 
-			pstmt.close();
-			pstmt = null;
-
-			// 합 100 초과했는지 확인
-
-			sql = " SELECT SUM(OP_PER) OP_PER FROM OPDATE WHERE CAT_DATE = ? ";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cat_date);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				output = rs.getInt("OP_PER");
-			}
-
-			if (output > 100) {
-				conn.rollback();
-			} else {
-
-				conn.commit();
-				conn.setAutoCommit(true);
-
-			}
+			
 
 		} catch (SQLException e) {
 
@@ -266,15 +241,9 @@ public class ResultDAOImpl implements ResultDAO {
 				}
 			}
 
-			try {
-				// conn.setAutoCommit(true);
-			} catch (Exception e) {
-
-			}
-
 		}
 
-		return output;
+		return result;
 
 	}
 
