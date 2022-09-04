@@ -20,13 +20,13 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 		while (true) {
 
 			try {
-				System.out.print("1. 인사 관리 2. 업체 관리 3. 일정 관리 4. 로그아웃 5. 종료 ");
+				System.out.print("1. 인사 관리 2. 업체 관리 3. 일정 관리 4. 뒤로가기 5. 종료 ");
 
 				ch = Integer.parseInt(br.readLine());
 
 				if (ch == 5) {
 					DBConn.close();
-					return;
+					System.exit(0);
 				}
 
 				switch (ch) {
@@ -40,9 +40,8 @@ public class EmployeeUI { // EmployeeUI로 이름 수정
 					PlanUI planUI = new PlanUI();
 					planUI.menu();
 					break;
-				case 4: // 로그아웃
-
-					break;
+				case 4: 
+					return;
 				}
 
 			} catch (Exception e) {

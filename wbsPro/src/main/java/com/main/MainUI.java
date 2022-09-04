@@ -134,7 +134,7 @@ public class MainUI {
 		while (true) {
 
 			try {
-				System.out.print("1. 계획 일정 관리 2. 실적 관리 3. 사원 관리 4. 발주 업체 관리 ");
+				System.out.print("1. 계획 일정 관리 2. 실적 관리 3. 사원 관리 4. 발주 업체 관리 5. 로그아웃");
 				int ch = Integer.parseInt(br.readLine());
 				switch (ch) {
 				case 1:
@@ -149,7 +149,10 @@ public class MainUI {
 				case 4:
 					ocUI.menu();
 					break;
-
+				case 5:
+					login.logout(); menu();
+					
+					break;
 				}
 			} catch (Exception e) {
 			}

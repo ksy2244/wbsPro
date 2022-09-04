@@ -76,7 +76,7 @@ public class PlanUI {
 	private void searchWork() throws NumberFormatException, SQLException, IOException {
 
 		System.out.println("[작업 검색]");
-		System.out.println("1. 사원 코드로 조회  2. 작업 코드로 조회 3. 작업 날짜로 조회 4.뒤로가기");
+		System.out.println("1. 사원 코드로 조회  2. 작업 코드로 조회 3. 작업 날짜로 조회 4. 뒤로가기");
 		ch = Integer.parseInt(br.readLine());
 
 		if (ch == 4) {
@@ -253,9 +253,9 @@ public class PlanUI {
 			System.out.print(dto.getWorkEnd() + "\t"); // 종료일
 			System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 진척율
 			System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
-			System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 계획 구성 진행 비율
+			System.out.print(dto.getWorkPRatio() + "%" + "  "); // 계획 구성 진행 비율
 			System.out.print(dto.getRatio() + "%" + "\t"); // 실적 구성 진행 비율
-			System.out.println(dto.getRemain() + "\t"); // 잔여일
+			System.out.println(dto.getRemain()); // 잔여일
 
 		}
 		System.out.println();
@@ -266,7 +266,7 @@ public class PlanUI {
 		int prj_code;
 		int n = 0;
 		System.out.println("전체 리스트 조회");
-		System.out.print("검색할 프로젝트 작업명? ");
+		System.out.print("검색할 프로젝트 작업코드? ");
 		// PlanDTO dto = new PlanDTO();
 		prj_code = Integer.parseInt(br.readLine());
 
@@ -281,26 +281,27 @@ public class PlanUI {
 		System.out.println(
 				"----------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(
-				"      작    업       |          계     획          |        실         적      |    업 무    구 성 비  |   구 성  진 행  비 율 ");
+				"        작    업        |                      계     획                        |           실      적          | 업무구성비  | 구 성  진 행  비 율 ");
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(
-				" NO | CODE |   작업명   | 기간 |  계획 시작일 |  계획 종료일 |  담당자 | 진척율 |   시작일   |    종료일   | 진척율 | 업무 구성비 | 계획 | 실적 | 잔여일 ");
+				" NO |  CODE   |  작업명  | 기간  |   계획 시작일   |  계획 종료일  |  담당자  |  진척율  |   시작일   |    종료일   | 진척율 | 업무 구성비 | 계획 | 실적 | 잔여일 ");
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------------");
 
+		// 주식회사 자바 Renewal Scheduling
 		for (PlanDTO dto : list) {
 			System.out.print("  " + (++n) + "   "); // no
 			System.out.print(dto.getWorkCode() + "\t"); // 작업 코드 번호
-			System.out.print(dto.getWorkName() + "\t"); // 작업명
-			System.out.print(dto.getWorkTerm() + "\t"); // 기간
-			System.out.print(dto.getWorkPlanStart() + "\t"); // 계획 시작일
-			System.out.print(dto.getWorkPlanEnd() + "\t"); // 계획 종료일
+			System.out.print(dto.getWorkName() + "\t  "); // 작업명
+			System.out.print(dto.getWorkTerm() + "\t "); // 기간
+			System.out.print(dto.getWorkPlanStart() + "    "); // 계획 시작일
+			System.out.print(dto.getWorkPlanEnd() + "     "); // 계획 종료일
 			System.out.print(dto.getWorkUserName() + "\t"); // 담당자
 			System.out.print(dto.getWorkPlanPer() + "%" + "\t"); // 계획 진척율
-			System.out.print(dto.getWorkStart() + "\t"); // 시작일
-			System.out.print(dto.getWorkEnd() + "\t"); // 종료일
-			System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 진척율
+			System.out.print(dto.getWorkStart() + "  "); // 시작일
+			System.out.print(dto.getWorkEnd() + "  "); // 종료일
+			System.out.print(dto.getWorkPRatio() + "%" + "\t  "); // 진척율
 			System.out.print(dto.getWorkComp() + "\t"); // 업무 구성비
 			System.out.print(dto.getWorkPRatio() + "%" + "\t"); // 계획 구성 진행 비율
 			System.out.print(dto.getRatio() + "%" + "\t"); // 실적 구성 진행 비율
@@ -393,7 +394,8 @@ public class PlanUI {
 	}
 
 	private void delete() {
-
+		System.out.println("[작업 삭제]");
+		
 		while (true) {
 
 			try {
